@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { FileText, BookOpen, Star, Volume2, Sun, Moon, Plus, X, Globe, ChevronDown, Palette, Edit3, Search, Shuffle, Award, RefreshCw, Brain, MessageSquare, GraduationCap } from "lucide-react";
 import LearnCenter from "./LearnCenter";
-import { LANGUAGE_PACKS } from "./learn-data";
+import { loadLanguagePacks, type LanguagePack } from "./learn-data";
 
 // ─── TTS helpers ──────────────────────────────────────────────────────────────
 
@@ -1837,6 +1837,16 @@ export default function App() {
   const [ttsSpeed, setTtsSpeed] = useState<"slow" | "normal" | "fast">("normal");
   const activeWordRef = useRef<string | null>(null);
 
+  // Lazy-load curriculum so the initial bundle stays small
+  const [languagePacks, setLanguagePacks] = useState<LanguagePack[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    loadLanguagePacks().then((packs) => {
+      if (!cancelled) setLanguagePacks(packs);
+    });
+    return () => { cancelled = true; };
+  }, []);
+
   // Quiz / streak / daily goal state
   const [quizPrefs, setQuizPrefsState] = useState<QuizPrefs>(loadQuizPrefs);
   const setQuizPrefs = (p: QuizPrefs) => { setQuizPrefsState(p); saveQuizPrefs(p); };
@@ -2312,7 +2322,7 @@ textarea:focus,input:focus,button:focus{outline:none}
         <LearnCenter
           t={t}
           s={s}
-          languagePacks={LANGUAGE_PACKS}
+          languagePacks={languagePacks}
           onReadText={(text, srcLang) => {
             setRawText(text);
             setSourceLang(srcLang);

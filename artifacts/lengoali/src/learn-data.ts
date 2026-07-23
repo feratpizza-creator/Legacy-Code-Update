@@ -3,6 +3,14 @@
 
 export type ExplanationLang = "en" | "ar" | "fi" | "es" | "fr";
 
+export type LanguageMeta = {
+  id: string;
+  name: string;
+  targetLang: string;
+  flag: string;
+  description: string;
+};
+
 export type LanguagePack = {
   id: string;
   name: string;
@@ -93,10 +101,34 @@ export type QuizQuestion = {
 };
 
 // ------------------------------------------------------------------------
-// Import populated language packs
+// Lightweight language metadata (synchronous)
 // ------------------------------------------------------------------------
 
-import { FINNISH_PACK } from "./curriculum-data";
-import { ENGLISH_PACK } from "./curriculum-en";
+export const AVAILABLE_LANGUAGES: LanguageMeta[] = [
+  {
+    id: "fi-en",
+    name: "Finnish",
+    targetLang: "fi",
+    flag: "🇫🇮",
+    description: "Learn Finnish from scratch with original lessons built for translation-first reading.",
+  },
+  {
+    id: "en-ar",
+    name: "English",
+    targetLang: "en",
+    flag: "🇺🇸",
+    description: "Learn English with original CEFR lessons from A0 to C2.",
+  },
+];
 
-export const LANGUAGE_PACKS: LanguagePack[] = [FINNISH_PACK, ENGLISH_PACK];
+// ------------------------------------------------------------------------
+// Lazy-load full curriculum to keep the initial bundle small
+// ------------------------------------------------------------------------
+
+export async function loadLanguagePacks(): Promise<LanguagePack[]> {
+  const [{ FINNISH_PACK }, { ENGLISH_PACK }] = await Promise.all([
+    import("./curriculum-data"),
+    import("./curriculum-en"),
+  ]);
+  return [FINNISH_PACK, ENGLISH_PACK];
+}
