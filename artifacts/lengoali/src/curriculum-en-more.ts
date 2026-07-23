@@ -613,6 +613,394 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "Minun kotini on pieni talo. Ovi on punainen ja ikkunat ovat suuret. Keittiössä on pöytä ja tuolit. Talo on lämmin.",
         "translation": "My home is a small house. The door is red and the windows are big. In the kitchen there is a table and chairs. The house is warm."
       }
+    },
+    {
+      "id": "u12",
+      "title": "Emotions",
+      "description": "Learn words for feelings and emotions.",
+      "words": [
+        {
+          "word": "joy",
+          "translation": "ilo",
+          "pos": "noun",
+          "example": "He has joy on his face.",
+          "exampleTranslation": "Hänellä on ilo kasvoillaan."
+        },
+        {
+          "word": "sadness",
+          "translation": "suru",
+          "pos": "noun",
+          "example": "The sadness is great.",
+          "exampleTranslation": "Suru on suuri."
+        },
+        {
+          "word": "tired",
+          "translation": "väsynyt",
+          "pos": "adjective",
+          "example": "I am tired.",
+          "exampleTranslation": "Olen väsynyt."
+        },
+        {
+          "word": "happy",
+          "translation": "onnellinen",
+          "pos": "adjective",
+          "example": "I am happy.",
+          "exampleTranslation": "Olen onnellinen."
+        },
+        {
+          "word": "angry",
+          "translation": "vihainen",
+          "pos": "adjective",
+          "example": "He is angry.",
+          "exampleTranslation": "Hän on vihainen."
+        },
+        {
+          "word": "scared",
+          "translation": "pelokas",
+          "pos": "adjective",
+          "example": "I am scared.",
+          "exampleTranslation": "Olen pelokas."
+        },
+        {
+          "word": "surprised",
+          "translation": "yllättynyt",
+          "pos": "adjective",
+          "example": "I am surprised.",
+          "exampleTranslation": "Olen yllättynyt."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "I am happy.",
+          "translation": "Olen iloinen."
+        },
+        {
+          "phrase": "I am tired.",
+          "translation": "Olen väsynyt."
+        },
+        {
+          "phrase": "He is angry.",
+          "translation": "Hän on vihainen."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How do you feel?",
+          "translation": "Miltä sinusta tuntuu?"
+        },
+        {
+          "speaker": "B",
+          "text": "I am happy and tired.",
+          "translation": "Olen iloinen ja väsynyt."
+        },
+        {
+          "speaker": "A",
+          "text": "Why are you happy?",
+          "translation": "Miksi olet iloinen?"
+        },
+        {
+          "speaker": "B",
+          "text": "Because today is Friday.",
+          "translation": "Sillä tänään on perjantai."
+        }
+      ],
+      "reading": {
+        "title": "Feelings",
+        "text": "People have many feelings. Sometimes we are happy and sometimes sad. Tiredness comes in the evening. Happiness makes the day beautiful.",
+        "translation": "Ihmisillä on monia tunteita. Joskus olemme iloisia ja joskus surullisia. Väsymys tulee illalla. Onnellisuus tekee päivästä kauniin."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "School",
+      "description": "Learn words for school and studying.",
+      "words": [
+        {
+          "word": "school",
+          "translation": "koulu",
+          "pos": "noun",
+          "example": "The school is nearby.",
+          "exampleTranslation": "Koulu on lähellä."
+        },
+        {
+          "word": "teacher",
+          "translation": "opettaja",
+          "pos": "noun",
+          "example": "The teacher is friendly.",
+          "exampleTranslation": "Opettaja on ystävällinen."
+        },
+        {
+          "word": "student",
+          "translation": "oppilas",
+          "pos": "noun",
+          "example": "The student studies.",
+          "exampleTranslation": "Oppilas opiskelee."
+        },
+        {
+          "word": "book",
+          "translation": "kirja",
+          "pos": "noun",
+          "example": "The book is new.",
+          "exampleTranslation": "Kirja on uusi."
+        },
+        {
+          "word": "notebook",
+          "translation": "vihko",
+          "pos": "noun",
+          "example": "The notebook is full.",
+          "exampleTranslation": "Vihko on täynnä."
+        },
+        {
+          "word": "pen",
+          "translation": "kynä",
+          "pos": "noun",
+          "example": "The pen is black.",
+          "exampleTranslation": "Kynä on musta."
+        },
+        {
+          "word": "desk",
+          "translation": "pulpetti",
+          "pos": "noun",
+          "example": "The desk is clean.",
+          "exampleTranslation": "Pulpetti on puhdas."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "I go to school.",
+          "translation": "Menen kouluun."
+        },
+        {
+          "phrase": "The teacher teaches.",
+          "translation": "Opettaja opettaa."
+        },
+        {
+          "phrase": "I open the book.",
+          "translation": "Avaan kirjan."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Where is the school?",
+          "translation": "Missä on koulu?"
+        },
+        {
+          "speaker": "B",
+          "text": "It is over there.",
+          "translation": "Se on tuolla."
+        },
+        {
+          "speaker": "A",
+          "text": "Is the teacher good?",
+          "translation": "Onko opettaja hyvä?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, he is friendly.",
+          "translation": "Kyllä, hän on ystävällinen."
+        }
+      ],
+      "reading": {
+        "title": "A School Day",
+        "text": "I go to school in the morning. The teacher teaches mathematics. The students open their books and listen. School is an interesting place.",
+        "translation": "Menen kouluun aamulla. Opettaja opettaa matematiikkaa. Oppilaat avaavat kirjat ja kuuntelevat. Koulu on mielenkiintoinen paikka."
+      }
+    },
+    {
+      "id": "u12",
+      "title": "Emotions",
+      "description": "Learn words for feelings and emotions.",
+      "words": [
+        {
+          "word": "joy",
+          "translation": "ilo",
+          "pos": "noun",
+          "example": "He has joy on his face.",
+          "exampleTranslation": "Hänellä on ilo kasvoillaan."
+        },
+        {
+          "word": "sadness",
+          "translation": "suru",
+          "pos": "noun",
+          "example": "The sadness is great.",
+          "exampleTranslation": "Suru on suuri."
+        },
+        {
+          "word": "tired",
+          "translation": "väsynyt",
+          "pos": "adjective",
+          "example": "I am tired.",
+          "exampleTranslation": "Olen väsynyt."
+        },
+        {
+          "word": "happy",
+          "translation": "onnellinen",
+          "pos": "adjective",
+          "example": "I am happy.",
+          "exampleTranslation": "Olen onnellinen."
+        },
+        {
+          "word": "angry",
+          "translation": "vihainen",
+          "pos": "adjective",
+          "example": "He is angry.",
+          "exampleTranslation": "Hän on vihainen."
+        },
+        {
+          "word": "scared",
+          "translation": "pelokas",
+          "pos": "adjective",
+          "example": "I am scared.",
+          "exampleTranslation": "Olen pelokas."
+        },
+        {
+          "word": "surprised",
+          "translation": "yllättynyt",
+          "pos": "adjective",
+          "example": "I am surprised.",
+          "exampleTranslation": "Olen yllättynyt."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "I am happy.",
+          "translation": "Olen iloinen."
+        },
+        {
+          "phrase": "I am tired.",
+          "translation": "Olen väsynyt."
+        },
+        {
+          "phrase": "He is angry.",
+          "translation": "Hän on vihainen."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How do you feel?",
+          "translation": "Miltä sinusta tuntuu?"
+        },
+        {
+          "speaker": "B",
+          "text": "I am happy and tired.",
+          "translation": "Olen iloinen ja väsynyt."
+        },
+        {
+          "speaker": "A",
+          "text": "Why are you happy?",
+          "translation": "Miksi olet iloinen?"
+        },
+        {
+          "speaker": "B",
+          "text": "Because today is Friday.",
+          "translation": "Sillä tänään on perjantai."
+        }
+      ],
+      "reading": {
+        "title": "Feelings",
+        "text": "People have many feelings. Sometimes we are happy and sometimes sad. Tiredness comes in the evening. Happiness makes the day beautiful.",
+        "translation": "Ihmisillä on monia tunteita. Joskus olemme iloisia ja joskus surullisia. Väsymys tulee illalla. Onnellisuus tekee päivästä kauniin."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "School",
+      "description": "Learn words for school and studying.",
+      "words": [
+        {
+          "word": "school",
+          "translation": "koulu",
+          "pos": "noun",
+          "example": "The school is nearby.",
+          "exampleTranslation": "Koulu on lähellä."
+        },
+        {
+          "word": "teacher",
+          "translation": "opettaja",
+          "pos": "noun",
+          "example": "The teacher is friendly.",
+          "exampleTranslation": "Opettaja on ystävällinen."
+        },
+        {
+          "word": "student",
+          "translation": "oppilas",
+          "pos": "noun",
+          "example": "The student studies.",
+          "exampleTranslation": "Oppilas opiskelee."
+        },
+        {
+          "word": "book",
+          "translation": "kirja",
+          "pos": "noun",
+          "example": "The book is new.",
+          "exampleTranslation": "Kirja on uusi."
+        },
+        {
+          "word": "notebook",
+          "translation": "vihko",
+          "pos": "noun",
+          "example": "The notebook is full.",
+          "exampleTranslation": "Vihko on täynnä."
+        },
+        {
+          "word": "pen",
+          "translation": "kynä",
+          "pos": "noun",
+          "example": "The pen is black.",
+          "exampleTranslation": "Kynä on musta."
+        },
+        {
+          "word": "desk",
+          "translation": "pulpetti",
+          "pos": "noun",
+          "example": "The desk is clean.",
+          "exampleTranslation": "Pulpetti on puhdas."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "I go to school.",
+          "translation": "Menen kouluun."
+        },
+        {
+          "phrase": "The teacher teaches.",
+          "translation": "Opettaja opettaa."
+        },
+        {
+          "phrase": "I open the book.",
+          "translation": "Avaan kirjan."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Where is the school?",
+          "translation": "Missä on koulu?"
+        },
+        {
+          "speaker": "B",
+          "text": "It is over there.",
+          "translation": "Se on tuolla."
+        },
+        {
+          "speaker": "A",
+          "text": "Is the teacher good?",
+          "translation": "Onko opettaja hyvä?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, he is friendly.",
+          "translation": "Kyllä, hän on ystävällinen."
+        }
+      ],
+      "reading": {
+        "title": "A School Day",
+        "text": "I go to school in the morning. The teacher teaches mathematics. The students open their books and listen. School is an interesting place.",
+        "translation": "Menen kouluun aamulla. Opettaja opettaa matematiikkaa. Oppilaat avaavat kirjat ja kuuntelevat. Koulu on mielenkiintoinen paikka."
+      }
     }
   ],
   "A1": [
@@ -1224,6 +1612,394 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "title": "Directions",
         "text": "Olen kadun kulmassa. Vasemmalla on koulu ja oikealla on puisto. Menen suoraan ja näen aseman edessäni.",
         "translation": "I am at the street corner. To the left is the school and to the right is the park. I go straight and see the station in front of me."
+      }
+    },
+    {
+      "id": "u12",
+      "title": "Body and Health",
+      "description": "Learn words for body parts and health.",
+      "words": [
+        {
+          "word": "head",
+          "translation": "pää",
+          "pos": "noun",
+          "example": "My head hurts.",
+          "exampleTranslation": "Pää särkee."
+        },
+        {
+          "word": "stomach",
+          "translation": "vatsa",
+          "pos": "noun",
+          "example": "My stomach is sore.",
+          "exampleTranslation": "Vatsa on kipeä."
+        },
+        {
+          "word": "sore",
+          "translation": "kipeä",
+          "pos": "adjective",
+          "example": "My throat is sore.",
+          "exampleTranslation": "Kurkkuni on kipeä."
+        },
+        {
+          "word": "medicine",
+          "translation": "lääke",
+          "pos": "noun",
+          "example": "Medicine helps.",
+          "exampleTranslation": "Lääke auttaa."
+        },
+        {
+          "word": "health",
+          "translation": "terveys",
+          "pos": "noun",
+          "example": "Health is important.",
+          "exampleTranslation": "Terveys on tärkeää."
+        },
+        {
+          "word": "rest",
+          "translation": "lepo",
+          "pos": "noun",
+          "example": "Rest is needed.",
+          "exampleTranslation": "Lepo on tarpeen."
+        },
+        {
+          "word": "drink",
+          "translation": "juoda",
+          "pos": "verb",
+          "example": "I drink a lot of water.",
+          "exampleTranslation": "Juon paljon vettä."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "I have a headache.",
+          "translation": "Minulla on päänsärky."
+        },
+        {
+          "phrase": "I need rest.",
+          "translation": "Tarvitsen lepoa."
+        },
+        {
+          "phrase": "I drink water.",
+          "translation": "Juon vettä."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is wrong with you?",
+          "translation": "Mikä sinulla on?"
+        },
+        {
+          "speaker": "B",
+          "text": "I have a sore throat and a headache.",
+          "translation": "Minulla on kipeä kurkku ja päänsärky."
+        },
+        {
+          "speaker": "A",
+          "text": "Have you taken medicine?",
+          "translation": "Oletko syönyt lääkettä?"
+        },
+        {
+          "speaker": "B",
+          "text": "Not yet, I am just drinking water.",
+          "translation": "En vielä, juon vain vettä."
+        }
+      ],
+      "reading": {
+        "title": "A Healthy Day",
+        "text": "In the morning I eat a good breakfast and drink water. During the day I walk and enjoy fresh air. In the evening I rest early. Health improves with small daily actions.",
+        "translation": "Aamulla syön hyvää aamupalaa ja juon vettä. Päivällä kävelen ja nautin raikasta ilmaa. Illalla lepään ajoissa. Terveys paranee päivittäisillä pienillä teoilla."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "City and Transport",
+      "description": "Learn words for the city and getting around.",
+      "words": [
+        {
+          "word": "city centre",
+          "translation": "keskusta",
+          "pos": "noun",
+          "example": "The city centre is lively.",
+          "exampleTranslation": "Keskusta on vilkas."
+        },
+        {
+          "word": "crossing",
+          "translation": "risteys",
+          "pos": "noun",
+          "example": "The crossing is dangerous.",
+          "exampleTranslation": "Risteys on vaarallinen."
+        },
+        {
+          "word": "traffic",
+          "translation": "liikenne",
+          "pos": "noun",
+          "example": "The traffic is heavy.",
+          "exampleTranslation": "Liikenne on ruuhkainen."
+        },
+        {
+          "word": "tram",
+          "translation": "raitiovaunu",
+          "pos": "noun",
+          "example": "The tram is blue.",
+          "exampleTranslation": "Raitiovaunu on sininen."
+        },
+        {
+          "word": "subway",
+          "translation": "metro",
+          "pos": "noun",
+          "example": "The subway is fast.",
+          "exampleTranslation": "Metro on nopea."
+        },
+        {
+          "word": "stop",
+          "translation": "pysäkki",
+          "pos": "noun",
+          "example": "The stop is here.",
+          "exampleTranslation": "Pysäkki on tässä."
+        },
+        {
+          "word": "street name",
+          "translation": "kadunnimi",
+          "pos": "noun",
+          "example": "What is the street name?",
+          "exampleTranslation": "Mikä kadunnimi on?"
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "In which direction?",
+          "translation": "Mihin suuntaan?"
+        },
+        {
+          "phrase": "The stop is over there.",
+          "translation": "Pysäkki on tuolla."
+        },
+        {
+          "phrase": "Go by subway.",
+          "translation": "Mene metrolla."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How do I get to the city centre?",
+          "translation": "Miten pääsen keskustaan?"
+        },
+        {
+          "speaker": "B",
+          "text": "Take tram number ten.",
+          "translation": "Mene raitiovaunulla kymmenen."
+        },
+        {
+          "speaker": "A",
+          "text": "Where is the stop?",
+          "translation": "Missä on pysäkki?"
+        },
+        {
+          "speaker": "B",
+          "text": "It is over there at the street corner.",
+          "translation": "Se on tuolla kadun kulmassa."
+        }
+      ],
+      "reading": {
+        "title": "In the City",
+        "text": "The city centre is always lively. Trams and subways run frequently. Traffic lights guide drivers and pedestrians. It is easy to find the stop using a map.",
+        "translation": "Kaupungin keskusta on aina vilkas. Raitiovaunut ja metrot kulkevat usein. Liikennevalit ohjaavat autoilijoita ja jalankulkijoita. Pysäkille on helppo löytää kartan avulla."
+      }
+    },
+    {
+      "id": "u12",
+      "title": "Body and Health",
+      "description": "Learn words for body parts and health.",
+      "words": [
+        {
+          "word": "head",
+          "translation": "pää",
+          "pos": "noun",
+          "example": "My head hurts.",
+          "exampleTranslation": "Pää särkee."
+        },
+        {
+          "word": "stomach",
+          "translation": "vatsa",
+          "pos": "noun",
+          "example": "My stomach is sore.",
+          "exampleTranslation": "Vatsa on kipeä."
+        },
+        {
+          "word": "sore",
+          "translation": "kipeä",
+          "pos": "adjective",
+          "example": "My throat is sore.",
+          "exampleTranslation": "Kurkkuni on kipeä."
+        },
+        {
+          "word": "medicine",
+          "translation": "lääke",
+          "pos": "noun",
+          "example": "Medicine helps.",
+          "exampleTranslation": "Lääke auttaa."
+        },
+        {
+          "word": "health",
+          "translation": "terveys",
+          "pos": "noun",
+          "example": "Health is important.",
+          "exampleTranslation": "Terveys on tärkeää."
+        },
+        {
+          "word": "rest",
+          "translation": "lepo",
+          "pos": "noun",
+          "example": "Rest is needed.",
+          "exampleTranslation": "Lepo on tarpeen."
+        },
+        {
+          "word": "drink",
+          "translation": "juoda",
+          "pos": "verb",
+          "example": "I drink a lot of water.",
+          "exampleTranslation": "Juon paljon vettä."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "I have a headache.",
+          "translation": "Minulla on päänsärky."
+        },
+        {
+          "phrase": "I need rest.",
+          "translation": "Tarvitsen lepoa."
+        },
+        {
+          "phrase": "I drink water.",
+          "translation": "Juon vettä."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is wrong with you?",
+          "translation": "Mikä sinulla on?"
+        },
+        {
+          "speaker": "B",
+          "text": "I have a sore throat and a headache.",
+          "translation": "Minulla on kipeä kurkku ja päänsärky."
+        },
+        {
+          "speaker": "A",
+          "text": "Have you taken medicine?",
+          "translation": "Oletko syönyt lääkettä?"
+        },
+        {
+          "speaker": "B",
+          "text": "Not yet, I am just drinking water.",
+          "translation": "En vielä, juon vain vettä."
+        }
+      ],
+      "reading": {
+        "title": "A Healthy Day",
+        "text": "In the morning I eat a good breakfast and drink water. During the day I walk and enjoy fresh air. In the evening I rest early. Health improves with small daily actions.",
+        "translation": "Aamulla syön hyvää aamupalaa ja juon vettä. Päivällä kävelen ja nautin raikasta ilmaa. Illalla lepään ajoissa. Terveys paranee päivittäisillä pienillä teoilla."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "City and Transport",
+      "description": "Learn words for the city and getting around.",
+      "words": [
+        {
+          "word": "city centre",
+          "translation": "keskusta",
+          "pos": "noun",
+          "example": "The city centre is lively.",
+          "exampleTranslation": "Keskusta on vilkas."
+        },
+        {
+          "word": "crossing",
+          "translation": "risteys",
+          "pos": "noun",
+          "example": "The crossing is dangerous.",
+          "exampleTranslation": "Risteys on vaarallinen."
+        },
+        {
+          "word": "traffic",
+          "translation": "liikenne",
+          "pos": "noun",
+          "example": "The traffic is heavy.",
+          "exampleTranslation": "Liikenne on ruuhkainen."
+        },
+        {
+          "word": "tram",
+          "translation": "raitiovaunu",
+          "pos": "noun",
+          "example": "The tram is blue.",
+          "exampleTranslation": "Raitiovaunu on sininen."
+        },
+        {
+          "word": "subway",
+          "translation": "metro",
+          "pos": "noun",
+          "example": "The subway is fast.",
+          "exampleTranslation": "Metro on nopea."
+        },
+        {
+          "word": "stop",
+          "translation": "pysäkki",
+          "pos": "noun",
+          "example": "The stop is here.",
+          "exampleTranslation": "Pysäkki on tässä."
+        },
+        {
+          "word": "street name",
+          "translation": "kadunnimi",
+          "pos": "noun",
+          "example": "What is the street name?",
+          "exampleTranslation": "Mikä kadunnimi on?"
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "In which direction?",
+          "translation": "Mihin suuntaan?"
+        },
+        {
+          "phrase": "The stop is over there.",
+          "translation": "Pysäkki on tuolla."
+        },
+        {
+          "phrase": "Go by subway.",
+          "translation": "Mene metrolla."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How do I get to the city centre?",
+          "translation": "Miten pääsen keskustaan?"
+        },
+        {
+          "speaker": "B",
+          "text": "Take tram number ten.",
+          "translation": "Mene raitiovaunulla kymmenen."
+        },
+        {
+          "speaker": "A",
+          "text": "Where is the stop?",
+          "translation": "Missä on pysäkki?"
+        },
+        {
+          "speaker": "B",
+          "text": "It is over there at the street corner.",
+          "translation": "Se on tuolla kadun kulmassa."
+        }
+      ],
+      "reading": {
+        "title": "In the City",
+        "text": "The city centre is always lively. Trams and subways run frequently. Traffic lights guide drivers and pedestrians. It is easy to find the stop using a map.",
+        "translation": "Kaupungin keskusta on aina vilkas. Raitiovaunut ja metrot kulkevat usein. Liikennevalit ohjaavat autoilijoita ja jalankulkijoita. Pysäkille on helppo löytää kartan avulla."
       }
     }
   ],
@@ -1837,6 +2613,394 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "Viikonloppuna oli syntymäpäiväjuhlat. Vieraat toivat lahjoja ja söivät kakkua. Juhlat olivat hauskat ja lämpimät.",
         "translation": "On the weekend there was a birthday party. Guests brought gifts and ate cake. The party was fun and warm."
       }
+    },
+    {
+      "id": "u12",
+      "title": "Sports and Fitness",
+      "description": "Learn words for sports and fitness.",
+      "words": [
+        {
+          "word": "team",
+          "translation": "joukkue",
+          "pos": "noun",
+          "example": "The team practises today.",
+          "exampleTranslation": "Joukkue harjoittelee tänään."
+        },
+        {
+          "word": "match",
+          "translation": "ottelu",
+          "pos": "noun",
+          "example": "The match starts soon.",
+          "exampleTranslation": "Ottelu alkaa pian."
+        },
+        {
+          "word": "victory",
+          "translation": "voitto",
+          "pos": "noun",
+          "example": "The victory was sweet.",
+          "exampleTranslation": "Voitto oli makea."
+        },
+        {
+          "word": "defeat",
+          "translation": "tappio",
+          "pos": "noun",
+          "example": "The defeat taught us a lot.",
+          "exampleTranslation": "Tappio opetti meille paljon."
+        },
+        {
+          "word": "fitness",
+          "translation": "kunto",
+          "pos": "noun",
+          "example": "Fitness improves with practice.",
+          "exampleTranslation": "Kunto paranee harjoittelulla."
+        },
+        {
+          "word": "practice",
+          "translation": "harjoitus",
+          "pos": "noun",
+          "example": "Practice is important.",
+          "exampleTranslation": "Harjoitus on tärkeää."
+        },
+        {
+          "word": "competition",
+          "translation": "kilpailu",
+          "pos": "noun",
+          "example": "The competition is tight.",
+          "exampleTranslation": "Kilpailu on tiukka."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "I like sports.",
+          "translation": "Pidän urheilusta."
+        },
+        {
+          "phrase": "Shall we practise together?",
+          "translation": "Harjoitetaanko yhdessä?"
+        },
+        {
+          "phrase": "The team won the match.",
+          "translation": "Joukkue voitti ottelun."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What sports do you follow?",
+          "translation": "Mitä urheilulajeja seuraat?"
+        },
+        {
+          "speaker": "B",
+          "text": "I follow football and swimming.",
+          "translation": "Seuraan jalkapalloa ja uintia."
+        },
+        {
+          "speaker": "A",
+          "text": "Do you play yourself?",
+          "translation": "Pelatko itse?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I go to the gym twice a week.",
+          "translation": "Kyllä, käyn salilla kaksi kertaa viikossa."
+        }
+      ],
+      "reading": {
+        "title": "A Fitness Day",
+        "text": "In the morning I go running in the park. During the day I do strength training at the gym. In the evening I relax by stretching. Regular exercise makes me feel energetic.",
+        "translation": "Aamulla käyn juoksemassa puistossa. Päivällä teen lihaskuntoharjoituksia salilla. Illalla rentoudun venyttelemällä. Säännöllinen liikunta tekee oloni virkeäksi."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "Technology and Digital Life",
+      "description": "Learn about technology and digital life.",
+      "words": [
+        {
+          "word": "application",
+          "translation": "sovellus",
+          "pos": "noun",
+          "example": "This application is useful.",
+          "exampleTranslation": "Tämä sovellus on hyödyllinen."
+        },
+        {
+          "word": "password",
+          "translation": "salasana",
+          "pos": "noun",
+          "example": "My password is long.",
+          "exampleTranslation": "Salasanani on pitkä."
+        },
+        {
+          "word": "update",
+          "translation": "päivitys",
+          "pos": "noun",
+          "example": "The update fixes bugs.",
+          "exampleTranslation": "Päivitys korjaa virheet."
+        },
+        {
+          "word": "cyber security",
+          "translation": "tietoturva",
+          "pos": "noun",
+          "example": "Cyber security is important.",
+          "exampleTranslation": "Tietoturva on tärkeää."
+        },
+        {
+          "word": "network",
+          "translation": "verkko",
+          "pos": "noun",
+          "example": "The network is slow.",
+          "exampleTranslation": "Verkko on hidas."
+        },
+        {
+          "word": "save",
+          "translation": "tallennus",
+          "pos": "noun",
+          "example": "The save succeeded.",
+          "exampleTranslation": "Tallennus onnistui."
+        },
+        {
+          "word": "log in",
+          "translation": "kirjautua",
+          "pos": "verb",
+          "example": "Log in to the application.",
+          "exampleTranslation": "Kirjaudu sovellukseen."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "What is your password?",
+          "translation": "Mikä salasanasi on?"
+        },
+        {
+          "phrase": "The network is slow.",
+          "translation": "Verkko on hidas."
+        },
+        {
+          "phrase": "Update the application.",
+          "translation": "Päivitä sovellus."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Have you downloaded the new application?",
+          "translation": "Oletko ladannut uuden sovelluksen?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, but it asks for a password.",
+          "translation": "Kyllä, mutta se pyytää salasanaa."
+        },
+        {
+          "speaker": "A",
+          "text": "Is the network working?",
+          "translation": "Onko verkko kunnossa?"
+        },
+        {
+          "speaker": "B",
+          "text": "The network is a bit slow today.",
+          "translation": "Verkko on vähän hidas tänään."
+        }
+      ],
+      "reading": {
+        "title": "Digital Life",
+        "text": "Today many things are handled by phone. Applications make everyday life easier, but cyber security must be remembered. Passwords should be changed regularly and updates installed quickly.",
+        "translation": "Nykyään monet asiat hoituvat puhelimella. Sovellukset helpottavat arkea, mutta tietoturva täytyy muistaa. Salasanat kannattaa vaihtaa säännöllisesti ja päivitykset asentaa nopeasti."
+      }
+    },
+    {
+      "id": "u12",
+      "title": "Sports and Fitness",
+      "description": "Learn words for sports and fitness.",
+      "words": [
+        {
+          "word": "team",
+          "translation": "joukkue",
+          "pos": "noun",
+          "example": "The team practises today.",
+          "exampleTranslation": "Joukkue harjoittelee tänään."
+        },
+        {
+          "word": "match",
+          "translation": "ottelu",
+          "pos": "noun",
+          "example": "The match starts soon.",
+          "exampleTranslation": "Ottelu alkaa pian."
+        },
+        {
+          "word": "victory",
+          "translation": "voitto",
+          "pos": "noun",
+          "example": "The victory was sweet.",
+          "exampleTranslation": "Voitto oli makea."
+        },
+        {
+          "word": "defeat",
+          "translation": "tappio",
+          "pos": "noun",
+          "example": "The defeat taught us a lot.",
+          "exampleTranslation": "Tappio opetti meille paljon."
+        },
+        {
+          "word": "fitness",
+          "translation": "kunto",
+          "pos": "noun",
+          "example": "Fitness improves with practice.",
+          "exampleTranslation": "Kunto paranee harjoittelulla."
+        },
+        {
+          "word": "practice",
+          "translation": "harjoitus",
+          "pos": "noun",
+          "example": "Practice is important.",
+          "exampleTranslation": "Harjoitus on tärkeää."
+        },
+        {
+          "word": "competition",
+          "translation": "kilpailu",
+          "pos": "noun",
+          "example": "The competition is tight.",
+          "exampleTranslation": "Kilpailu on tiukka."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "I like sports.",
+          "translation": "Pidän urheilusta."
+        },
+        {
+          "phrase": "Shall we practise together?",
+          "translation": "Harjoitetaanko yhdessä?"
+        },
+        {
+          "phrase": "The team won the match.",
+          "translation": "Joukkue voitti ottelun."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What sports do you follow?",
+          "translation": "Mitä urheilulajeja seuraat?"
+        },
+        {
+          "speaker": "B",
+          "text": "I follow football and swimming.",
+          "translation": "Seuraan jalkapalloa ja uintia."
+        },
+        {
+          "speaker": "A",
+          "text": "Do you play yourself?",
+          "translation": "Pelatko itse?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I go to the gym twice a week.",
+          "translation": "Kyllä, käyn salilla kaksi kertaa viikossa."
+        }
+      ],
+      "reading": {
+        "title": "A Fitness Day",
+        "text": "In the morning I go running in the park. During the day I do strength training at the gym. In the evening I relax by stretching. Regular exercise makes me feel energetic.",
+        "translation": "Aamulla käyn juoksemassa puistossa. Päivällä teen lihaskuntoharjoituksia salilla. Illalla rentoudun venyttelemällä. Säännöllinen liikunta tekee oloni virkeäksi."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "Technology and Digital Life",
+      "description": "Learn about technology and digital life.",
+      "words": [
+        {
+          "word": "application",
+          "translation": "sovellus",
+          "pos": "noun",
+          "example": "This application is useful.",
+          "exampleTranslation": "Tämä sovellus on hyödyllinen."
+        },
+        {
+          "word": "password",
+          "translation": "salasana",
+          "pos": "noun",
+          "example": "My password is long.",
+          "exampleTranslation": "Salasanani on pitkä."
+        },
+        {
+          "word": "update",
+          "translation": "päivitys",
+          "pos": "noun",
+          "example": "The update fixes bugs.",
+          "exampleTranslation": "Päivitys korjaa virheet."
+        },
+        {
+          "word": "cyber security",
+          "translation": "tietoturva",
+          "pos": "noun",
+          "example": "Cyber security is important.",
+          "exampleTranslation": "Tietoturva on tärkeää."
+        },
+        {
+          "word": "network",
+          "translation": "verkko",
+          "pos": "noun",
+          "example": "The network is slow.",
+          "exampleTranslation": "Verkko on hidas."
+        },
+        {
+          "word": "save",
+          "translation": "tallennus",
+          "pos": "noun",
+          "example": "The save succeeded.",
+          "exampleTranslation": "Tallennus onnistui."
+        },
+        {
+          "word": "log in",
+          "translation": "kirjautua",
+          "pos": "verb",
+          "example": "Log in to the application.",
+          "exampleTranslation": "Kirjaudu sovellukseen."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "What is your password?",
+          "translation": "Mikä salasanasi on?"
+        },
+        {
+          "phrase": "The network is slow.",
+          "translation": "Verkko on hidas."
+        },
+        {
+          "phrase": "Update the application.",
+          "translation": "Päivitä sovellus."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Have you downloaded the new application?",
+          "translation": "Oletko ladannut uuden sovelluksen?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, but it asks for a password.",
+          "translation": "Kyllä, mutta se pyytää salasanaa."
+        },
+        {
+          "speaker": "A",
+          "text": "Is the network working?",
+          "translation": "Onko verkko kunnossa?"
+        },
+        {
+          "speaker": "B",
+          "text": "The network is a bit slow today.",
+          "translation": "Verkko on vähän hidas tänään."
+        }
+      ],
+      "reading": {
+        "title": "Digital Life",
+        "text": "Today many things are handled by phone. Applications make everyday life easier, but cyber security must be remembered. Passwords should be changed regularly and updates installed quickly.",
+        "translation": "Nykyään monet asiat hoituvat puhelimella. Sovellukset helpottavat arkea, mutta tietoturva täytyy muistaa. Salasanat kannattaa vaihtaa säännöllisesti ja päivitykset asentaa nopeasti."
+      }
     }
   ],
   "B1": [
@@ -2448,6 +3612,394 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "title": "Transportation",
         "text": "Kaupungissa julkinen liikenne on kätevä. Bussi ja metro vievät nopeasti paikasta toiseen. Lippuautomaatilta voi ostaa lipun helposti.",
         "translation": "In the city public transport is convenient. Bus and metro quickly take you from place to place. You can easily buy a ticket from the ticket machine."
+      }
+    },
+    {
+      "id": "u12",
+      "title": "Travel and Adventure",
+      "description": "Discuss travel and adventures.",
+      "words": [
+        {
+          "word": "destination",
+          "translation": "matkakohde",
+          "pos": "noun",
+          "example": "The destination was chosen carefully.",
+          "exampleTranslation": "Matkakohde oli valittu huolellisesti."
+        },
+        {
+          "word": "route",
+          "translation": "reitti",
+          "pos": "noun",
+          "example": "The route passed through the mountains.",
+          "exampleTranslation": "Reitti kulki vuoriston läpi."
+        },
+        {
+          "word": "accommodation",
+          "translation": "majoitus",
+          "pos": "noun",
+          "example": "The accommodation was cozy.",
+          "exampleTranslation": "Majoitus oli kodikas."
+        },
+        {
+          "word": "sight",
+          "translation": "nähtävyys",
+          "pos": "noun",
+          "example": "The sight was impressive.",
+          "exampleTranslation": "Nähtävyys oli vaikuttava."
+        },
+        {
+          "word": "local",
+          "translation": "paikallinen",
+          "pos": "adjective",
+          "example": "The local food was delicious.",
+          "exampleTranslation": "Paikallinen ruoka oli herkullista."
+        },
+        {
+          "word": "adventure",
+          "translation": "seikkailu",
+          "pos": "noun",
+          "example": "The adventure began at the airport.",
+          "exampleTranslation": "Seikkailu alkoi lentokentältä."
+        },
+        {
+          "word": "travel insurance",
+          "translation": "matkavakuutus",
+          "pos": "noun",
+          "example": "Travel insurance is worth buying.",
+          "exampleTranslation": "Matkavakuutus kannattaa ostaa."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "What are your favourite destinations?",
+          "translation": "Mitkä ovat suosikkikohteesi?"
+        },
+        {
+          "phrase": "I travelled by local bus.",
+          "translation": "Matkustin paikallisella bussilla."
+        },
+        {
+          "phrase": "The adventure was unforgettable.",
+          "translation": "Seikkailu oli unohtumaton."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Where are you heading next?",
+          "translation": "Mihin suuntaat seuraavaksi?"
+        },
+        {
+          "speaker": "B",
+          "text": "I plan to travel north to the mountain region.",
+          "translation": "Aion matkustaa pohjoiseen vuoristoseudulle."
+        },
+        {
+          "speaker": "A",
+          "text": "Have you booked accommodation?",
+          "translation": "Oletko varannut majoituksen?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, in a small hotel on the edge of the centre.",
+          "translation": "Kyllä, pienestä hotellista keskustan laidalta."
+        }
+      ],
+      "reading": {
+        "title": "Mountain Adventure",
+        "text": "Our trip began with an early flight. The route passed through green valleys and high mountains. A local guide introduced us to history and stories. In the evening we sat on the terrace and ate traditional dishes. The adventure left an indelible impression on us.",
+        "translation": "Matkamme alkoi varhaisella lennolla. Reitti kulki halki vihreiden laaksojen ja korkeiden vuorten. Paikallinen opas esitteli meille historian ja tarinat. Illalla istuimme terassilla ja söimme perinneruokia. Seikkailu jätti meihin lähtemättömän vaikutuksen."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "Food and Culture",
+      "description": "Discuss food culture and flavors.",
+      "words": [
+        {
+          "word": "spice",
+          "translation": "mauste",
+          "pos": "noun",
+          "example": "The spice gave the food flavour.",
+          "exampleTranslation": "Mauste antoi ruoalle makua."
+        },
+        {
+          "word": "traditional dish",
+          "translation": "perinneruoka",
+          "pos": "noun",
+          "example": "The traditional dish is often simple.",
+          "exampleTranslation": "Perinneruoka on usein yksinkertainen."
+        },
+        {
+          "word": "food culture",
+          "translation": "ruokakulttuuri",
+          "pos": "noun",
+          "example": "Food culture tells a lot about a country.",
+          "exampleTranslation": "Ruokakulttuuri kertoo paljon maasta."
+        },
+        {
+          "word": "meal",
+          "translation": "ateria",
+          "pos": "noun",
+          "example": "The meal consisted of several courses.",
+          "exampleTranslation": "Ateria koostui useasta ruokalajista."
+        },
+        {
+          "word": "delicious",
+          "translation": "herkullinen",
+          "pos": "adjective",
+          "example": "The food was delicious.",
+          "exampleTranslation": "Ruoka oli herkullinen."
+        },
+        {
+          "word": "dish",
+          "translation": "ruokalaji",
+          "pos": "noun",
+          "example": "Each dish was different.",
+          "exampleTranslation": "Jokainen ruokalaji oli erilainen."
+        },
+        {
+          "word": "soup",
+          "translation": "keitto",
+          "pos": "noun",
+          "example": "The soup was the special of the day.",
+          "exampleTranslation": "Keitto oli päivän erikoisuus."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "This is a traditional dish.",
+          "translation": "Tämä on perinneruokaa."
+        },
+        {
+          "phrase": "The spices are full-bodied.",
+          "translation": "Mausteet ovat täyteläisiä."
+        },
+        {
+          "phrase": "The food culture is rich.",
+          "translation": "Ruokakulttuuri on rikas."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is this country's most famous dish?",
+          "translation": "Mikä on tämän maan tunnetuin ruokalaji?"
+        },
+        {
+          "speaker": "B",
+          "text": "Many people like the traditional fish soup.",
+          "translation": "Monet pitävät perinteisestä kalakeitosta."
+        },
+        {
+          "speaker": "A",
+          "text": "Is it spicy?",
+          "translation": "Onko se mausteista?"
+        },
+        {
+          "speaker": "B",
+          "text": "Not very, but the taste is full-bodied.",
+          "translation": "Ei kovin, mutta maku on täyteläinen."
+        }
+      ],
+      "reading": {
+        "title": "The World of Flavours",
+        "text": "Every country builds its food culture on history and agriculture. Traditional dishes are preserved from generation to generation. Spices tell of trade connections and migration. When we taste foreign food, we also learn about its culture.",
+        "translation": "Jokainen maa rakentaa ruokakulttuurinsa historian ja maanviljelyn varaan. Perinneruoat säilyvät sukupolvelta toiselle. Mausteet kertovat kauppayhteyksistä ja muuttoliikkeestä. Kun maistamme vierasta ruokaa, opimme myös sen kulttuuria."
+      }
+    },
+    {
+      "id": "u12",
+      "title": "Travel and Adventure",
+      "description": "Discuss travel and adventures.",
+      "words": [
+        {
+          "word": "destination",
+          "translation": "matkakohde",
+          "pos": "noun",
+          "example": "The destination was chosen carefully.",
+          "exampleTranslation": "Matkakohde oli valittu huolellisesti."
+        },
+        {
+          "word": "route",
+          "translation": "reitti",
+          "pos": "noun",
+          "example": "The route passed through the mountains.",
+          "exampleTranslation": "Reitti kulki vuoriston läpi."
+        },
+        {
+          "word": "accommodation",
+          "translation": "majoitus",
+          "pos": "noun",
+          "example": "The accommodation was cozy.",
+          "exampleTranslation": "Majoitus oli kodikas."
+        },
+        {
+          "word": "sight",
+          "translation": "nähtävyys",
+          "pos": "noun",
+          "example": "The sight was impressive.",
+          "exampleTranslation": "Nähtävyys oli vaikuttava."
+        },
+        {
+          "word": "local",
+          "translation": "paikallinen",
+          "pos": "adjective",
+          "example": "The local food was delicious.",
+          "exampleTranslation": "Paikallinen ruoka oli herkullista."
+        },
+        {
+          "word": "adventure",
+          "translation": "seikkailu",
+          "pos": "noun",
+          "example": "The adventure began at the airport.",
+          "exampleTranslation": "Seikkailu alkoi lentokentältä."
+        },
+        {
+          "word": "travel insurance",
+          "translation": "matkavakuutus",
+          "pos": "noun",
+          "example": "Travel insurance is worth buying.",
+          "exampleTranslation": "Matkavakuutus kannattaa ostaa."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "What are your favourite destinations?",
+          "translation": "Mitkä ovat suosikkikohteesi?"
+        },
+        {
+          "phrase": "I travelled by local bus.",
+          "translation": "Matkustin paikallisella bussilla."
+        },
+        {
+          "phrase": "The adventure was unforgettable.",
+          "translation": "Seikkailu oli unohtumaton."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Where are you heading next?",
+          "translation": "Mihin suuntaat seuraavaksi?"
+        },
+        {
+          "speaker": "B",
+          "text": "I plan to travel north to the mountain region.",
+          "translation": "Aion matkustaa pohjoiseen vuoristoseudulle."
+        },
+        {
+          "speaker": "A",
+          "text": "Have you booked accommodation?",
+          "translation": "Oletko varannut majoituksen?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, in a small hotel on the edge of the centre.",
+          "translation": "Kyllä, pienestä hotellista keskustan laidalta."
+        }
+      ],
+      "reading": {
+        "title": "Mountain Adventure",
+        "text": "Our trip began with an early flight. The route passed through green valleys and high mountains. A local guide introduced us to history and stories. In the evening we sat on the terrace and ate traditional dishes. The adventure left an indelible impression on us.",
+        "translation": "Matkamme alkoi varhaisella lennolla. Reitti kulki halki vihreiden laaksojen ja korkeiden vuorten. Paikallinen opas esitteli meille historian ja tarinat. Illalla istuimme terassilla ja söimme perinneruokia. Seikkailu jätti meihin lähtemättömän vaikutuksen."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "Food and Culture",
+      "description": "Discuss food culture and flavors.",
+      "words": [
+        {
+          "word": "spice",
+          "translation": "mauste",
+          "pos": "noun",
+          "example": "The spice gave the food flavour.",
+          "exampleTranslation": "Mauste antoi ruoalle makua."
+        },
+        {
+          "word": "traditional dish",
+          "translation": "perinneruoka",
+          "pos": "noun",
+          "example": "The traditional dish is often simple.",
+          "exampleTranslation": "Perinneruoka on usein yksinkertainen."
+        },
+        {
+          "word": "food culture",
+          "translation": "ruokakulttuuri",
+          "pos": "noun",
+          "example": "Food culture tells a lot about a country.",
+          "exampleTranslation": "Ruokakulttuuri kertoo paljon maasta."
+        },
+        {
+          "word": "meal",
+          "translation": "ateria",
+          "pos": "noun",
+          "example": "The meal consisted of several courses.",
+          "exampleTranslation": "Ateria koostui useasta ruokalajista."
+        },
+        {
+          "word": "delicious",
+          "translation": "herkullinen",
+          "pos": "adjective",
+          "example": "The food was delicious.",
+          "exampleTranslation": "Ruoka oli herkullinen."
+        },
+        {
+          "word": "dish",
+          "translation": "ruokalaji",
+          "pos": "noun",
+          "example": "Each dish was different.",
+          "exampleTranslation": "Jokainen ruokalaji oli erilainen."
+        },
+        {
+          "word": "soup",
+          "translation": "keitto",
+          "pos": "noun",
+          "example": "The soup was the special of the day.",
+          "exampleTranslation": "Keitto oli päivän erikoisuus."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "This is a traditional dish.",
+          "translation": "Tämä on perinneruokaa."
+        },
+        {
+          "phrase": "The spices are full-bodied.",
+          "translation": "Mausteet ovat täyteläisiä."
+        },
+        {
+          "phrase": "The food culture is rich.",
+          "translation": "Ruokakulttuuri on rikas."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is this country's most famous dish?",
+          "translation": "Mikä on tämän maan tunnetuin ruokalaji?"
+        },
+        {
+          "speaker": "B",
+          "text": "Many people like the traditional fish soup.",
+          "translation": "Monet pitävät perinteisestä kalakeitosta."
+        },
+        {
+          "speaker": "A",
+          "text": "Is it spicy?",
+          "translation": "Onko se mausteista?"
+        },
+        {
+          "speaker": "B",
+          "text": "Not very, but the taste is full-bodied.",
+          "translation": "Ei kovin, mutta maku on täyteläinen."
+        }
+      ],
+      "reading": {
+        "title": "The World of Flavours",
+        "text": "Every country builds its food culture on history and agriculture. Traditional dishes are preserved from generation to generation. Spices tell of trade connections and migration. When we taste foreign food, we also learn about its culture.",
+        "translation": "Jokainen maa rakentaa ruokakulttuurinsa historian ja maanviljelyn varaan. Perinneruoat säilyvät sukupolvelta toiselle. Mausteet kertovat kauppayhteyksistä ja muuttoliikkeestä. Kun maistamme vierasta ruokaa, opimme myös sen kulttuuria."
       }
     }
   ],
@@ -3061,6 +4613,394 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "Psykologia tutkii mieltä, tunteita ja käyttäytymistä. Stressiä voi hallita levolla ja liikunnalla. Motivaatio ja hyvä muisti auttavat oppimisessa ja arjessa.",
         "translation": "Psychology studies the mind, emotions, and behavior. Stress can be managed with rest and exercise. Motivation and good memory help with learning and daily life."
       }
+    },
+    {
+      "id": "u12",
+      "title": "Media and Literacy",
+      "description": "Discuss media and critical literacy.",
+      "words": [
+        {
+          "word": "media",
+          "translation": "media",
+          "pos": "noun",
+          "example": "Media influences opinions.",
+          "exampleTranslation": "Media vaikuttaa mielipiteisiin."
+        },
+        {
+          "word": "propaganda",
+          "translation": "propaganda",
+          "pos": "noun",
+          "example": "Propaganda distorts facts.",
+          "exampleTranslation": "Propaganda vääristää faktoja."
+        },
+        {
+          "word": "sources",
+          "translation": "lähteet",
+          "pos": "noun",
+          "example": "Sources must be checked.",
+          "exampleTranslation": "Lähteet täytyy tarkistaa."
+        },
+        {
+          "word": "critical",
+          "translation": "kriittinen",
+          "pos": "adjective",
+          "example": "Critical literacy is important.",
+          "exampleTranslation": "Kriittinen lukutaito on tärkeä."
+        },
+        {
+          "word": "news coverage",
+          "translation": "uutisointi",
+          "pos": "noun",
+          "example": "The news coverage was biased.",
+          "exampleTranslation": "Uutisointi oli puolueellista."
+        },
+        {
+          "word": "censorship",
+          "translation": "sensuuri",
+          "pos": "noun",
+          "example": "Censorship restricts freedom of speech.",
+          "exampleTranslation": "Sensuuri rajoittaa sananvapautta."
+        },
+        {
+          "word": "information",
+          "translation": "informaatio",
+          "pos": "noun",
+          "example": "Information travels quickly.",
+          "exampleTranslation": "Informaatio kulkee nopeasti."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Check the sources.",
+          "translation": "Tarkista lähteet."
+        },
+        {
+          "phrase": "News coverage can be misleading.",
+          "translation": "Uutisointi voi olla harhaanjohtavaa."
+        },
+        {
+          "phrase": "Critical thinking is essential.",
+          "translation": "Kriittinen ajattelu on välttämätöntä."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Do you trust all the news you read?",
+          "translation": "Luotatko kaikkiin uutisiin, jotka luet?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, I always check the sources.",
+          "translation": "En, tarkistan aina lähteet."
+        },
+        {
+          "speaker": "A",
+          "text": "How do you recognise propaganda?",
+          "translation": "Miten tunnistat propagandaa?"
+        },
+        {
+          "speaker": "B",
+          "text": "I look at whether the text appeals to emotions or facts.",
+          "translation": "Katson, vetoako teksti tunteisiin vai faktoihin."
+        }
+      ],
+      "reading": {
+        "title": "Media Freedom and Responsibility",
+        "text": "In a free society, the media monitors power and conveys information. At the same time, the media itself must be responsible. Critical literacy helps distinguish facts from opinions. Every reader is also a filter of information.",
+        "translation": "Vapaassa yhteiskunnassa media valvoo valtaa ja välittää tietoa. Samalla median täytyy itse olla vastuullinen. Kriittinen lukutaito auttaa erottamaan faktat mielipiteistä. Jokainen lukija on myös tiedon suodattaja."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "Innovation and Entrepreneurship",
+      "description": "Discuss innovation and entrepreneurship.",
+      "words": [
+        {
+          "word": "innovation",
+          "translation": "innovaatio",
+          "pos": "noun",
+          "example": "Innovation can change the market.",
+          "exampleTranslation": "Innovaatio voi muuttaa markkinat."
+        },
+        {
+          "word": "entrepreneur",
+          "translation": "yrittäjä",
+          "pos": "noun",
+          "example": "The entrepreneur takes risks.",
+          "exampleTranslation": "Yrittäjä ottaa riskejä."
+        },
+        {
+          "word": "startup",
+          "translation": "startup",
+          "pos": "noun",
+          "example": "The startup raised funding.",
+          "exampleTranslation": "Startup keräsi rahoitusta."
+        },
+        {
+          "word": "competition",
+          "translation": "kilpailu",
+          "pos": "noun",
+          "example": "Competition tightened.",
+          "exampleTranslation": "Kilpailu kiristyi."
+        },
+        {
+          "word": "investment",
+          "translation": "investointi",
+          "pos": "noun",
+          "example": "The investment was profitable.",
+          "exampleTranslation": "Investointi oli kannattava."
+        },
+        {
+          "word": "strategy",
+          "translation": "strategia",
+          "pos": "noun",
+          "example": "The strategy had to be updated.",
+          "exampleTranslation": "Strategia täytyi päivittää."
+        },
+        {
+          "word": "customer",
+          "translation": "asiakas",
+          "pos": "noun",
+          "example": "The customer is everything.",
+          "exampleTranslation": "Asiakas on kaikki kaikessa."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Entrepreneurship requires courage.",
+          "translation": "Yrittäjyys vaatii rohkeutta."
+        },
+        {
+          "phrase": "Innovation solved the problem.",
+          "translation": "Innovaatio ratkaisi ongelman."
+        },
+        {
+          "phrase": "The investment paid for itself.",
+          "translation": "Investointi maksoi itsensä takaisin."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How did your startup begin?",
+          "translation": "Miten startupisi sai alkunsa?"
+        },
+        {
+          "speaker": "B",
+          "text": "I noticed a common problem and came up with a solution.",
+          "translation": "Huomasin yleisen ongelman ja keksin ratkaisun."
+        },
+        {
+          "speaker": "A",
+          "text": "Is there much competition?",
+          "translation": "Onko kilpailua paljon?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, but customer-centricity sets us apart.",
+          "translation": "Kyllä, mutta asiakaslähtöisyys erottaa meidät."
+        }
+      ],
+      "reading": {
+        "title": "A New Wave of Entrepreneurship",
+        "text": "Small businesses and startups create new jobs and try bold ideas. They do not always succeed, but they keep the economy vibrant. Entrepreneurship requires both vision and patience. Innovation often arises from need and setbacks.",
+        "translation": "Pienet yritykset ja startupit luovat uusia työpaikkoja ja kokeilevat rohkeita ideoita. Ne eivät aina menesty, mutta ne pitävät talouden elinvoimaisena. Yrittäjyys vaatii sekä visionäärisyyttä että kärsivällisyyttä. Innovaatio syntyy usein tarpeesta ja vastoinkäymisistä."
+      }
+    },
+    {
+      "id": "u12",
+      "title": "Media and Literacy",
+      "description": "Discuss media and critical literacy.",
+      "words": [
+        {
+          "word": "media",
+          "translation": "media",
+          "pos": "noun",
+          "example": "Media influences opinions.",
+          "exampleTranslation": "Media vaikuttaa mielipiteisiin."
+        },
+        {
+          "word": "propaganda",
+          "translation": "propaganda",
+          "pos": "noun",
+          "example": "Propaganda distorts facts.",
+          "exampleTranslation": "Propaganda vääristää faktoja."
+        },
+        {
+          "word": "sources",
+          "translation": "lähteet",
+          "pos": "noun",
+          "example": "Sources must be checked.",
+          "exampleTranslation": "Lähteet täytyy tarkistaa."
+        },
+        {
+          "word": "critical",
+          "translation": "kriittinen",
+          "pos": "adjective",
+          "example": "Critical literacy is important.",
+          "exampleTranslation": "Kriittinen lukutaito on tärkeä."
+        },
+        {
+          "word": "news coverage",
+          "translation": "uutisointi",
+          "pos": "noun",
+          "example": "The news coverage was biased.",
+          "exampleTranslation": "Uutisointi oli puolueellista."
+        },
+        {
+          "word": "censorship",
+          "translation": "sensuuri",
+          "pos": "noun",
+          "example": "Censorship restricts freedom of speech.",
+          "exampleTranslation": "Sensuuri rajoittaa sananvapautta."
+        },
+        {
+          "word": "information",
+          "translation": "informaatio",
+          "pos": "noun",
+          "example": "Information travels quickly.",
+          "exampleTranslation": "Informaatio kulkee nopeasti."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Check the sources.",
+          "translation": "Tarkista lähteet."
+        },
+        {
+          "phrase": "News coverage can be misleading.",
+          "translation": "Uutisointi voi olla harhaanjohtavaa."
+        },
+        {
+          "phrase": "Critical thinking is essential.",
+          "translation": "Kriittinen ajattelu on välttämätöntä."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Do you trust all the news you read?",
+          "translation": "Luotatko kaikkiin uutisiin, jotka luet?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, I always check the sources.",
+          "translation": "En, tarkistan aina lähteet."
+        },
+        {
+          "speaker": "A",
+          "text": "How do you recognise propaganda?",
+          "translation": "Miten tunnistat propagandaa?"
+        },
+        {
+          "speaker": "B",
+          "text": "I look at whether the text appeals to emotions or facts.",
+          "translation": "Katson, vetoako teksti tunteisiin vai faktoihin."
+        }
+      ],
+      "reading": {
+        "title": "Media Freedom and Responsibility",
+        "text": "In a free society, the media monitors power and conveys information. At the same time, the media itself must be responsible. Critical literacy helps distinguish facts from opinions. Every reader is also a filter of information.",
+        "translation": "Vapaassa yhteiskunnassa media valvoo valtaa ja välittää tietoa. Samalla median täytyy itse olla vastuullinen. Kriittinen lukutaito auttaa erottamaan faktat mielipiteistä. Jokainen lukija on myös tiedon suodattaja."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "Innovation and Entrepreneurship",
+      "description": "Discuss innovation and entrepreneurship.",
+      "words": [
+        {
+          "word": "innovation",
+          "translation": "innovaatio",
+          "pos": "noun",
+          "example": "Innovation can change the market.",
+          "exampleTranslation": "Innovaatio voi muuttaa markkinat."
+        },
+        {
+          "word": "entrepreneur",
+          "translation": "yrittäjä",
+          "pos": "noun",
+          "example": "The entrepreneur takes risks.",
+          "exampleTranslation": "Yrittäjä ottaa riskejä."
+        },
+        {
+          "word": "startup",
+          "translation": "startup",
+          "pos": "noun",
+          "example": "The startup raised funding.",
+          "exampleTranslation": "Startup keräsi rahoitusta."
+        },
+        {
+          "word": "competition",
+          "translation": "kilpailu",
+          "pos": "noun",
+          "example": "Competition tightened.",
+          "exampleTranslation": "Kilpailu kiristyi."
+        },
+        {
+          "word": "investment",
+          "translation": "investointi",
+          "pos": "noun",
+          "example": "The investment was profitable.",
+          "exampleTranslation": "Investointi oli kannattava."
+        },
+        {
+          "word": "strategy",
+          "translation": "strategia",
+          "pos": "noun",
+          "example": "The strategy had to be updated.",
+          "exampleTranslation": "Strategia täytyi päivittää."
+        },
+        {
+          "word": "customer",
+          "translation": "asiakas",
+          "pos": "noun",
+          "example": "The customer is everything.",
+          "exampleTranslation": "Asiakas on kaikki kaikessa."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Entrepreneurship requires courage.",
+          "translation": "Yrittäjyys vaatii rohkeutta."
+        },
+        {
+          "phrase": "Innovation solved the problem.",
+          "translation": "Innovaatio ratkaisi ongelman."
+        },
+        {
+          "phrase": "The investment paid for itself.",
+          "translation": "Investointi maksoi itsensä takaisin."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How did your startup begin?",
+          "translation": "Miten startupisi sai alkunsa?"
+        },
+        {
+          "speaker": "B",
+          "text": "I noticed a common problem and came up with a solution.",
+          "translation": "Huomasin yleisen ongelman ja keksin ratkaisun."
+        },
+        {
+          "speaker": "A",
+          "text": "Is there much competition?",
+          "translation": "Onko kilpailua paljon?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, but customer-centricity sets us apart.",
+          "translation": "Kyllä, mutta asiakaslähtöisyys erottaa meidät."
+        }
+      ],
+      "reading": {
+        "title": "A New Wave of Entrepreneurship",
+        "text": "Small businesses and startups create new jobs and try bold ideas. They do not always succeed, but they keep the economy vibrant. Entrepreneurship requires both vision and patience. Innovation often arises from need and setbacks.",
+        "translation": "Pienet yritykset ja startupit luovat uusia työpaikkoja ja kokeilevat rohkeita ideoita. Ne eivät aina menesty, mutta ne pitävät talouden elinvoimaisena. Yrittäjyys vaatii sekä visionäärisyyttä että kärsivällisyyttä. Innovaatio syntyy usein tarpeesta ja vastoinkäymisistä."
+      }
     }
   ],
   "C1": [
@@ -3673,6 +5613,394 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "Median tehtävä on kertoa luotettavasti maailman tapahtumista. Sensuuri ja propaganda voivat vääristää totuutta. Läpinäkyvyys ja yhdenvertaisuus ovat keskeisiä journalismin eettisiä periaatteita.",
         "translation": "The media's task is to report reliably on world events. Censorship and propaganda can distort truth. Transparency and equality are central ethical principles of journalism."
       }
+    },
+    {
+      "id": "u12",
+      "title": "Philosophy and Ethics",
+      "description": "Discuss philosophical and ethical questions.",
+      "words": [
+        {
+          "word": "ethos",
+          "translation": "eetos",
+          "pos": "noun",
+          "example": "Ethos is one of the modes of rhetoric.",
+          "exampleTranslation": "Eetos on yksi retoriikan tavoista."
+        },
+        {
+          "word": "moral philosophy",
+          "translation": "moraalifilosofia",
+          "pos": "noun",
+          "example": "Moral philosophy ponders right and wrong.",
+          "exampleTranslation": "Moraalifilosofia pohtii oikeaa ja väärää."
+        },
+        {
+          "word": "utilitarianism",
+          "translation": "utilitarismi",
+          "pos": "noun",
+          "example": "Utilitarianism emphasises overall benefit.",
+          "exampleTranslation": "Utilitarismi painottaa kokonaishyötyä."
+        },
+        {
+          "word": "deontology",
+          "translation": "deontologia",
+          "pos": "noun",
+          "example": "Deontology focuses on duties.",
+          "exampleTranslation": "Deontologia keskittyy velvollisuuksiin."
+        },
+        {
+          "word": "ethics",
+          "translation": "etiikka",
+          "pos": "noun",
+          "example": "Ethics guides decisions.",
+          "exampleTranslation": "Etiikka ohjaa päätöksiä."
+        },
+        {
+          "word": "argument",
+          "translation": "argumentti",
+          "pos": "noun",
+          "example": "The argument was convincing.",
+          "exampleTranslation": "Argumentti oli vakuuttava."
+        },
+        {
+          "word": "dilemma",
+          "translation": "dilemma",
+          "pos": "noun",
+          "example": "The dilemma was difficult to solve.",
+          "exampleTranslation": "Dilemma oli vaikea ratkaista."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "A moral dilemma requires consideration.",
+          "translation": "Moraalinen dilemma vaatii harkintaa."
+        },
+        {
+          "phrase": "Ethics and efficiency can be in conflict.",
+          "translation": "Etiikka ja tehokkuus voivat olla ristiriidassa."
+        },
+        {
+          "phrase": "The argument is based on logical steps.",
+          "translation": "Argumentti perustuu loogisiin askeliin."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is the greatest ethical challenge in AI?",
+          "translation": "Mikä on suurin eettinen haaste tekoälyssä?"
+        },
+        {
+          "speaker": "B",
+          "text": "Responsibility for the algorithm's decisions.",
+          "translation": "Vastuu algoritmin tekemistä päätöksistä."
+        },
+        {
+          "speaker": "A",
+          "text": "Is it a utilitarian or deontological question?",
+          "translation": "Onko se utilitaristinen vai deontologinen kysymys?"
+        },
+        {
+          "speaker": "B",
+          "text": "Both perspectives are needed.",
+          "translation": "Molemmat näkökulmat ovat tarpeen."
+        }
+      ],
+      "reading": {
+        "title": "Ethics and Technology",
+        "text": "Technological development brings new ethical questions. Autonomous systems make decisions that have consequences for people. Philosophy helps to structure these challenges. Ultimately, responsibility remains with the people who design and approve technology.",
+        "translation": "Teknologian kehitys tuo uusia eettisiä kysymyksiä. Autonomiset järjestelmät tekevät päätöksiä, joilla on seurauksia ihmisille. Filosofia auttaa jäsentämään näitä haasteita. Lopulta vastuu jää ihmisille, jotka suunnittelevat ja hyväksyvät teknologian."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "Global Challenges",
+      "description": "Discuss global challenges.",
+      "words": [
+        {
+          "word": "climate change",
+          "translation": "ilmastonmuutos",
+          "pos": "noun",
+          "example": "Climate change requires action.",
+          "exampleTranslation": "Ilmastonmuutos vaatii toimia."
+        },
+        {
+          "word": "sustainable",
+          "translation": "kestävä",
+          "pos": "adjective",
+          "example": "Sustainable development is important.",
+          "exampleTranslation": "Kestävä kehitys on tärkeää."
+        },
+        {
+          "word": "inequality",
+          "translation": "epätasa-arvo",
+          "pos": "noun",
+          "example": "Inequality is a global challenge.",
+          "exampleTranslation": "Epätasa-arvo on globaali haaste."
+        },
+        {
+          "word": "refugeehood",
+          "translation": "pakolaisuus",
+          "pos": "noun",
+          "example": "Refugeehood affects millions.",
+          "exampleTranslation": "Pakolaisuus koskettaa miljoonia."
+        },
+        {
+          "word": "resources",
+          "translation": "resurssit",
+          "pos": "noun",
+          "example": "Resources are limited.",
+          "exampleTranslation": "Resurssit ovat rajalliset."
+        },
+        {
+          "word": "cooperation",
+          "translation": "yhteistoiminta",
+          "pos": "noun",
+          "example": "Cooperation is essential.",
+          "exampleTranslation": "Yhteistoiminta on välttämätöntä."
+        },
+        {
+          "word": "global",
+          "translation": "globaali",
+          "pos": "adjective",
+          "example": "The global crisis requires solutions.",
+          "exampleTranslation": "Globaali kriisi vaatii ratkaisuja."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Climate change affects everyone.",
+          "translation": "Ilmastonmuutos koskettaa kaikkia."
+        },
+        {
+          "phrase": "Sustainable development is a common goal.",
+          "translation": "Kestävä kehitys on yhteinen tavoite."
+        },
+        {
+          "phrase": "Inequality threatens stability.",
+          "translation": "Epätasa-arvo uhkaa vakautta."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is the most urgent global challenge?",
+          "translation": "Mikä on kiireellisin globaali haaste?"
+        },
+        {
+          "speaker": "B",
+          "text": "Many consider climate change the greatest.",
+          "translation": "Monet pitävät ilmastonmuutosta suurimpana."
+        },
+        {
+          "speaker": "A",
+          "text": "How can it be solved?",
+          "translation": "Miten se voidaan ratkaista?"
+        },
+        {
+          "speaker": "B",
+          "text": "Only international cooperation is enough.",
+          "translation": "Vain kansainvälinen yhteistoiminta riittää."
+        }
+      ],
+      "reading": {
+        "title": "Under Pressure of Global Challenges",
+        "text": "The world faces several converging crises from climate change to inequality and refugeehood. Individual states cannot solve them alone. Political will, fair distribution of resources, and long-term cooperation are needed. Scientific knowledge and moral responsibility must be combined.",
+        "translation": "Maailma kohtaa useita keskittyviä kriisejä ilmastonmuutoksesta epätasa-arvoon ja pakolaisuuteen. Yksittäiset valtiot eivät voi ratkaista niitä yksin. Tarvitaan poliittista tahtoa, reilua resurssien jakoa ja pitkäjänteistä yhteistoimintaa. Tieteellinen tieto ja moraalinen vastuu täytyy yhdistää."
+      }
+    },
+    {
+      "id": "u12",
+      "title": "Philosophy and Ethics",
+      "description": "Discuss philosophical and ethical questions.",
+      "words": [
+        {
+          "word": "ethos",
+          "translation": "eetos",
+          "pos": "noun",
+          "example": "Ethos is one of the modes of rhetoric.",
+          "exampleTranslation": "Eetos on yksi retoriikan tavoista."
+        },
+        {
+          "word": "moral philosophy",
+          "translation": "moraalifilosofia",
+          "pos": "noun",
+          "example": "Moral philosophy ponders right and wrong.",
+          "exampleTranslation": "Moraalifilosofia pohtii oikeaa ja väärää."
+        },
+        {
+          "word": "utilitarianism",
+          "translation": "utilitarismi",
+          "pos": "noun",
+          "example": "Utilitarianism emphasises overall benefit.",
+          "exampleTranslation": "Utilitarismi painottaa kokonaishyötyä."
+        },
+        {
+          "word": "deontology",
+          "translation": "deontologia",
+          "pos": "noun",
+          "example": "Deontology focuses on duties.",
+          "exampleTranslation": "Deontologia keskittyy velvollisuuksiin."
+        },
+        {
+          "word": "ethics",
+          "translation": "etiikka",
+          "pos": "noun",
+          "example": "Ethics guides decisions.",
+          "exampleTranslation": "Etiikka ohjaa päätöksiä."
+        },
+        {
+          "word": "argument",
+          "translation": "argumentti",
+          "pos": "noun",
+          "example": "The argument was convincing.",
+          "exampleTranslation": "Argumentti oli vakuuttava."
+        },
+        {
+          "word": "dilemma",
+          "translation": "dilemma",
+          "pos": "noun",
+          "example": "The dilemma was difficult to solve.",
+          "exampleTranslation": "Dilemma oli vaikea ratkaista."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "A moral dilemma requires consideration.",
+          "translation": "Moraalinen dilemma vaatii harkintaa."
+        },
+        {
+          "phrase": "Ethics and efficiency can be in conflict.",
+          "translation": "Etiikka ja tehokkuus voivat olla ristiriidassa."
+        },
+        {
+          "phrase": "The argument is based on logical steps.",
+          "translation": "Argumentti perustuu loogisiin askeliin."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is the greatest ethical challenge in AI?",
+          "translation": "Mikä on suurin eettinen haaste tekoälyssä?"
+        },
+        {
+          "speaker": "B",
+          "text": "Responsibility for the algorithm's decisions.",
+          "translation": "Vastuu algoritmin tekemistä päätöksistä."
+        },
+        {
+          "speaker": "A",
+          "text": "Is it a utilitarian or deontological question?",
+          "translation": "Onko se utilitaristinen vai deontologinen kysymys?"
+        },
+        {
+          "speaker": "B",
+          "text": "Both perspectives are needed.",
+          "translation": "Molemmat näkökulmat ovat tarpeen."
+        }
+      ],
+      "reading": {
+        "title": "Ethics and Technology",
+        "text": "Technological development brings new ethical questions. Autonomous systems make decisions that have consequences for people. Philosophy helps to structure these challenges. Ultimately, responsibility remains with the people who design and approve technology.",
+        "translation": "Teknologian kehitys tuo uusia eettisiä kysymyksiä. Autonomiset järjestelmät tekevät päätöksiä, joilla on seurauksia ihmisille. Filosofia auttaa jäsentämään näitä haasteita. Lopulta vastuu jää ihmisille, jotka suunnittelevat ja hyväksyvät teknologian."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "Global Challenges",
+      "description": "Discuss global challenges.",
+      "words": [
+        {
+          "word": "climate change",
+          "translation": "ilmastonmuutos",
+          "pos": "noun",
+          "example": "Climate change requires action.",
+          "exampleTranslation": "Ilmastonmuutos vaatii toimia."
+        },
+        {
+          "word": "sustainable",
+          "translation": "kestävä",
+          "pos": "adjective",
+          "example": "Sustainable development is important.",
+          "exampleTranslation": "Kestävä kehitys on tärkeää."
+        },
+        {
+          "word": "inequality",
+          "translation": "epätasa-arvo",
+          "pos": "noun",
+          "example": "Inequality is a global challenge.",
+          "exampleTranslation": "Epätasa-arvo on globaali haaste."
+        },
+        {
+          "word": "refugeehood",
+          "translation": "pakolaisuus",
+          "pos": "noun",
+          "example": "Refugeehood affects millions.",
+          "exampleTranslation": "Pakolaisuus koskettaa miljoonia."
+        },
+        {
+          "word": "resources",
+          "translation": "resurssit",
+          "pos": "noun",
+          "example": "Resources are limited.",
+          "exampleTranslation": "Resurssit ovat rajalliset."
+        },
+        {
+          "word": "cooperation",
+          "translation": "yhteistoiminta",
+          "pos": "noun",
+          "example": "Cooperation is essential.",
+          "exampleTranslation": "Yhteistoiminta on välttämätöntä."
+        },
+        {
+          "word": "global",
+          "translation": "globaali",
+          "pos": "adjective",
+          "example": "The global crisis requires solutions.",
+          "exampleTranslation": "Globaali kriisi vaatii ratkaisuja."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Climate change affects everyone.",
+          "translation": "Ilmastonmuutos koskettaa kaikkia."
+        },
+        {
+          "phrase": "Sustainable development is a common goal.",
+          "translation": "Kestävä kehitys on yhteinen tavoite."
+        },
+        {
+          "phrase": "Inequality threatens stability.",
+          "translation": "Epätasa-arvo uhkaa vakautta."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is the most urgent global challenge?",
+          "translation": "Mikä on kiireellisin globaali haaste?"
+        },
+        {
+          "speaker": "B",
+          "text": "Many consider climate change the greatest.",
+          "translation": "Monet pitävät ilmastonmuutosta suurimpana."
+        },
+        {
+          "speaker": "A",
+          "text": "How can it be solved?",
+          "translation": "Miten se voidaan ratkaista?"
+        },
+        {
+          "speaker": "B",
+          "text": "Only international cooperation is enough.",
+          "translation": "Vain kansainvälinen yhteistoiminta riittää."
+        }
+      ],
+      "reading": {
+        "title": "Under Pressure of Global Challenges",
+        "text": "The world faces several converging crises from climate change to inequality and refugeehood. Individual states cannot solve them alone. Political will, fair distribution of resources, and long-term cooperation are needed. Scientific knowledge and moral responsibility must be combined.",
+        "translation": "Maailma kohtaa useita keskittyviä kriisejä ilmastonmuutoksesta epätasa-arvoon ja pakolaisuuteen. Yksittäiset valtiot eivät voi ratkaista niitä yksin. Tarvitaan poliittista tahtoa, reilua resurssien jakoa ja pitkäjänteistä yhteistoimintaa. Tieteellinen tieto ja moraalinen vastuu täytyy yhdistää."
+      }
     }
   ],
   "C2": [
@@ -4284,6 +6612,394 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "title": "Aesthetics",
         "text": "Estetiikka tutkii taiteen ja kauneuden kokemista. Kauneus ei ole vain ulkonäköä vaan myös tunnetta ja merkitystä. Maku ja kokemus vaihtelevat kulttuureittain.",
         "translation": "Aesthetics studies the experience of art and beauty. Beauty is not only appearance but also feeling and meaning. Taste and experience vary across cultures."
+      }
+    },
+    {
+      "id": "u12",
+      "title": "Linguistics and Language Change",
+      "description": "Discuss language and how it changes.",
+      "words": [
+        {
+          "word": "phonetics",
+          "translation": "foneetikka",
+          "pos": "noun",
+          "example": "Phonetics studies sounds.",
+          "exampleTranslation": "Foneetikka tutkii äänteitä."
+        },
+        {
+          "word": "morphology",
+          "translation": "morfologia",
+          "pos": "noun",
+          "example": "Morphology deals with word forms.",
+          "exampleTranslation": "Morfologia käsittelee sanamuotoja."
+        },
+        {
+          "word": "syntax",
+          "translation": "syntaksi",
+          "pos": "noun",
+          "example": "Syntax determines sentence structure.",
+          "exampleTranslation": "Syntaksi määrää lauseen rakenteen."
+        },
+        {
+          "word": "semantics",
+          "translation": "semantiikka",
+          "pos": "noun",
+          "example": "Semantics studies meanings.",
+          "exampleTranslation": "Semantiikka tutkii merkityksiä."
+        },
+        {
+          "word": "language variation",
+          "translation": "kielen vaihtelu",
+          "pos": "noun",
+          "example": "Language variation is natural.",
+          "exampleTranslation": "Kielen vaihtelu on luonnollista."
+        },
+        {
+          "word": "language contact",
+          "translation": "kielikontakti",
+          "pos": "noun",
+          "example": "Language contact enriches languages.",
+          "exampleTranslation": "Kielikontakti rikastuttaa kieliä."
+        },
+        {
+          "word": "language death",
+          "translation": "kielenkuolema",
+          "pos": "noun",
+          "example": "Language death is a cultural loss.",
+          "exampleTranslation": "Kielenkuolema on kulttuurin menetys."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Language changes all the time.",
+          "translation": "Kieli muuttuu koko ajan."
+        },
+        {
+          "phrase": "Language contact creates loanwords.",
+          "translation": "Kielikontakti synnyttää lainasanoja."
+        },
+        {
+          "phrase": "Dialects enrich language.",
+          "translation": "Murteet rikastuttavat kieltä."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Why do languages change?",
+          "translation": "Miksi kielet muuttuvat?"
+        },
+        {
+          "speaker": "B",
+          "text": "Societal change and contact with other languages influence it.",
+          "translation": "Yhteiskunnan muutos ja kontakti muiden kielten kanssa vaikuttavat."
+        },
+        {
+          "speaker": "A",
+          "text": "Is preserving dialects important?",
+          "translation": "Onko murteiden säilyminen tärkeää?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, they carry identity and history.",
+          "translation": "Kyllä, ne kantavat identiteettiä ja historiaa."
+        }
+      ],
+      "reading": {
+        "title": "The Life and Death of Languages",
+        "text": "Every language lives in its community and changes with it. Loanwords, neologisms, and mixing between languages are ancient phenomena. When a language disappears, it takes with it a worldview and knowledge. The study of language helps us understand our own place in the world.",
+        "translation": "Jokainen kieli elää yhteisössään ja muuttuu sen mukana. Lainasanat, uudissanat ja kielten välinen sekoittuminen ovat ikivanhoja ilmiöitä. Kun kieli katoaa, mukanaan se vie maailmankuvan ja tiedon. Kielen tutkimus auttaa ymmärtämään myös omaa paikkaamme maailmassa."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "Postmodern Culture",
+      "description": "Discuss postmodern culture.",
+      "words": [
+        {
+          "word": "postmodern",
+          "translation": "postmoderni",
+          "pos": "adjective",
+          "example": "Postmodern art breaks boundaries.",
+          "exampleTranslation": "Postmoderni taide rikkoo rajoja."
+        },
+        {
+          "word": "narrative",
+          "translation": "narratiivi",
+          "pos": "noun",
+          "example": "The narrative shaped culture.",
+          "exampleTranslation": "Narratiivi muokkasi kulttuuria."
+        },
+        {
+          "word": "identity",
+          "translation": "identiteetti",
+          "pos": "noun",
+          "example": "Identity is complex.",
+          "exampleTranslation": "Identiteetti on monimutkainen."
+        },
+        {
+          "word": "cultural heritage",
+          "translation": "kulttuuriperintö",
+          "pos": "noun",
+          "example": "Cultural heritage must be cherished.",
+          "exampleTranslation": "Kulttuuriperintöä täytyy vaalia."
+        },
+        {
+          "word": "metaphor",
+          "translation": "metafora",
+          "pos": "noun",
+          "example": "Metaphor opens new meanings.",
+          "exampleTranslation": "Metafora avaa uusia merkityksiä."
+        },
+        {
+          "word": "intertextuality",
+          "translation": "intertekstuaalisuus",
+          "pos": "noun",
+          "example": "Intertextuality enriches the work.",
+          "exampleTranslation": "Intertekstuaalisuus rikastuttaa teosta."
+        },
+        {
+          "word": "symbol",
+          "translation": "symboli",
+          "pos": "noun",
+          "example": "The symbol refers to a broader meaning.",
+          "exampleTranslation": "Symboli viittaa laajempaan merkitykseen."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Postmodern culture questions truths.",
+          "translation": "Postmoderni kulttuuri kyseenalaistaa totuuksia."
+        },
+        {
+          "phrase": "Identity is built from stories.",
+          "translation": "Identiteetti rakentuu tarinoista."
+        },
+        {
+          "phrase": "Art reflects society.",
+          "translation": "Taide heijastaa yhteiskuntaa."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What does postmodern culture mean to you?",
+          "translation": "Mitä postmoderni kulttuuri merkitsee sinulle?"
+        },
+        {
+          "speaker": "B",
+          "text": "It opens space for many interpretations.",
+          "translation": "Se avaa tilaa monille tulkinnoille."
+        },
+        {
+          "speaker": "A",
+          "text": "Is identity fixed or changeable?",
+          "translation": "Onko identiteetti kiinteä vai muuttuva?"
+        },
+        {
+          "speaker": "B",
+          "text": "Both: it is at once permanent and negotiable.",
+          "translation": "Molempia: se on samaan aikaan pysyvä ja neuvoteltavissa."
+        }
+      ],
+      "reading": {
+        "title": "Postmodern Culture and Us",
+        "text": "In postmodern culture, a single work no longer necessarily speaks with one voice. It refers to other works, history, and the viewer's own experience. Identity is built from the stories we tell about ourselves. This makes culture rich but also challenging.",
+        "translation": "Postmodernissa kulttuurissa yksittäinen teos ei enää välttämättä puhu yhdellä äänellä. Se viittaa muihin teoksiin, historiaan ja katsojan omaan kokemukseen. Identiteetti rakentuu tarinoista, joita kerromme itsestäämme. Tämä tekee kulttuurista rikkaan mutta myös haastavan."
+      }
+    },
+    {
+      "id": "u12",
+      "title": "Linguistics and Language Change",
+      "description": "Discuss language and how it changes.",
+      "words": [
+        {
+          "word": "phonetics",
+          "translation": "foneetikka",
+          "pos": "noun",
+          "example": "Phonetics studies sounds.",
+          "exampleTranslation": "Foneetikka tutkii äänteitä."
+        },
+        {
+          "word": "morphology",
+          "translation": "morfologia",
+          "pos": "noun",
+          "example": "Morphology deals with word forms.",
+          "exampleTranslation": "Morfologia käsittelee sanamuotoja."
+        },
+        {
+          "word": "syntax",
+          "translation": "syntaksi",
+          "pos": "noun",
+          "example": "Syntax determines sentence structure.",
+          "exampleTranslation": "Syntaksi määrää lauseen rakenteen."
+        },
+        {
+          "word": "semantics",
+          "translation": "semantiikka",
+          "pos": "noun",
+          "example": "Semantics studies meanings.",
+          "exampleTranslation": "Semantiikka tutkii merkityksiä."
+        },
+        {
+          "word": "language variation",
+          "translation": "kielen vaihtelu",
+          "pos": "noun",
+          "example": "Language variation is natural.",
+          "exampleTranslation": "Kielen vaihtelu on luonnollista."
+        },
+        {
+          "word": "language contact",
+          "translation": "kielikontakti",
+          "pos": "noun",
+          "example": "Language contact enriches languages.",
+          "exampleTranslation": "Kielikontakti rikastuttaa kieliä."
+        },
+        {
+          "word": "language death",
+          "translation": "kielenkuolema",
+          "pos": "noun",
+          "example": "Language death is a cultural loss.",
+          "exampleTranslation": "Kielenkuolema on kulttuurin menetys."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Language changes all the time.",
+          "translation": "Kieli muuttuu koko ajan."
+        },
+        {
+          "phrase": "Language contact creates loanwords.",
+          "translation": "Kielikontakti synnyttää lainasanoja."
+        },
+        {
+          "phrase": "Dialects enrich language.",
+          "translation": "Murteet rikastuttavat kieltä."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Why do languages change?",
+          "translation": "Miksi kielet muuttuvat?"
+        },
+        {
+          "speaker": "B",
+          "text": "Societal change and contact with other languages influence it.",
+          "translation": "Yhteiskunnan muutos ja kontakti muiden kielten kanssa vaikuttavat."
+        },
+        {
+          "speaker": "A",
+          "text": "Is preserving dialects important?",
+          "translation": "Onko murteiden säilyminen tärkeää?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, they carry identity and history.",
+          "translation": "Kyllä, ne kantavat identiteettiä ja historiaa."
+        }
+      ],
+      "reading": {
+        "title": "The Life and Death of Languages",
+        "text": "Every language lives in its community and changes with it. Loanwords, neologisms, and mixing between languages are ancient phenomena. When a language disappears, it takes with it a worldview and knowledge. The study of language helps us understand our own place in the world.",
+        "translation": "Jokainen kieli elää yhteisössään ja muuttuu sen mukana. Lainasanat, uudissanat ja kielten välinen sekoittuminen ovat ikivanhoja ilmiöitä. Kun kieli katoaa, mukanaan se vie maailmankuvan ja tiedon. Kielen tutkimus auttaa ymmärtämään myös omaa paikkaamme maailmassa."
+      }
+    },
+    {
+      "id": "u13",
+      "title": "Postmodern Culture",
+      "description": "Discuss postmodern culture.",
+      "words": [
+        {
+          "word": "postmodern",
+          "translation": "postmoderni",
+          "pos": "adjective",
+          "example": "Postmodern art breaks boundaries.",
+          "exampleTranslation": "Postmoderni taide rikkoo rajoja."
+        },
+        {
+          "word": "narrative",
+          "translation": "narratiivi",
+          "pos": "noun",
+          "example": "The narrative shaped culture.",
+          "exampleTranslation": "Narratiivi muokkasi kulttuuria."
+        },
+        {
+          "word": "identity",
+          "translation": "identiteetti",
+          "pos": "noun",
+          "example": "Identity is complex.",
+          "exampleTranslation": "Identiteetti on monimutkainen."
+        },
+        {
+          "word": "cultural heritage",
+          "translation": "kulttuuriperintö",
+          "pos": "noun",
+          "example": "Cultural heritage must be cherished.",
+          "exampleTranslation": "Kulttuuriperintöä täytyy vaalia."
+        },
+        {
+          "word": "metaphor",
+          "translation": "metafora",
+          "pos": "noun",
+          "example": "Metaphor opens new meanings.",
+          "exampleTranslation": "Metafora avaa uusia merkityksiä."
+        },
+        {
+          "word": "intertextuality",
+          "translation": "intertekstuaalisuus",
+          "pos": "noun",
+          "example": "Intertextuality enriches the work.",
+          "exampleTranslation": "Intertekstuaalisuus rikastuttaa teosta."
+        },
+        {
+          "word": "symbol",
+          "translation": "symboli",
+          "pos": "noun",
+          "example": "The symbol refers to a broader meaning.",
+          "exampleTranslation": "Symboli viittaa laajempaan merkitykseen."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Postmodern culture questions truths.",
+          "translation": "Postmoderni kulttuuri kyseenalaistaa totuuksia."
+        },
+        {
+          "phrase": "Identity is built from stories.",
+          "translation": "Identiteetti rakentuu tarinoista."
+        },
+        {
+          "phrase": "Art reflects society.",
+          "translation": "Taide heijastaa yhteiskuntaa."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What does postmodern culture mean to you?",
+          "translation": "Mitä postmoderni kulttuuri merkitsee sinulle?"
+        },
+        {
+          "speaker": "B",
+          "text": "It opens space for many interpretations.",
+          "translation": "Se avaa tilaa monille tulkinnoille."
+        },
+        {
+          "speaker": "A",
+          "text": "Is identity fixed or changeable?",
+          "translation": "Onko identiteetti kiinteä vai muuttuva?"
+        },
+        {
+          "speaker": "B",
+          "text": "Both: it is at once permanent and negotiable.",
+          "translation": "Molempia: se on samaan aikaan pysyvä ja neuvoteltavissa."
+        }
+      ],
+      "reading": {
+        "title": "Postmodern Culture and Us",
+        "text": "In postmodern culture, a single work no longer necessarily speaks with one voice. It refers to other works, history, and the viewer's own experience. Identity is built from the stories we tell about ourselves. This makes culture rich but also challenging.",
+        "translation": "Postmodernissa kulttuurissa yksittäinen teos ei enää välttämättä puhu yhdellä äänellä. Se viittaa muihin teoksiin, historiaan ja katsojan omaan kokemukseen. Identiteetti rakentuu tarinoista, joita kerromme itsestäämme. Tämä tekee kulttuurista rikkaan mutta myös haastavan."
       }
     }
   ]
