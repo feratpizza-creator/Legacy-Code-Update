@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { FileText, BookOpen, Star, Volume2, Sun, Moon, Plus, X, Globe, ChevronDown, Palette, Edit3, Search, Shuffle, Award, RefreshCw, Brain, MessageSquare } from "lucide-react";
+import { FileText, BookOpen, Star, Volume2, Sun, Moon, Plus, X, Globe, ChevronDown, Palette, Edit3, Search, Shuffle, Award, RefreshCw, Brain, MessageSquare, GraduationCap } from "lucide-react";
+import LearnCenter from "./LearnCenter";
+import { LANGUAGE_PACKS } from "./learn-data";
 
 // ─── TTS helpers ──────────────────────────────────────────────────────────────
 
@@ -292,6 +294,23 @@ const STR: Record<UiLang, Record<string, string>> = {
     dark: "Dark mode",
     uiLanguage: "Interface language",
     noFlashcards: "No saved words to study.",
+    learn: "Learn",
+    levels: "Levels",
+    units: "Units",
+    lessons: "Lessons",
+    vocabulary: "Vocabulary",
+    grammar: "Grammar",
+    reading: "Reading",
+    exercise: "Exercise",
+    openInReader: "Open in Reader",
+    saveWord: "Save word",
+    explanationLanguage: "Explanation language",
+    words: "words",
+    back: "Back",
+    tryAgain: "Try again",
+    checkAnswers: "Check answers",
+    correct: "correct",
+    chooseLanguagePack: "Choose a language pack and start learning.",
   },
   ar: {
     pasteHint: "الصق نصاً بأي لغة — الترجمة تلقائية.",
@@ -385,6 +404,23 @@ const STR: Record<UiLang, Record<string, string>> = {
     dark: "الوضع الداكن",
     uiLanguage: "لغة الواجهة",
     noFlashcards: "لا توجد كلمات محفوظة للدراسة.",
+    learn: "تعلّم",
+    levels: "المستويات",
+    units: "الوحدات",
+    lessons: "الدروس",
+    vocabulary: "المفردات",
+    grammar: "القواعد",
+    reading: "القراءة",
+    exercise: "تمرين",
+    openInReader: "افتح في القارئ",
+    saveWord: "احفظ الكلمة",
+    explanationLanguage: "لغة الشرح",
+    words: "كلمات",
+    back: "رجوع",
+    tryAgain: "حاول مجدداً",
+    checkAnswers: "تحقق من الإجابات",
+    correct: "صحيحة",
+    chooseLanguagePack: "اختر حزمة لغة وابدأ التعلم.",
   },
   fi: {
     pasteHint: "Liitä tekstiä millä tahansa kielellä — käännös on automaattinen.",
@@ -478,6 +514,23 @@ const STR: Record<UiLang, Record<string, string>> = {
     dark: "Tumma tila",
     uiLanguage: "Käyttöliittymän kieli",
     noFlashcards: "Ei tallennettuja sanoja opiskeltavaksi.",
+    learn: "Opi",
+    levels: "Tasot",
+    units: "Yksiköt",
+    lessons: "Opetukset",
+    vocabulary: "Sanasto",
+    grammar: "Kielioppi",
+    reading: "Lukeminen",
+    exercise: "Harjoitus",
+    openInReader: "Avaa lukijassa",
+    saveWord: "Tallenna sana",
+    explanationLanguage: "Selityskieli",
+    words: "sanaa",
+    back: "Takaisin",
+    tryAgain: "Yritä uudelleen",
+    checkAnswers: "Tarkista vastaukset",
+    correct: "oikein",
+    chooseLanguagePack: "Valitse kielipaketti ja aloita oppiminen.",
   },
   es: {
     pasteHint: "Pega texto en cualquier idioma — la traducción es automática.",
@@ -571,6 +624,23 @@ const STR: Record<UiLang, Record<string, string>> = {
     dark: "Modo oscuro",
     uiLanguage: "Idioma de la interfaz",
     noFlashcards: "No hay palabras guardadas para estudiar.",
+    learn: "Aprender",
+    levels: "Niveles",
+    units: "Unidades",
+    lessons: "Lecciones",
+    vocabulary: "Vocabulario",
+    grammar: "Gramática",
+    reading: "Lectura",
+    exercise: "Ejercicio",
+    openInReader: "Abrir en lector",
+    saveWord: "Guardar palabra",
+    explanationLanguage: "Lenguaje de explicación",
+    words: "palabras",
+    back: "Atrás",
+    tryAgain: "Intentar de nuevo",
+    checkAnswers: "Comprobar respuestas",
+    correct: "correctas",
+    chooseLanguagePack: "Elige un paquete de idioma y comienza a aprender.",
   },
   fr: {
     pasteHint: "Collez du texte dans n'importe quelle langue — la traduction est automatique.",
@@ -664,6 +734,23 @@ const STR: Record<UiLang, Record<string, string>> = {
     dark: "Mode sombre",
     uiLanguage: "Langue de l'interface",
     noFlashcards: "Aucun mot enregistré à étudier.",
+    learn: "Apprendre",
+    levels: "Niveaux",
+    units: "Unités",
+    lessons: "Leçons",
+    vocabulary: "Vocabulaire",
+    grammar: "Grammaire",
+    reading: "Lecture",
+    exercise: "Exercice",
+    openInReader: "Ouvrir dans le lecteur",
+    saveWord: "Enregistrer le mot",
+    explanationLanguage: "Langue d'explication",
+    words: "mots",
+    back: "Retour",
+    tryAgain: "Réessayer",
+    checkAnswers: "Vérifier les réponses",
+    correct: "correctes",
+    chooseLanguagePack: "Choisissez un pack de langue et commencez à apprendre.",
   },
 };
 
@@ -1699,7 +1786,7 @@ export default function App() {
   }
 
   // App state
-  const [tab, setTab] = useState<"input" | "reader" | "saved" | "quiz">("input");
+  const [tab, setTab] = useState<"input" | "reader" | "learn" | "saved" | "quiz">("input");
   const [rawText, setRawText] = useState("");
   const [paragraphs, setParagraphs] = useState<Paragraph[]>([]);
   const [sheet, setSheet] = useState<WordDetail | null>(null);
@@ -2186,6 +2273,39 @@ textarea:focus,input:focus,button:focus{outline:none}
             onWrong={onQuizWrong}
           />
         )}
+      {tab === "learn" && (
+        <LearnCenter
+          t={t}
+          s={s}
+          languagePacks={LANGUAGE_PACKS}
+          onReadText={(text, srcLang) => {
+            setRawText(text);
+            setSourceLang(srcLang);
+            setTimeout(() => {
+              handleRead();
+            }, 0);
+          }}
+          onSaveWord={(word, srcLang, translation) => {
+            const existing = saved.find((w) => w.word === word && w.srcLang === srcLang);
+            if (existing) return;
+            const detail: WordDetail = {
+              word,
+              srcLang,
+              pos: null,
+              synonym: null,
+              pronunciation: null,
+              emoji: findEmoji(translation) || findEmoji(word) || null,
+              translations: { [srcLang]: translation },
+              altMeanings: {},
+              savedAt: Date.now(),
+              errorCount: 0,
+              successCount: 0,
+              needsReview: true,
+            };
+            setSaved((prev) => [detail, ...prev]);
+          }}
+        />
+      )}
       </main>
 
       {/* Bottom nav */}
@@ -2193,6 +2313,7 @@ textarea:focus,input:focus,button:focus{outline:none}
         {([
           { id: "input" as const, Icon: FileText, label: s.text },
           { id: "reader" as const, Icon: BookOpen, label: s.reader },
+          { id: "learn" as const, Icon: GraduationCap, label: s.learn },
           { id: "saved" as const, Icon: Star, label: `${s.saved} (${saved.length})` },
           { id: "quiz" as const, Icon: Brain, label: s.quiz },
         ]).map(({ id, Icon, label }) => (
