@@ -479,6 +479,140 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "Aamulla herään ja syön aamupalan. Päivällä juon vettä. Illalla haluan nukkua.",
         "translation": "In the morning I wake up and eat breakfast. During the day I drink water. In the evening I want to sleep."
       }
+    },
+    {
+      "id": "u10",
+      "title": "Time",
+      "description": "Learn words for time and clock times.",
+      "words": [
+        {
+          "word": "morning",
+          "translation": "aamu",
+          "pos": "noun",
+          "example": "The morning is beautiful.",
+          "exampleTranslation": "Aamu on kaunis."
+        },
+        {
+          "word": "day",
+          "translation": "päivä",
+          "pos": "noun",
+          "example": "The day is long.",
+          "exampleTranslation": "Päivä on pitkä."
+        },
+        {
+          "word": "evening",
+          "translation": "ilta",
+          "pos": "noun",
+          "example": "The evening is calm.",
+          "exampleTranslation": "Ilta on rauhallinen."
+        },
+        {
+          "word": "clock",
+          "translation": "kello",
+          "pos": "noun",
+          "example": "The clock is five.",
+          "exampleTranslation": "Kello on viisi."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Mihin aikaan?",
+          "translation": "At what time?"
+        },
+        {
+          "phrase": "On aamu.",
+          "translation": "It is morning."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Mihin aikaan heräät?",
+          "translation": "What time do you wake up?"
+        },
+        {
+          "speaker": "B",
+          "text": "Herään aamulla seitsemältä.",
+          "translation": "I wake up in the morning at seven."
+        },
+        {
+          "speaker": "A",
+          "text": "Kiitos!",
+          "translation": "Thank you!"
+        }
+      ],
+      "reading": {
+        "title": "Time",
+        "text": "Aamu alkaa auringon nousulla. Päivällä teen töitä. Illalla rentoudun kotona. Kello näyttää yhdeksää.",
+        "translation": "The morning starts with sunrise. During the day I work. In the evening I relax at home. The clock shows nine."
+      }
+    },
+    {
+      "id": "u11",
+      "title": "Home",
+      "description": "Learn words for home and furniture.",
+      "words": [
+        {
+          "word": "house",
+          "translation": "tal",
+          "pos": "noun",
+          "example": "The house is big.",
+          "exampleTranslation": "Talo on iso."
+        },
+        {
+          "word": "door",
+          "translation": "ovi",
+          "pos": "noun",
+          "example": "The door is open.",
+          "exampleTranslation": "Ovi on auki."
+        },
+        {
+          "word": "window",
+          "translation": "ikkuna",
+          "pos": "noun",
+          "example": "The window is clean.",
+          "exampleTranslation": "Ikkuna on puhdas."
+        },
+        {
+          "word": "chair",
+          "translation": "tuoli",
+          "pos": "noun",
+          "example": "The chair is by the table.",
+          "exampleTranslation": "Tuoli on pöydän ääressä."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Talo on kaunis.",
+          "translation": "The house is beautiful."
+        },
+        {
+          "phrase": "Sulje ovi.",
+          "translation": "Close the door."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Asutko isossa talossa?",
+          "translation": "Do you live in a big house?"
+        },
+        {
+          "speaker": "B",
+          "text": "Kyllä, talo on iso ja valoisa.",
+          "translation": "Yes, the house is big and bright."
+        },
+        {
+          "speaker": "A",
+          "text": "Onko siellä paljon huonekaluja?",
+          "translation": "Is there a lot of furniture?"
+        }
+      ],
+      "reading": {
+        "title": "Home",
+        "text": "Minun kotini on pieni talo. Ovi on punainen ja ikkunat ovat suuret. Keittiössä on pöytä ja tuolit. Talo on lämmin.",
+        "translation": "My home is a small house. The door is red and the windows are big. In the kitchen there is a table and chairs. The house is warm."
+      }
     }
   ],
   "A1": [
@@ -956,6 +1090,140 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "title": "Family",
         "text": "Minun perheessäni on viisi ihmistä: äiti, isä, kaksi veljeä ja minä. Asumme pienessä talossa. Viikonloppuna pelaamme korttia yhdessä.",
         "translation": "My family has five people: mother, father, two brothers, and me. We live in a small house. On weekends we play cards together."
+      }
+    },
+    {
+      "id": "u10",
+      "title": "Hobbies",
+      "description": "Learn to talk about your hobbies.",
+      "words": [
+        {
+          "word": "music",
+          "translation": "musiikki",
+          "pos": "noun",
+          "example": "Music is my hobby.",
+          "exampleTranslation": "Musiikki on minun harrastukseni."
+        },
+        {
+          "word": "sports",
+          "translation": "urheilu",
+          "pos": "noun",
+          "example": "Sports keep me healthy.",
+          "exampleTranslation": "Urheilu pitää minut terveenä."
+        },
+        {
+          "word": "photography",
+          "translation": "valokuvaus",
+          "pos": "noun",
+          "example": "I am into photography.",
+          "exampleTranslation": "Harrastan valokuvausta."
+        },
+        {
+          "word": "gaming",
+          "translation": "pelaaminen",
+          "pos": "noun",
+          "example": "Gaming is fun.",
+          "exampleTranslation": "Pelaaminen on hauskaa."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Mitä teet vapaa-ajalla?",
+          "translation": "What do you do in your free time?"
+        },
+        {
+          "phrase": "Pidän musiikki.",
+          "translation": "I like music."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Mitä teet vapaa-ajalla?",
+          "translation": "What do you do in your free time?"
+        },
+        {
+          "speaker": "B",
+          "text": "Pidän musiikki ja urheilu.",
+          "translation": "I like music and sports."
+        },
+        {
+          "speaker": "A",
+          "text": "Kuulosta hauskalta!",
+          "translation": "That sounds fun!"
+        }
+      ],
+      "reading": {
+        "title": "Hobbies",
+        "text": "Vapaa-ajallani kuuntelen musiikkia ja pelaan pelejä. Joskus käyn urheilemassa. Harrastukset auttavat rentoutumaan.",
+        "translation": "In my free time I listen to music and play games. Sometimes I do sports. Hobbies help me relax."
+      }
+    },
+    {
+      "id": "u11",
+      "title": "Directions",
+      "description": "Learn how to ask for and give directions.",
+      "words": [
+        {
+          "word": "left",
+          "translation": "vasen",
+          "pos": "noun",
+          "example": "Turn left.",
+          "exampleTranslation": "Käänny vasemmalle."
+        },
+        {
+          "word": "right",
+          "translation": "oikea",
+          "pos": "noun",
+          "example": "Turn right.",
+          "exampleTranslation": "Käänny oikealle."
+        },
+        {
+          "word": "straight",
+          "translation": "suoraan",
+          "pos": "adverb",
+          "example": "Go straight.",
+          "exampleTranslation": "Mene suoraan."
+        },
+        {
+          "word": "corner",
+          "translation": "kulma",
+          "pos": "noun",
+          "example": "Be at the corner.",
+          "exampleTranslation": "Ole kulmassa."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Miten pääsen sinne?",
+          "translation": "How do I get there?"
+        },
+        {
+          "phrase": "Käänny vasen.",
+          "translation": "Turn left."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Anteeksi, missä on asema?",
+          "translation": "Excuse me, where is the station?"
+        },
+        {
+          "speaker": "B",
+          "text": "Mene suoraan ja käänny vasemmalle.",
+          "translation": "Go straight and turn left."
+        },
+        {
+          "speaker": "A",
+          "text": "Kiitos!",
+          "translation": "Thank you!"
+        }
+      ],
+      "reading": {
+        "title": "Directions",
+        "text": "Olen kadun kulmassa. Vasemmalla on koulu ja oikealla on puisto. Menen suoraan ja näen aseman edessäni.",
+        "translation": "I am at the street corner. To the left is the school and to the right is the park. I go straight and see the station in front of me."
       }
     }
   ],
@@ -1435,6 +1703,140 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "Saavuimme hotellille illalla. Vastaanotto antoi meitä avaimen ja ohjeet huoneeseen. Aamiainen tarjoiltiin aamulla seitsemästä.",
         "translation": "We arrived at the hotel in the evening. Reception gave us the key and directions to the room. Breakfast was served from seven in the morning."
       }
+    },
+    {
+      "id": "u10",
+      "title": "Communication",
+      "description": "Learn vocabulary about communication and messaging.",
+      "words": [
+        {
+          "word": "message",
+          "translation": "viesti",
+          "pos": "noun",
+          "example": "I sent a message yesterday.",
+          "exampleTranslation": "Lähetin viesti eilen."
+        },
+        {
+          "word": "email",
+          "translation": "sähköposti",
+          "pos": "noun",
+          "example": "Check your email.",
+          "exampleTranslation": "Tarkista sähköposti."
+        },
+        {
+          "word": "phone",
+          "translation": "puhelin",
+          "pos": "noun",
+          "example": "The phone is silent.",
+          "exampleTranslation": "Puhelin on hiljainen."
+        },
+        {
+          "word": "invitation",
+          "translation": "kutsu",
+          "pos": "noun",
+          "example": "I received an invitation to the party.",
+          "exampleTranslation": "Sain kutsun juhlaan."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Lähetä viesti myöhemmin.",
+          "translation": "Send the message later."
+        },
+        {
+          "phrase": "Otan sinuun yhteyttä huomenna.",
+          "translation": "I will contact you tomorrow."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Saanko lähettää sinulle sähköpostia?",
+          "translation": "Can I send you an email?"
+        },
+        {
+          "speaker": "B",
+          "text": "Kyllä, vastaan pian.",
+          "translation": "Yes, I will reply soon."
+        },
+        {
+          "speaker": "A",
+          "text": "Kiitos!",
+          "translation": "Thank you!"
+        }
+      ],
+      "reading": {
+        "title": "Communication",
+        "text": "Nykyään viestit kulkevat nopeasti. Sähköposti ja puhelin ovat tärkeitä työvälineitä. Kutsut ja ilmoitukset tulevat usein viesteinä.",
+        "translation": "Today messages travel fast. Email and phone are important work tools. Invitations and announcements often come as messages."
+      }
+    },
+    {
+      "id": "u11",
+      "title": "Celebrations",
+      "description": "Learn vocabulary about celebrations and traditions.",
+      "words": [
+        {
+          "word": "birthday",
+          "translation": "syntymäpäivä",
+          "pos": "noun",
+          "example": "The birthday is today.",
+          "exampleTranslation": "Syntymäpäivä on tänään."
+        },
+        {
+          "word": "gift",
+          "translation": "lahja",
+          "pos": "noun",
+          "example": "I buy a gift.",
+          "exampleTranslation": "Ostan lahjan."
+        },
+        {
+          "word": "cake",
+          "translation": "kakku",
+          "pos": "noun",
+          "example": "The cake is sweet.",
+          "exampleTranslation": "Kakku on makea."
+        },
+        {
+          "word": "guest",
+          "translation": "vieras",
+          "pos": "noun",
+          "example": "The guest came late.",
+          "exampleTranslation": "Vieras tuli myöhään."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Hyvää syntymäpäivää!",
+          "translation": "Happy birthday!"
+        },
+        {
+          "phrase": "Kiitos kutsusta.",
+          "translation": "Thank you for the invitation."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Mikä juhla on viikonloppuna?",
+          "translation": "What celebration is on the weekend?"
+        },
+        {
+          "speaker": "B",
+          "text": "Syntymäpäiväjuhlat.",
+          "translation": "Birthday party."
+        },
+        {
+          "speaker": "A",
+          "text": "Tuon kakun.",
+          "translation": "I will bring cake."
+        }
+      ],
+      "reading": {
+        "title": "Celebrations",
+        "text": "Viikonloppuna oli syntymäpäiväjuhlat. Vieraat toivat lahjoja ja söivät kakkua. Juhlat olivat hauskat ja lämpimät.",
+        "translation": "On the weekend there was a birthday party. Guests brought gifts and ate cake. The party was fun and warm."
+      }
     }
   ],
   "B1": [
@@ -1912,6 +2314,140 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "title": "Media",
         "text": "Media kertoo meille maailman tapahtumista. Toimittajien täytyy kertoa totuudenmukaisesti. Somessa kaikki eivät tarkista lähteitään, joten meidän täytyy olla kriittisiä.",
         "translation": "The media tells us about world events. Journalists must report truthfully. On social media not everyone checks their sources, so we must be critical."
+      }
+    },
+    {
+      "id": "u10",
+      "title": "Banking",
+      "description": "Learn vocabulary about banking and money.",
+      "words": [
+        {
+          "word": "account",
+          "translation": "tili",
+          "pos": "noun",
+          "example": "The account is at the bank.",
+          "exampleTranslation": "Tili on pankissa."
+        },
+        {
+          "word": "card",
+          "translation": "kortti",
+          "pos": "noun",
+          "example": "I pay by card.",
+          "exampleTranslation": "Maksan kortilla."
+        },
+        {
+          "word": "loan",
+          "translation": "laina",
+          "pos": "noun",
+          "example": "I took a loan for the apartment.",
+          "exampleTranslation": "Otin lainan asuntoon."
+        },
+        {
+          "word": "savings",
+          "translation": "säästö",
+          "pos": "noun",
+          "example": "Savings grow slowly.",
+          "exampleTranslation": "Säästö kasvaa hitaasti."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Haluan avata tilin.",
+          "translation": "I want to open an account."
+        },
+        {
+          "phrase": "Mikä on tilin saldo?",
+          "translation": "What is the account balance?"
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Haluaisin avata pankkitilin.",
+          "translation": "I would like to open a bank account."
+        },
+        {
+          "speaker": "B",
+          "text": "Tarvitsetko kortin?",
+          "translation": "Do you need a card?"
+        },
+        {
+          "speaker": "A",
+          "text": "Kyllä, ja haluan myös nettipankin.",
+          "translation": "Yes, and I also want online banking."
+        }
+      ],
+      "reading": {
+        "title": "Banking",
+        "text": "Pankissa voi avata tilin ja hakea lainaa. Kortti ja nettipankki helpottavat arkea. Säästöille on hyvä olla oma tili. Rahan käyttöä kannattaa seurata säännöllisesti.",
+        "translation": "At the bank you can open an account and apply for a loan. A card and online banking make everyday life easier. It is good to have a separate account for savings. You should monitor your spending regularly."
+      }
+    },
+    {
+      "id": "u11",
+      "title": "Transportation",
+      "description": "Learn vocabulary about traffic and vehicles.",
+      "words": [
+        {
+          "word": "traffic",
+          "translation": "liikenne",
+          "pos": "noun",
+          "example": "The traffic is heavy.",
+          "exampleTranslation": "Liikenne on ruuhkainen."
+        },
+        {
+          "word": "bus",
+          "translation": "bussi",
+          "pos": "noun",
+          "example": "The bus is on time.",
+          "exampleTranslation": "Bussi on ajoissa."
+        },
+        {
+          "word": "metro",
+          "translation": "metro",
+          "pos": "noun",
+          "example": "The metro is fast.",
+          "exampleTranslation": "Metro on nopea."
+        },
+        {
+          "word": "ticket machine",
+          "translation": "lippuautomaatti",
+          "pos": "noun",
+          "example": "The ticket machine is at the station.",
+          "exampleTranslation": "Lippuautomaatti on asemalla."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Mene bussilla.",
+          "translation": "Take the bus."
+        },
+        {
+          "phrase": "Osta lippu automaatista.",
+          "translation": "Buy a ticket from the machine."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Miten pääsen keskustaan?",
+          "translation": "How do I get to the city center?"
+        },
+        {
+          "speaker": "B",
+          "text": "Ota metro asemalta.",
+          "translation": "Take the metro from the station."
+        },
+        {
+          "speaker": "A",
+          "text": "Missä voin ostaa lipun?",
+          "translation": "Where can I buy a ticket?"
+        }
+      ],
+      "reading": {
+        "title": "Transportation",
+        "text": "Kaupungissa julkinen liikenne on kätevä. Bussi ja metro vievät nopeasti paikasta toiseen. Lippuautomaatilta voi ostaa lipun helposti.",
+        "translation": "In the city public transport is convenient. Bus and metro quickly take you from place to place. You can easily buy a ticket from the ticket machine."
       }
     }
   ],
@@ -2391,6 +2927,140 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "Suomessa terveyskeskukset tarjoavat perusterveydenhuoltoa. Hoitajat ja lääkärit vastaavat potilaista. Reseptit ja tartuntojen torjunta ovat osa päivittäistä työtä.",
         "translation": "In Finland health centers provide basic healthcare. Nurses and doctors take care of patients. Prescriptions and infection control are part of daily work."
       }
+    },
+    {
+      "id": "u10",
+      "title": "Economy",
+      "description": "Learn vocabulary about economy and finance.",
+      "words": [
+        {
+          "word": "market",
+          "translation": "markkinat",
+          "pos": "noun",
+          "example": "Markets vary.",
+          "exampleTranslation": "Markkinat vaihtelevat."
+        },
+        {
+          "word": "inflation",
+          "translation": "inflaatio",
+          "pos": "noun",
+          "example": "Inflation raises prices.",
+          "exampleTranslation": "Inflaatio nostaa hintoja."
+        },
+        {
+          "word": "unemployment",
+          "translation": "työttömyys",
+          "pos": "noun",
+          "example": "Unemployment is high.",
+          "exampleTranslation": "Työttömyys on korkea."
+        },
+        {
+          "word": "export",
+          "translation": "vienti",
+          "pos": "noun",
+          "example": "Exports are growing this year.",
+          "exampleTranslation": "Vienti kasvaa tänä vuonna."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Talous kasvaa hitaasti.",
+          "translation": "The economy is growing slowly."
+        },
+        {
+          "phrase": "Inflaatio vaikuttaa ostovoimaan.",
+          "translation": "Inflation affects purchasing power."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Miten talous kehittyy?",
+          "translation": "How is the economy developing?"
+        },
+        {
+          "speaker": "B",
+          "text": "Se kasvaa hitaasti, mutta inflaatio huolettaa.",
+          "translation": "It is growing slowly, but inflation is worrying."
+        },
+        {
+          "speaker": "A",
+          "text": "Entä työttömyys?",
+          "translation": "What about unemployment?"
+        }
+      ],
+      "reading": {
+        "title": "Economy",
+        "text": "Maailmantalous kohtaa monia haasteita. Inflaatio nostaa hintoja ja voi heikentää ostovoimaa. Vienti ja työllisyys ovat tärkeitä mittareita talouden tilalle.",
+        "translation": "The world economy faces many challenges. Inflation raises prices and can weaken purchasing power. Exports and employment are important indicators of the state of the economy."
+      }
+    },
+    {
+      "id": "u11",
+      "title": "Psychology",
+      "description": "Learn vocabulary about psychology and the mind.",
+      "words": [
+        {
+          "word": "emotions",
+          "translation": "tunteet",
+          "pos": "noun",
+          "example": "Emotions affect behavior.",
+          "exampleTranslation": "Tunteet vaikuttavat käytökseen."
+        },
+        {
+          "word": "stress",
+          "translation": "stressi",
+          "pos": "noun",
+          "example": "Stress is tiring.",
+          "exampleTranslation": "Stressi väsyttää."
+        },
+        {
+          "word": "motivation",
+          "translation": "motivaatio",
+          "pos": "noun",
+          "example": "Motivation helps to learn.",
+          "exampleTranslation": "Motivaatio auttaa oppimaan."
+        },
+        {
+          "word": "memory",
+          "translation": "muisti",
+          "pos": "noun",
+          "example": "Memory improves with practice.",
+          "exampleTranslation": "Muisti parankee harjoituksella."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Hallitse stressiä.",
+          "translation": "Manage stress."
+        },
+        {
+          "phrase": "Motivaatio on avain menestykseen.",
+          "translation": "Motivation is the key to success."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Miten voit vähentää stressiä?",
+          "translation": "How can you reduce stress?"
+        },
+        {
+          "speaker": "B",
+          "text": "Lepään ja liikun säännöllisesti.",
+          "translation": "I rest and exercise regularly."
+        },
+        {
+          "speaker": "A",
+          "text": "Motivaatio auttaa kyllä.",
+          "translation": "Motivation certainly helps."
+        }
+      ],
+      "reading": {
+        "title": "Psychology",
+        "text": "Psykologia tutkii mieltä, tunteita ja käyttäytymistä. Stressiä voi hallita levolla ja liikunnalla. Motivaatio ja hyvä muisti auttavat oppimisessa ja arjessa.",
+        "translation": "Psychology studies the mind, emotions, and behavior. Stress can be managed with rest and exercise. Motivation and good memory help with learning and daily life."
+      }
     }
   ],
   "C1": [
@@ -2869,6 +3539,140 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "Diplomatian tavoitteena on ratkaista konflikteja neuvotteluin. Sopimukset ja liittoumat vahvistavat kansainvälistä yhteistyötä. Pakotteet voivat olla väline painostaa maita noudattamaan sopimuksia.",
         "translation": "The goal of diplomacy is to resolve conflicts through negotiation. Agreements and alliances strengthen international cooperation. Sanctions can be a tool to pressure countries to comply with agreements."
       }
+    },
+    {
+      "id": "u10",
+      "title": "Globalization",
+      "description": "Learn vocabulary about globalization and the world economy.",
+      "words": [
+        {
+          "word": "globalization",
+          "translation": "globalisaatio",
+          "pos": "noun",
+          "example": "Globalization connects economies.",
+          "exampleTranslation": "Globalisaatio yhdistää talouksia."
+        },
+        {
+          "word": "multinational",
+          "translation": "monikansallinen",
+          "pos": "adjective",
+          "example": "A multinational company operates in many countries.",
+          "exampleTranslation": "Monikansallinen yritys toimii monessa maassa."
+        },
+        {
+          "word": "dependency",
+          "translation": "riippuvuus",
+          "pos": "noun",
+          "example": "Dependency is growing globally.",
+          "exampleTranslation": "Riippuvuus kasvaa maailmanlaajuisesti."
+        },
+        {
+          "word": "abroad",
+          "translation": "ulkomailla",
+          "pos": "adverb",
+          "example": "The company expanded abroad.",
+          "exampleTranslation": "Yritys laajeni ulkomaille."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Globalisaatio luo mahdollisuuksia ja haasteita.",
+          "translation": "Globalization creates opportunities and challenges."
+        },
+        {
+          "phrase": "Monikansalliset yritykset vaikuttavat paikallisiin markkinoihin.",
+          "translation": "Multinational companies affect local markets."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Miten globalisaatio vaikuttaa työllisyyteen?",
+          "translation": "How does globalization affect employment?"
+        },
+        {
+          "speaker": "B",
+          "text": "Se avaa työpaikkoja mutta lisää kilpailua.",
+          "translation": "It opens jobs but increases competition."
+        },
+        {
+          "speaker": "A",
+          "text": "Riippuvuus ulkomaisista markkinoista kasvaa.",
+          "translation": "Dependency on foreign markets is growing."
+        }
+      ],
+      "reading": {
+        "title": "Globalization",
+        "text": "Globalisaatio tekee talouksista riippuvaisia toisistaan. Monikansalliset yritykset tuovat työpaikkoja, mutta ne voivat myös heikentää paikallista kulttuuria. Riippuvuus ulkomaista tuonnista voi olla riski.",
+        "translation": "Globalization makes economies dependent on each other. Multinational companies bring jobs, but they can also weaken local culture. Dependence on foreign imports can be a risk."
+      }
+    },
+    {
+      "id": "u11",
+      "title": "Media Ethics",
+      "description": "Learn vocabulary about media ethics.",
+      "words": [
+        {
+          "word": "censorship",
+          "translation": "sensuuri",
+          "pos": "noun",
+          "example": "Censorship restricts freedom of speech.",
+          "exampleTranslation": "Sensuuri rajoittaa sananvapautta."
+        },
+        {
+          "word": "propaganda",
+          "translation": "propaganda",
+          "pos": "noun",
+          "example": "Propaganda shapes opinions.",
+          "exampleTranslation": "Propaganda muokkaa mielipiteitä."
+        },
+        {
+          "word": "equality",
+          "translation": "yhdenvertaisuus",
+          "pos": "noun",
+          "example": "Equality is a journalist's value.",
+          "exampleTranslation": "Yhdenvertaisuus on journalistin arvo."
+        },
+        {
+          "word": "transparency",
+          "translation": "läpinäkyvyys",
+          "pos": "noun",
+          "example": "Transparency increases trust.",
+          "exampleTranslation": "Läpinäkyvyys lisää luottamusta."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Media vastuullaan raportoi totuuden.",
+          "translation": "The media reports the truth responsibly."
+        },
+        {
+          "phrase": "Sensuuri ja propaganda uhkaavat sananvapautta.",
+          "translation": "Censorship and propaganda threaten freedom of speech."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Miten media voi olla rehellinen?",
+          "translation": "How can the media be honest?"
+        },
+        {
+          "speaker": "B",
+          "text": "Läpinäkyvyys ja lähteiden tarkistaminen auttavat.",
+          "translation": "Transparency and checking sources help."
+        },
+        {
+          "speaker": "A",
+          "text": "Yhdenvertaisuus on tärkeää uutisoinnissa.",
+          "translation": "Equality is important in reporting."
+        }
+      ],
+      "reading": {
+        "title": "Media Ethics",
+        "text": "Median tehtävä on kertoa luotettavasti maailman tapahtumista. Sensuuri ja propaganda voivat vääristää totuutta. Läpinäkyvyys ja yhdenvertaisuus ovat keskeisiä journalismin eettisiä periaatteita.",
+        "translation": "The media's task is to report reliably on world events. Censorship and propaganda can distort truth. Transparency and equality are central ethical principles of journalism."
+      }
     }
   ],
   "C2": [
@@ -3346,6 +4150,140 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "title": "History",
         "text": "Vallankumoukset ja siirtoma-aika ovat muokanneet maailmaa. Niiden perintö näkyy nyky-yhteiskunnan rakenteissa. Revisionismi haastaa meitä tarkastelemaan historiaa uusin silmin.",
         "translation": "Revolutions and the colonial era have shaped the world. Their legacy is visible in the structures of today's society. Revisionism challenges us to look at history with fresh eyes."
+      }
+    },
+    {
+      "id": "u10",
+      "title": "Epistemology",
+      "description": "Learn vocabulary about the theory of knowledge and belief.",
+      "words": [
+        {
+          "word": "knowledge",
+          "translation": "tieto",
+          "pos": "noun",
+          "example": "Knowledge is based on justification.",
+          "exampleTranslation": "Tieto perustuu perusteluihin."
+        },
+        {
+          "word": "belief",
+          "translation": "uskomus",
+          "pos": "noun",
+          "example": "A belief can be false.",
+          "exampleTranslation": "Uskomus voi olla väärä."
+        },
+        {
+          "word": "proof",
+          "translation": "todiste",
+          "pos": "noun",
+          "example": "Proof confirms the claim.",
+          "exampleTranslation": "Todiste vahvistaa väitteen."
+        },
+        {
+          "word": "skepticism",
+          "translation": "skeptismi",
+          "pos": "noun",
+          "example": "Skepticism challenges claims.",
+          "exampleTranslation": "Skeptismi haastaa väitteet."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Mistä tiedämme mitä tiedämme?",
+          "translation": "How do we know what we know?"
+        },
+        {
+          "phrase": "Todisteiden puute tekee väitteestä epävarman.",
+          "translation": "Lack of proof makes a claim uncertain."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Onko tieto koskaan varmaa?",
+          "translation": "Is knowledge every certain?"
+        },
+        {
+          "speaker": "B",
+          "text": "Skeptismi väittää, että usein epäilemme liikaa.",
+          "translation": "Skepticism claims that we often doubt too much."
+        },
+        {
+          "speaker": "A",
+          "text": "Todisteet ratkaisevat lopulta.",
+          "translation": "Proof ultimately decides."
+        }
+      ],
+      "reading": {
+        "title": "Epistemology",
+        "text": "Epistemologia pohtii tiedon ja uskomusten rajaa. Tieto vaatii perusteluja ja todisteita. Skeptismi muistuttaa meitä kyseenalaistamaan liian nopeat johtopäätökset.",
+        "translation": "Epistemology contemplates the boundary between knowledge and belief. Knowledge requires justification and proof. Skepticism reminds us to question hasty conclusions."
+      }
+    },
+    {
+      "id": "u11",
+      "title": "Aesthetics",
+      "description": "Learn vocabulary about the philosophy of art and beauty.",
+      "words": [
+        {
+          "word": "beauty",
+          "translation": "kauneus",
+          "pos": "noun",
+          "example": "Beauty is in the eye of the beholder.",
+          "exampleTranslation": "Kauneus on katsojan silmässä."
+        },
+        {
+          "word": "art",
+          "translation": "taide",
+          "pos": "noun",
+          "example": "Art expresses emotions.",
+          "exampleTranslation": "Taide ilmaisee tunteita."
+        },
+        {
+          "word": "taste",
+          "translation": "maku",
+          "pos": "noun",
+          "example": "Taste varies from person to person.",
+          "exampleTranslation": "Maku vaihtelee ihmisittäin."
+        },
+        {
+          "word": "experience",
+          "translation": "kokemus",
+          "pos": "noun",
+          "example": "Experience is individual.",
+          "exampleTranslation": "Kokemus on yksilöllinen."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Mikä on kaunista?",
+          "translation": "What is beautiful?"
+        },
+        {
+          "phrase": "Taide herättää tunteita.",
+          "translation": "Art evokes emotions."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Miten määrittelet kauneuden?",
+          "translation": "How do you define beauty?"
+        },
+        {
+          "speaker": "B",
+          "text": "Se on subjektiivinen kokemus.",
+          "translation": "It is a subjective experience."
+        },
+        {
+          "speaker": "A",
+          "text": "Taide avaa monia tulokkaita.",
+          "translation": "Art opens many interpretations."
+        }
+      ],
+      "reading": {
+        "title": "Aesthetics",
+        "text": "Estetiikka tutkii taiteen ja kauneuden kokemista. Kauneus ei ole vain ulkonäköä vaan myös tunnetta ja merkitystä. Maku ja kokemus vaihtelevat kulttuureittain.",
+        "translation": "Aesthetics studies the experience of art and beauty. Beauty is not only appearance but also feeling and meaning. Taste and experience vary across cultures."
       }
     }
   ]
