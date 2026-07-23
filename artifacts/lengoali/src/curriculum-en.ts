@@ -12,6 +12,7 @@ import type {
   QuizQuestion,
   ReadingText,
 } from "./learn-data";
+import { ADDITIONAL_EN_UNITS } from "./curriculum-en-more";
 
 // ------------------------------------------------------------------------
 // Helpers (mirrors curriculum-data.ts helpers to avoid circular imports)
@@ -178,13 +179,15 @@ function buildUnit(seed: UnitSeed, levelSeed: LevelSeed, levelIndex: number, uni
   };
 }
 
-function buildLevel(seed: LevelSeed, levelIndex: number): Level {
+function buildLevel(seed: LevelSeed, levelIndex: number, additionalUnits: UnitSeed[] = []): Level {
+  const builtUnits = seed.units.map((u, i) => buildUnit(u, seed, levelIndex, i));
+  const extraUnits = additionalUnits.map((u, i) => buildUnit(u, seed, levelIndex, seed.units.length + i));
   return {
     id: seed.cefr,
     cefr: seed.cefr,
     title: seed.title,
     description: seed.description,
-    units: seed.units.map((u, i) => buildUnit(u, seed, levelIndex, i)),
+    units: [...builtUnits, ...extraUnits],
   };
 }
 
@@ -199,9 +202,10 @@ function buildLanguagePack(
   flag: string,
   description: string,
   levels: LevelSeed[],
+  additionalUnits: Record<string, UnitSeed[]> = {},
   manualA0U1?: Unit
 ): LanguagePack {
-  const builtLevels = levels.map((l, i) => buildLevel(l, i));
+  const builtLevels = levels.map((l, i) => buildLevel(l, i, additionalUnits[l.cefr]));
   if (manualA0U1) {
     builtLevels[0]!.units[0] = manualA0U1;
   }
@@ -960,5 +964,6 @@ export const ENGLISH_PACK: LanguagePack = buildLanguagePack(
   "🇬🇧",
   "Learn English from scratch with original lessons built for translation-first reading.",
   ENGLISH_LEVELS,
+  ADDITIONAL_EN_UNITS,
   ENGLISH_MANUAL_A0
 );

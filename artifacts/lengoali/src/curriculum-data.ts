@@ -12,6 +12,7 @@ import type {
   QuizQuestion,
   ReadingText,
 } from "./learn-data";
+import { ADDITIONAL_FI_UNITS } from "./curriculum-data-more";
 
 // ------------------------------------------------------------------------
 // Helpers
@@ -180,13 +181,15 @@ function buildUnit(seed: UnitSeed, levelSeed: LevelSeed, levelIndex: number, uni
   };
 }
 
-function buildLevel(seed: LevelSeed, levelIndex: number): Level {
+function buildLevel(seed: LevelSeed, levelIndex: number, additionalUnits: UnitSeed[] = []): Level {
+  const builtUnits = seed.units.map((u, i) => buildUnit(u, seed, levelIndex, i));
+  const extraUnits = additionalUnits.map((u, i) => buildUnit(u, seed, levelIndex, seed.units.length + i));
   return {
     id: seed.cefr,
     cefr: seed.cefr,
     title: seed.title,
     description: seed.description,
-    units: seed.units.map((u, i) => buildUnit(u, seed, levelIndex, i)),
+    units: [...builtUnits, ...extraUnits],
   };
 }
 
@@ -201,9 +204,10 @@ function buildLanguagePack(
   flag: string,
   description: string,
   levels: LevelSeed[],
+  additionalUnits: Record<string, UnitSeed[]> = {},
   manualA0U1?: Unit
 ): LanguagePack {
-  const builtLevels = levels.map((l, i) => buildLevel(l, i));
+  const builtLevels = levels.map((l, i) => buildLevel(l, i, additionalUnits[l.cefr]));
   if (manualA0U1) {
     builtLevels[0]!.units[0] = manualA0U1;
   }
@@ -1030,5 +1034,6 @@ export const FINNISH_PACK: LanguagePack = buildLanguagePack(
   "🇫🇮",
   "Learn Finnish from scratch with original lessons built for translation-first reading.",
   FINNISH_LEVELS,
+  ADDITIONAL_FI_UNITS,
   FINNISH_MANUAL_A0
 );
