@@ -59,6 +59,16 @@ const NATIVE_LANGUAGES: NativeLanguage[] = [
 
 const ONBOARDING_KEY = "lengoali-learn-onboarding";
 
+function scrollToTop() {
+  if (typeof window === "undefined") return;
+  const main = document.querySelector("main");
+  if (main) {
+    main.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
 function speak(text: string, lang: string) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
   try {
@@ -255,7 +265,6 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
           setSelectedLevel(next.level);
           setSelectedUnit(next.unit);
           setActiveLesson(next.lesson);
-          window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         t={t}
         s={s}
@@ -523,6 +532,10 @@ function LessonView({
 }) {
   const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
   const [quizChecked, setQuizChecked] = useState(false);
+
+  useEffect(() => {
+    scrollToTop();
+  }, [lesson.id]);
 
   const vocabRef = useRef<HTMLDivElement>(null);
   const readingRef = useRef<HTMLDivElement>(null);
