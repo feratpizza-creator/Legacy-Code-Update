@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import {
   type LanguagePack,
   type Level,
@@ -8,6 +8,7 @@ import {
   type QuizQuestion,
   type Exercise,
 } from "./learn-data";
+import LessonNavigation, { loadProgressStore } from "./components/LessonNavigation";
 import {
   BookOpen,
   ChevronLeft,
@@ -167,6 +168,7 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
   const [showOnboarding, setShowOnboarding] = useState<boolean>(!saved);
   const [targetLang, setTargetLang] = useState<string | null>(saved?.targetLang || null);
   const [nativeLang, setNativeLang] = useState<string | null>(saved?.nativeLang || null);
+  const [hasResumed, setHasResumed] = useState<boolean>(false);
 
   const targetLanguages = useMemo(() => {
     return languagePacks.map((pack) => ({ code: pack.targetLang, name: pack.name, flag: pack.flag }));
@@ -180,6 +182,29 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
   const allLevels = useMemo(() => {
     return languagePacks.flatMap((p) => p.levels.map((lvl) => ({ pack: p, level: lvl })));
   }, [languagePacks]);
+
+  // Auto-resume saved progress on mount
+  useEffect(() => {
+    if (hasResumed || selectedPack || languagePacks.length === 0) return;
+    const store = loadProgressStore();
+    if (!store) return;
+    for (const pack of languagePacks) {
+      const loc = store[pack.id];
+      if (!loc) continue;
+      const level = pack.levels.find((l) => l.id === loc.levelId);
+      const unit = level?.units.find((u) => u.id === loc.unitId);
+      const lesson = unit?.lessons.find((ls) => ls.id === loc.lessonId);
+      if (level && unit && lesson) {
+        setSelectedPack(pack);
+        setSelectedLevel(level);
+        setSelectedUnit(unit);
+        setActiveLesson(lesson);
+        setShowOnboarding(false);
+        setHasResumed(true);
+        break;
+      }
+    }
+  }, [hasResumed, languagePacks, selectedPack]);
 
   const handleSelectTarget = (code: string) => {
     setTargetLang(code);
@@ -210,11 +235,13 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
   };
 
   // ─── Lesson view ───────────────────────────────────────────────────────────
-  if (activeLesson && selectedPack) {
+  if (activeLesson && selectedPack && selectedLevel && selectedUnit) {
     return (
       <LessonView
         lesson={activeLesson}
         pack={selectedPack}
+        level={selectedLevel}
+        unit={selectedUnit}
         explanationLang={explanationLang}
         onBack={() => setActiveLesson(null)}
         onReadText={onReadText}
@@ -223,6 +250,12 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
           if (savedVocab.has(key)) return;
           setSavedVocab((prev) => new Set([...Array.from(prev), key]));
           onSaveWord(word, selectedPack.targetLang, translation);
+        }}
+        onNavigate={(next) => {
+          setSelectedLevel(next.level);
+          setSelectedUnit(next.unit);
+          setActiveLesson(next.lesson);
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         t={t}
         s={s}
@@ -466,24 +499,49 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
 function LessonView({
   lesson,
   pack,
+  level,
+  unit,
   explanationLang,
   onBack,
   onReadText,
   onSaveWord,
+  onNavigate,
   t,
   s,
 }: {
   lesson: Lesson;
   pack: LanguagePack;
+  level: Level;
+  unit: Unit;
   explanationLang: string;
   onBack: () => void;
   onReadText: (text: string, srcLang: string) => void;
   onSaveWord: (word: string, translation: string) => void;
+  onNavigate: (next: { level: Level; unit: Unit; lesson: Lesson }) => void;
   t: Theme;
   s: Record<string, string>;
 }) {
   const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
   const [quizChecked, setQuizChecked] = useState(false);
+
+  const vocabRef = useRef<HTMLDivElement>(null);
+  const readingRef = useRef<HTMLDivElement>(null);
+  const quizRef = useRef<HTMLDivElement>(null);
+
+  const scrollTo = (ref: React.RefObject<HTMLDivElement | null>) => {
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleReviewVocabulary = () => scrollTo(vocabRef);
+  const handleReadAgain = () => {
+    scrollTo(readingRef);
+    onReadText(lesson.reading.text, pack.targetLang);
+  };
+  const handlePracticeQuiz = () => {
+    setQuizAnswers({});
+    setQuizChecked(false);
+    scrollTo(quizRef);
+  };
 
   const handleQuizSelect = (qid: string, option: string) => {
     if (quizChecked) return;
@@ -504,11 +562,13 @@ function LessonView({
       <h2 style={{ color: t.text, margin: "0 0 6px" }}>{lesson.title}</h2>
       <p style={{ color: t.textDim, margin: "0 0 16px", fontSize: 14 }}>{lesson.objective}</p>
 
-      <SectionTitle t={t}>{s.vocabulary || "Vocabulary"}</SectionTitle>
-      <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 16 }}>
-        {lesson.vocabulary.map((v) => (
-          <VocabCard key={v.word} v={v} pack={pack} t={t} s={s} onSaveWord={onSaveWord} />
-        ))}
+      <div ref={vocabRef}>
+        <SectionTitle t={t}>{s.vocabulary || "Vocabulary"}</SectionTitle>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 16 }}>
+          {lesson.vocabulary.map((v) => (
+            <VocabCard key={v.word} v={v} pack={pack} t={t} s={s} onSaveWord={onSaveWord} />
+          ))}
+        </div>
       </div>
 
       {lesson.grammar.length > 0 && (
@@ -534,18 +594,20 @@ function LessonView({
         </>
       )}
 
-      <SectionTitle t={t}>{s.reading || "Reading"}</SectionTitle>
-      <Card t={t}>
-        {lesson.reading.title && <div style={{ color: t.text, fontWeight: 700, marginBottom: 8 }}>{lesson.reading.title}</div>}
-        <p style={{ color: t.text, margin: "0 0 10px", fontSize: 15, lineHeight: 1.6 }}>{lesson.reading.text}</p>
-        {lesson.reading.translation && <p style={{ color: t.textDim, margin: 0, fontSize: 13 }}>{lesson.reading.translation}</p>}
-        <button
-          onClick={() => onReadText(lesson.reading.text, pack.targetLang)}
-          style={{ marginTop: 12, width: "100%", padding: 12, borderRadius: 10, border: "none", background: "#2563eb", color: "#fff", fontSize: 14, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
-        >
-          <BookOpen size={16} /> {s.openInReader || "Open in Reader"}
-        </button>
-      </Card>
+      <div ref={readingRef}>
+        <SectionTitle t={t}>{s.reading || "Reading"}</SectionTitle>
+        <Card t={t}>
+          {lesson.reading.title && <div style={{ color: t.text, fontWeight: 700, marginBottom: 8 }}>{lesson.reading.title}</div>}
+          <p style={{ color: t.text, margin: "0 0 10px", fontSize: 15, lineHeight: 1.6 }}>{lesson.reading.text}</p>
+          {lesson.reading.translation && <p style={{ color: t.textDim, margin: 0, fontSize: 13 }}>{lesson.reading.translation}</p>}
+          <button
+            onClick={() => onReadText(lesson.reading.text, pack.targetLang)}
+            style={{ marginTop: 12, width: "100%", padding: 12, borderRadius: 10, border: "none", background: "#2563eb", color: "#fff", fontSize: 14, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+          >
+            <BookOpen size={16} /> {s.openInReader || "Open in Reader"}
+          </button>
+        </Card>
+      </div>
 
       {lesson.exercises.length > 0 && (
         <>
@@ -556,11 +618,13 @@ function LessonView({
         </>
       )}
 
-      <SectionTitle t={t}>{s.quiz || "Quiz"}</SectionTitle>
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {lesson.quiz.map((q) => (
-          <QuizCard key={q.id} q={q} t={t} s={s} selected={quizAnswers[q.id]} checked={quizChecked} onSelect={(option) => handleQuizSelect(q.id, option)} />
-        ))}
+      <div ref={quizRef}>
+        <SectionTitle t={t}>{s.quiz || "Quiz"}</SectionTitle>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {lesson.quiz.map((q) => (
+            <QuizCard key={q.id} q={q} t={t} s={s} selected={quizAnswers[q.id]} checked={quizChecked} onSelect={(option) => handleQuizSelect(q.id, option)} />
+          ))}
+        </div>
       </div>
       {!quizChecked ? (
         <button
@@ -583,6 +647,19 @@ function LessonView({
           </button>
         </Card>
       )}
+
+      <LessonNavigation
+        pack={pack}
+        level={level}
+        unit={unit}
+        lesson={lesson}
+        t={t}
+        s={s}
+        onNavigate={onNavigate}
+        onReviewVocabulary={handleReviewVocabulary}
+        onPracticeQuiz={handlePracticeQuiz}
+        onReadAgain={handleReadAgain}
+      />
     </div>
   );
 }
