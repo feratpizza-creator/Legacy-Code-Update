@@ -2,7 +2,7 @@ name: Deploy Lengoali to GitHub Pages
 
 on:
   push:
-    branches: [Freebuf-Kimi]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
