@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Lengoali"
+version = "1.0.0"
+id = "artifacts/lengoali"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18977
+
+[services.development]
+run = "pnpm --filter @workspace/lengoali run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/lengoali", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/lengoali/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18977"
+BASE_PATH = "/"
