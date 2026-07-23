@@ -48,6 +48,24 @@ function chunk<T>(arr: T[], parts: number): T[][] {
   return out;
 }
 
+function splitReading(
+  reading: ReadingText & { title: string },
+  lessonIndex: number,
+  parts: number = 2
+): ReadingText & { title: string } {
+  const sentences = reading.text.split(/(?<=[.!?])\s+/).filter(Boolean);
+  if (sentences.length <= 1) {
+    return reading;
+  }
+  const size = Math.max(1, Math.ceil(sentences.length / parts));
+  const start = lessonIndex * size;
+  const text = sentences.slice(start, start + size).join(" ");
+  const translation = reading.translation
+    ? reading.translation.split(/(?<=[.!?])\s+/).filter(Boolean).slice(start, start + size).join(" ")
+    : undefined;
+  return { ...reading, text, translation };
+}
+
 function buildLesson(
   seed: UnitSeed,
   levelSeed: LevelSeed,
@@ -63,6 +81,7 @@ function buildLesson(
   const pronunciation = levelSeed.pronunciationTips[(unitIndex * 2 + lessonIndex) % levelSeed.pronunciationTips.length] ?? "";
 
   // Split unit-level content into Part 1 and Part 2 so each lesson feels distinct.
+  const reading = splitReading(seed.reading, lessonIndex);
   const phraseChunks = chunk(seed.phrases, 2);
   const phrases = phraseChunks[lessonIndex] ?? seed.phrases;
   const dialogueChunks = chunk(seed.dialogue, 2);
@@ -91,7 +110,7 @@ function buildLesson(
     }
     exercises.push({ type: "match", prompt: "Match the phrases with their meanings.", pairs: phrasePairs });
   }
-  if (seed.reading) {
+  if (reading.text) {
     const question = lessonIndex === 0
       ? `In the reading, what is one key word introduced?`
       : `According to the reading, which word fits the context best?`;
@@ -137,7 +156,7 @@ function buildLesson(
       : `Apply ${seed.title.toLowerCase()} vocabulary and grammar in phrases and sentences at the ${levelSeed.cefr} level.`,
     vocabulary: words,
     grammar: [grammar],
-    reading: seed.reading,
+    reading,
     exercises,
     quiz,
     learningObjectives: lessonIndex === 0
