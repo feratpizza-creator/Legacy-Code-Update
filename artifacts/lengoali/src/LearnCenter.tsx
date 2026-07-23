@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useLayoutEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import {
   type LanguagePack,
   type Level,
@@ -58,6 +58,16 @@ const NATIVE_LANGUAGES: NativeLanguage[] = [
 ];
 
 const ONBOARDING_KEY = "lengoali-learn-onboarding";
+
+function scrollToTop() {
+  if (typeof window === "undefined") return;
+  const main = document.querySelector("main");
+  if (main) {
+    main.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
 
 function speak(text: string, lang: string) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -522,13 +532,9 @@ function LessonView({
 }) {
   const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
   const [quizChecked, setQuizChecked] = useState(false);
-  const lessonRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    const main = lessonRef.current?.parentElement;
-    if (main) {
-      main.scrollTo({ top: 0, behavior: "instant" });
-    }
+  useEffect(() => {
+    scrollToTop();
   }, [lesson.id]);
 
   const vocabRef = useRef<HTMLDivElement>(null);
@@ -558,7 +564,7 @@ function LessonView({
   const correctCount = lesson.quiz.filter((q) => quizAnswers[q.id] === q.answer).length;
 
   return (
-    <div ref={lessonRef} style={{ padding: "16px 16px 100px" }}>
+    <div style={{ padding: "16px 16px 100px" }}>
       <button
         onClick={onBack}
         style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "none", color: t.textDim, cursor: "pointer", padding: "4px 0", marginBottom: 12 }}
