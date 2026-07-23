@@ -62,6 +62,12 @@ function buildLesson(
   const grammar = levelSeed.grammar[grammarIndex]!;
   const pronunciation = levelSeed.pronunciationTips[(unitIndex * 2 + lessonIndex) % levelSeed.pronunciationTips.length] ?? "";
 
+  // Split unit-level content into Part 1 and Part 2 so each lesson feels distinct.
+  const phraseChunks = chunk(seed.phrases, 2);
+  const phrases = phraseChunks[lessonIndex] ?? seed.phrases;
+  const dialogueChunks = chunk(seed.dialogue, 2);
+  const dialogueLines = dialogueChunks[lessonIndex] ?? seed.dialogue;
+
   // Exercises
   const exercises: Exercise[] = [];
   if (words.length >= 2) {
@@ -75,15 +81,24 @@ function buildLesson(
     const sentence = w.example ?? "";
     return { sentence: sentence.replace(w.word, "_____"), answer: w.word };
   });
-  if (blanks.length > 0) {
+  if (blanks.length > 0 && lessonIndex === 1) {
     exercises.push({ type: "fill", prompt: "Fill in the missing word.", blanks });
   }
+  if (phrases.length > 0 && lessonIndex === 1) {
+    const phrasePairs: Record<string, string> = {};
+    for (const p of phrases.slice(0, 4)) {
+      phrasePairs[p.phrase] = p.translation;
+    }
+    exercises.push({ type: "match", prompt: "Match the phrases with their meanings.", pairs: phrasePairs });
+  }
   if (seed.reading) {
-    const answer = words[0]?.translation ?? "";
+    const question = lessonIndex === 0
+      ? `In the reading, what is one key word introduced?`
+      : `According to the reading, which word fits the context best?`;
     exercises.push({
       type: "choice",
       prompt: "Reading comprehension",
-      question: `In the reading, what is one key word introduced?`,
+      question,
       options: [words[0]?.word ?? "", words[1]?.word ?? "", words[2]?.word ?? ""].filter(Boolean),
       answer: words[0]?.word ?? "",
     });
@@ -117,16 +132,20 @@ function buildLesson(
   return {
     id: `${seed.id}-l${lessonIndex + 1}`,
     title: `${seed.title} – ${lessonIndex === 0 ? "Part 1" : "Part 2"}`,
-    objective: `Learn to use ${seed.title.toLowerCase()} vocabulary and grammar in natural ${levelSeed.cefr} contexts.`,
+    objective: lessonIndex === 0
+      ? `Learn and recognize ${seed.title.toLowerCase()} vocabulary and grammar in natural ${levelSeed.cefr} contexts.`
+      : `Apply ${seed.title.toLowerCase()} vocabulary and grammar in phrases and sentences at the ${levelSeed.cefr} level.`,
     vocabulary: words,
     grammar: [grammar],
     reading: seed.reading,
     exercises,
     quiz,
-    learningObjectives: [`Understand ${seed.title.toLowerCase()} words.`, `Use the key grammar point: ${grammar.title}.`, `Read and respond to a short text.`],
+    learningObjectives: lessonIndex === 0
+      ? [`Recognize ${seed.title.toLowerCase()} words.`, `Hear and read the key grammar point: ${grammar.title}.`, `Understand a short reading text.`]
+      : [`Use ${seed.title.toLowerCase()} words in phrases.`, `Apply the grammar point: ${grammar.title}.`, `Answer questions about the reading.`],
     pronunciation: [pronunciation],
-    usefulPhrases: seed.phrases,
-    dialogue: seed.dialogue,
+    usefulPhrases: phrases,
+    dialogue: dialogueLines,
     reviewItems,
     flashcards,
     estimatedDuration: `${10 + words.length * 2} min`,
