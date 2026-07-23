@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   type LanguagePack,
   type Level,
@@ -17,8 +17,6 @@ import {
   CheckCircle2,
   XCircle,
   Lightbulb,
-  List,
-  FileText,
   ArrowRight,
 } from "lucide-react";
 
@@ -38,6 +36,27 @@ type Theme = {
   overlay: string;
   sheetBg: string;
 };
+
+type NativeLanguage = {
+  code: string;
+  name: string;
+  flag: string;
+};
+
+const NATIVE_LANGUAGES: NativeLanguage[] = [
+  { code: "ar", name: "العربية", flag: "🇸🇦" },
+  { code: "en", name: "English", flag: "🇬🇧" },
+  { code: "fi", name: "Suomi", flag: "🇫🇮" },
+  { code: "es", name: "Español", flag: "🇪🇸" },
+  { code: "fr", name: "Français", flag: "🇫🇷" },
+  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  { code: "sv", name: "Svenska", flag: "🇸🇪" },
+  { code: "tr", name: "Türkçe", flag: "🇹🇷" },
+  { code: "ku", name: "Kurdî", flag: "🇮🇶" },
+  { code: "fa", name: "فارسی", flag: "🇮🇷" },
+];
+
+const ONBOARDING_KEY = "lengoali-learn-onboarding";
 
 function speak(text: string, lang: string) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -123,17 +142,72 @@ type LearnCenterProps = {
   onSaveWord: (word: string, srcLang: string, translation: string) => void;
 };
 
+function loadOnboarding() {
+  try {
+    const raw = localStorage.getItem(ONBOARDING_KEY);
+    if (raw) return JSON.parse(raw) as { targetLang: string; nativeLang: string } | null;
+  } catch { /* ignore */ }
+  return null;
+}
+
+function saveOnboarding(targetLang: string, nativeLang: string) {
+  try {
+    localStorage.setItem(ONBOARDING_KEY, JSON.stringify({ targetLang, nativeLang }));
+  } catch { /* ignore */ }
+}
+
 export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWord }: LearnCenterProps) {
+  const saved = loadOnboarding();
   const [selectedPack, setSelectedPack] = useState<LanguagePack | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
   const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
-  const [explanationLang, setExplanationLang] = useState<string>("en");
+  const [explanationLang, setExplanationLang] = useState<string>(saved?.nativeLang || "en");
   const [savedVocab, setSavedVocab] = useState<Set<string>>(new Set());
+  const [showOnboarding, setShowOnboarding] = useState<boolean>(!saved);
+  const [targetLang, setTargetLang] = useState<string | null>(saved?.targetLang || null);
+  const [nativeLang, setNativeLang] = useState<string | null>(saved?.nativeLang || null);
+
+  const targetLanguages = useMemo(() => {
+    return languagePacks.map((pack) => ({ code: pack.targetLang, name: pack.name, flag: pack.flag }));
+  }, [languagePacks]);
+
+  const filteredPacks = useMemo(() => {
+    if (!targetLang) return languagePacks;
+    return languagePacks.filter((pack) => pack.targetLang === targetLang);
+  }, [languagePacks, targetLang]);
 
   const allLevels = useMemo(() => {
     return languagePacks.flatMap((p) => p.levels.map((lvl) => ({ pack: p, level: lvl })));
   }, [languagePacks]);
+
+  const handleSelectTarget = (code: string) => {
+    setTargetLang(code);
+  };
+
+  const handleSelectNative = (code: string) => {
+    setNativeLang(code);
+    setExplanationLang(code);
+  };
+
+  const handleStart = () => {
+    if (!targetLang || !nativeLang) return;
+    saveOnboarding(targetLang, nativeLang);
+    setShowOnboarding(false);
+  };
+
+  const handleResetOnboarding = () => {
+    setShowOnboarding(true);
+    setTargetLang(null);
+    setNativeLang(null);
+    setSelectedPack(null);
+    setSelectedLevel(null);
+    setSelectedUnit(null);
+    setActiveLesson(null);
+    try {
+      localStorage.removeItem(ONBOARDING_KEY);
+    } catch { /* ignore */ }
+  };
 
   // ─── Lesson view ───────────────────────────────────────────────────────────
   if (activeLesson && selectedPack) {
@@ -215,6 +289,87 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
     );
   }
 
+  // ─── Onboarding flow ─────────────────────────────────────────────────────────
+  if (showOnboarding) {
+    return (
+      <div style={{ padding: "16px 16px 100px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+          <div style={{ width: 44, height: 44, borderRadius: 12, background: "#60a5fa22", display: "flex", alignItems: "center", justifyContent: "center", color: "#60a5fa" }}>
+            <GraduationCap size={24} />
+          </div>
+          <div>
+            <h1 style={{ color: t.text, margin: "0 0 2px", fontSize: 22 }}>{s.learn || "Learn"}</h1>
+            <p style={{ color: t.textDim, margin: 0, fontSize: 13 }}>{s.chooseLanguagePack || "Choose a language pack and start learning."}</p>
+          </div>
+        </div>
+
+        {!targetLang ? (
+          <>
+            <h2 style={{ color: t.text, margin: "0 0 16px", fontSize: 18 }}>{s.whatToLearn || "What language do you want to learn?"}</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {targetLanguages.map((lang) => (
+                <Card key={lang.code} t={t} onClick={() => handleSelectTarget(lang.code)}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                    <span style={{ fontSize: 32 }}>{lang.flag}</span>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ color: t.text, fontWeight: 700, fontSize: 16 }}>{lang.name}</div>
+                    </div>
+                    <ArrowRight size={18} color={t.textDim} />
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </>
+        ) : !nativeLang ? (
+          <>
+            <button
+              onClick={() => { setTargetLang(null); }}
+              style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "none", color: t.textDim, cursor: "pointer", padding: "4px 0", marginBottom: 12 }}
+            >
+              <ChevronLeft size={16} /> {s.back || "Back"}
+            </button>
+            <h2 style={{ color: t.text, margin: "0 0 16px", fontSize: 18 }}>{s.whatIsYourNativeLanguage || "What is your native language?"}</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 12 }}>
+              {NATIVE_LANGUAGES.map((lang) => (
+                <Card key={lang.code} t={t} onClick={() => handleSelectNative(lang.code)}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <span style={{ fontSize: 28 }}>{lang.flag}</span>
+                    <div style={{ color: t.text, fontWeight: 700, fontSize: 14 }}>{lang.name}</div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => { setNativeLang(null); }}
+              style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "none", color: t.textDim, cursor: "pointer", padding: "4px 0", marginBottom: 12 }}
+            >
+              <ChevronLeft size={16} /> {s.back || "Back"}
+            </button>
+            <Card t={t}>
+              <div style={{ color: t.text, fontWeight: 700, fontSize: 16, marginBottom: 8 }}>
+                {s.youChose || "You chose"}:
+              </div>
+              <div style={{ color: t.textDim, marginBottom: 16 }}>
+                {s.iWantToLearn || "I want to learn"}: <strong style={{ color: t.text }}>{targetLanguages.find((l) => l.code === targetLang)?.name}</strong>
+                <br />
+                {s.myNativeLanguageIs || "My native language is"}: <strong style={{ color: t.text }}>{NATIVE_LANGUAGES.find((l) => l.code === nativeLang)?.name}</strong>
+              </div>
+              <button
+                onClick={handleStart}
+                style={{ width: "100%", padding: 12, borderRadius: 10, border: "none", background: "#2563eb", color: "#fff", fontSize: 14, fontWeight: 600, cursor: "pointer" }}
+              >
+                {s.startLearning || "Start learning"}
+              </button>
+            </Card>
+          </>
+        )}
+      </div>
+    );
+  }
+
   // ─── Pack / landing view ───────────────────────────────────────────────────
   return (
     <div style={{ padding: "16px 16px 100px" }}>
@@ -249,11 +404,25 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
             </select>
           </label>
         </div>
-      ) : null}
+      ) : (
+        <div style={{ marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, flexWrap: "wrap" }}>
+          <div style={{ color: t.textDim, fontSize: 13 }}>
+            {s.iWantToLearn || "I want to learn"}: <strong style={{ color: t.text }}>{targetLanguages.find((l) => l.code === targetLang)?.name}</strong>
+            {' · '}
+            {s.myNativeLanguageIs || "My native language is"}: <strong style={{ color: t.text }}>{NATIVE_LANGUAGES.find((l) => l.code === nativeLang)?.name}</strong>
+          </div>
+          <button
+            onClick={handleResetOnboarding}
+            style={{ padding: "6px 12px", borderRadius: 8, border: `1px solid ${t.border}`, background: t.card, color: t.textDim, cursor: "pointer", fontSize: 13 }}
+          >
+            {s.changeLanguage || "Change language"}
+          </button>
+        </div>
+      )}
 
       {!selectedPack && (
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {languagePacks.map((pack) => (
+          {filteredPacks.map((pack) => (
             <Card key={pack.id} t={t} onClick={() => setSelectedPack(pack)}>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <span style={{ fontSize: 32 }}>{pack.flag}</span>
