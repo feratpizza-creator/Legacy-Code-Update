@@ -1695,6 +1695,222 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "There are many animals around us. The dog is man's best friend. The cat is independent. The bird flies in the sky and the fish swims in the water. Bears and rabbits live in the forests. Every animal has its own place in nature.",
         "translation": "Meidän ympärillä on monia eläimiä. Koira on ihmisen paras ystävä. Kissa on itsenäinen. Lintu lentää taivaalla ja kala ui vedessä. Karhut ja jänikset elävät metsissä. Jokaisella eläimellä on oma paikkansa luonnossa."
       }
+    },
+    {
+      "id": "u20",
+      "title": "Animals and Nature",
+      "description": "Learn words for animals and nature.",
+      "words": [
+        {
+          "word": "cat",
+          "translation": "kissa",
+          "pos": "noun",
+          "example": "The cat is sleeping.",
+          "exampleTranslation": "Kissa nukkuu."
+        },
+        {
+          "word": "dog",
+          "translation": "koira",
+          "pos": "noun",
+          "example": "The dog runs.",
+          "exampleTranslation": "Koira juoksee."
+        },
+        {
+          "word": "bird",
+          "translation": "lintu",
+          "pos": "noun",
+          "example": "The bird flies.",
+          "exampleTranslation": "Lintu lentää."
+        },
+        {
+          "word": "tree",
+          "translation": "puu",
+          "pos": "noun",
+          "example": "The tree is tall.",
+          "exampleTranslation": "Puu on korkea."
+        },
+        {
+          "word": "flower",
+          "translation": "kukka",
+          "pos": "noun",
+          "example": "The flower is beautiful.",
+          "exampleTranslation": "Kukka on kaunis."
+        },
+        {
+          "word": "forest",
+          "translation": "metsä",
+          "pos": "noun",
+          "example": "The forest is green.",
+          "exampleTranslation": "Metsä on vihreä."
+        },
+        {
+          "word": "river",
+          "translation": "joki",
+          "pos": "noun",
+          "example": "The river is long.",
+          "exampleTranslation": "Joki on pitkä."
+        },
+        {
+          "word": "mountain",
+          "translation": "vuori",
+          "pos": "noun",
+          "example": "The mountain is high.",
+          "exampleTranslation": "Vuori on korkea."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "What animal is this?",
+          "translation": "Mikä eläin tämä on?"
+        },
+        {
+          "phrase": "The animal is big.",
+          "translation": "Eläin on iso."
+        },
+        {
+          "phrase": "Nature is beautiful.",
+          "translation": "Luonto on kaunis."
+        },
+        {
+          "phrase": "What does he do?",
+          "translation": "Mitä hän tekee?"
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What animal is this?",
+          "translation": "Mikä eläin tämä on?"
+        },
+        {
+          "speaker": "B",
+          "text": "It is a dog.",
+          "translation": "Se on koira."
+        },
+        {
+          "speaker": "A",
+          "text": "Is it big?",
+          "translation": "Onko se iso?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, but it is friendly.",
+          "translation": "Kyllä, mutta se on ystävällinen."
+        }
+      ],
+      "reading": {
+        "title": "In the Forest",
+        "text": "There are many animals in the forest. I see a bird in the tree and a fox on the ground. The river flows slowly and the trees are tall. Nature is beautiful and peaceful.",
+        "translation": "Metsässä on paljon eläimiä. Näen linnun puussa ja ketun maassa. Joki kulkee hitaasti ja puut ovat korkeat. Luonto on kaunis ja rauhallinen."
+      }
+    },
+    {
+      "id": "u21",
+      "title": "Professions and Work",
+      "description": "Learn words for professions and work.",
+      "words": [
+        {
+          "word": "doctor",
+          "translation": "lääkäri",
+          "pos": "noun",
+          "example": "The doctor helps people.",
+          "exampleTranslation": "Lääkäri auttaa ihmisiä."
+        },
+        {
+          "word": "teacher",
+          "translation": "opettaja",
+          "pos": "noun",
+          "example": "The teacher teaches at school.",
+          "exampleTranslation": "Opettaja opettaa koulussa."
+        },
+        {
+          "word": "cook",
+          "translation": "kokki",
+          "pos": "noun",
+          "example": "The cook makes food.",
+          "exampleTranslation": "Kokki tekee ruokaa."
+        },
+        {
+          "word": "driver",
+          "translation": "ajaja",
+          "pos": "noun",
+          "example": "The driver drives a bus.",
+          "exampleTranslation": "Ajaja ajaa bussia."
+        },
+        {
+          "word": "police officer",
+          "translation": "poliisi",
+          "pos": "noun",
+          "example": "The police officer helps.",
+          "exampleTranslation": "Poliisi auttaa."
+        },
+        {
+          "word": "salesperson",
+          "translation": "myyjä",
+          "pos": "noun",
+          "example": "The salesperson works in a shop.",
+          "exampleTranslation": "Myyjä työskentelee kaupassa."
+        },
+        {
+          "word": "office",
+          "translation": "toimisto",
+          "pos": "noun",
+          "example": "The office is big.",
+          "exampleTranslation": "Toimisto on iso."
+        },
+        {
+          "word": "work",
+          "translation": "työ",
+          "pos": "noun",
+          "example": "Work starts in the morning.",
+          "exampleTranslation": "Työ alkaa aamulla."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "I am a teacher.",
+          "translation": "Minä olen opettaja."
+        },
+        {
+          "phrase": "Where do you work?",
+          "translation": "Missä sinä työskentelet?"
+        },
+        {
+          "phrase": "Work is important.",
+          "translation": "Työ on tärkeä."
+        },
+        {
+          "phrase": "He has a good profession.",
+          "translation": "Hänellä on hyvä ammatti."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is your profession?",
+          "translation": "Mikä sinun ammattisi on?"
+        },
+        {
+          "speaker": "B",
+          "text": "I am a teacher.",
+          "translation": "Olen opettaja."
+        },
+        {
+          "speaker": "A",
+          "text": "Where do you work?",
+          "translation": "Missä sinä työskentelet?"
+        },
+        {
+          "speaker": "B",
+          "text": "I work at a school.",
+          "translation": "Työskentelen koulussa."
+        }
+      ],
+      "reading": {
+        "title": "Workplaces",
+        "text": "Many people work in offices. The teacher teaches children. The doctor helps the sick. The cook makes food in a restaurant. Every job is important.",
+        "translation": "Monet ihmiset työskentelevät toimistoissa. Opettaja opettaa lapsia. Lääkäri auttaa sairaita. Kokki tekee ruokaa ravintolassa. Jokainen työ on tärkeä."
+      }
     }
   ],
   "A1": [
@@ -3388,6 +3604,222 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "title": "At the Clothing Store",
         "text": "I go to a clothing store to buy new clothes. Shirts come in many colors and trousers in different sizes. The jacket is warm and the shoes are comfortable. I try on clothes before I buy them.",
         "translation": "Menen vaatekauppaan ostamaan uusia vaatteita. Paitoja on monissa väreissä ja housut ovat eri kokoja. Takki on lämmin ja kengät ovat mukavat. Sovitan vaatteita ennen kuin ostan ne."
+      }
+    },
+    {
+      "id": "u20",
+      "title": "Hobbies and Free Time",
+      "description": "Learn words for hobbies and free time activities.",
+      "words": [
+        {
+          "word": "hobby",
+          "translation": "harrastus",
+          "pos": "noun",
+          "example": "What is your hobby?",
+          "exampleTranslation": "Mikä on sinun harrastuksesi?"
+        },
+        {
+          "word": "to do sports",
+          "translation": "urheilla",
+          "pos": "verb",
+          "example": "I want to do sports every day.",
+          "exampleTranslation": "Haluan urheilla joka päivä."
+        },
+        {
+          "word": "to paint",
+          "translation": "maalata",
+          "pos": "verb",
+          "example": "She can paint.",
+          "exampleTranslation": "Hän osaa maalata."
+        },
+        {
+          "word": "to play an instrument",
+          "translation": "soittaa",
+          "pos": "verb",
+          "example": "I want to play the guitar.",
+          "exampleTranslation": "Haluan soittaa kitaraa."
+        },
+        {
+          "word": "to sing",
+          "translation": "laulaa",
+          "pos": "verb",
+          "example": "They like to sing.",
+          "exampleTranslation": "He tykkäävät laulaa."
+        },
+        {
+          "word": "to dance",
+          "translation": "tanssia",
+          "pos": "verb",
+          "example": "We dance on Saturday.",
+          "exampleTranslation": "Tanssimme lauantaina."
+        },
+        {
+          "word": "walk",
+          "translation": "kävely",
+          "pos": "noun",
+          "example": "Walking is relaxing.",
+          "exampleTranslation": "Kävely on rentouttavaa."
+        },
+        {
+          "word": "to play",
+          "translation": "leikkiä",
+          "pos": "verb",
+          "example": "The children play in the park.",
+          "exampleTranslation": "Lapset leikkivät puistossa."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "What do you do in your free time?",
+          "translation": "Mitä teet vapaa-ajalla?"
+        },
+        {
+          "phrase": "I like music.",
+          "translation": "Pidän musiikista."
+        },
+        {
+          "phrase": "Let's agree on a common hobby.",
+          "translation": "Sovitaan yhteinen harrastus."
+        },
+        {
+          "phrase": "I do sports as a hobby.",
+          "translation": "Harrastan urheilua."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What do you do in your free time?",
+          "translation": "Mitä teet vapaa-ajalla?"
+        },
+        {
+          "speaker": "B",
+          "text": "I like sports and music.",
+          "translation": "Pidän urheilusta ja musiikista."
+        },
+        {
+          "speaker": "A",
+          "text": "Do you play any instrument?",
+          "translation": "Soitatko jotain instrumenttia?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I play the guitar.",
+          "translation": "Kyllä, soitan kitaraa."
+        }
+      ],
+      "reading": {
+        "title": "Free Time Hobbies",
+        "text": "In my free time I like music and exercise. I play the guitar and go jogging. Sometimes I dance with friends. Hobbies make life fun.",
+        "translation": "Vapaa-ajalla pidän musiikista ja liikunnasta. Soitan kitaraa ja käyn lenkillä. Joskus tanssin ystävien kanssa. Harrastukset tekevät elämästä hauskaa."
+      }
+    },
+    {
+      "id": "u21",
+      "title": "Celebrations and Traditions",
+      "description": "Learn words for celebrations and traditions.",
+      "words": [
+        {
+          "word": "party",
+          "translation": "juhla",
+          "pos": "noun",
+          "example": "The party is at the house.",
+          "exampleTranslation": "Juhla on talossa."
+        },
+        {
+          "word": "birthday",
+          "translation": "syntymäpäivä",
+          "pos": "noun",
+          "example": "The birthday is on Monday.",
+          "exampleTranslation": "Syntymäpäivä on maanantaina."
+        },
+        {
+          "word": "Christmas",
+          "translation": "joulu",
+          "pos": "noun",
+          "example": "Christmas is in December.",
+          "exampleTranslation": "Joulu on joulukuussa."
+        },
+        {
+          "word": "gift",
+          "translation": "lahja",
+          "pos": "noun",
+          "example": "I buy a gift.",
+          "exampleTranslation": "Ostan lahjan."
+        },
+        {
+          "word": "guest",
+          "translation": "vieras",
+          "pos": "noun",
+          "example": "A guest comes to visit.",
+          "exampleTranslation": "Vieras tulee kylään."
+        },
+        {
+          "word": "tradition",
+          "translation": "perinne",
+          "pos": "noun",
+          "example": "The tradition is old.",
+          "exampleTranslation": "Perinne on vanha."
+        },
+        {
+          "word": "meal",
+          "translation": "ateria",
+          "pos": "noun",
+          "example": "The meal is ready.",
+          "exampleTranslation": "Ateria on valmis."
+        },
+        {
+          "word": "invitation",
+          "translation": "kutsu",
+          "pos": "noun",
+          "example": "You get an invitation to the party.",
+          "exampleTranslation": "Saat kutsun juhlaan."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Happy birthday!",
+          "translation": "Hyvää syntymäpäivää!"
+        },
+        {
+          "phrase": "Thank you for the invitation.",
+          "translation": "Kiitos kutsusta."
+        },
+        {
+          "phrase": "What as a gift?",
+          "translation": "Mitä lahjaksi?"
+        },
+        {
+          "phrase": "The party is fun.",
+          "translation": "Juhlat ovat hauskat."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Is your birthday soon?",
+          "translation": "Onko sinulla syntymäpäivät pian?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, it is next week.",
+          "translation": "Kyllä, se on ensi viikolla."
+        },
+        {
+          "speaker": "A",
+          "text": "What do you want as a gift?",
+          "translation": "Mitä haluat lahjaksi?"
+        },
+        {
+          "speaker": "B",
+          "text": "I want a book.",
+          "translation": "Haluan kirjan."
+        }
+      ],
+      "reading": {
+        "title": "Birthdays",
+        "text": "Birthdays are important celebrations. Family and friends gather together. They bring gifts and we eat together. Traditions connect us.",
+        "translation": "Syntymäpäivät ovat tärkeitä juhlia. Perhe ja ystävät kokoontuvat yhteen. He tuovat lahjoja ja syömme yhdessä. Perinteet yhdistävät meitä."
       }
     }
   ],
@@ -5083,6 +5515,222 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "Music can express feelings that words alone cannot describe. It brings people together and creates memories. Some learn to play from a young age, others later in life. Music is a gift that lasts a lifetime.",
         "translation": "Musiikki voi ilmaista tunteita, joita sanat eivät riitä kuvaamaan. Se tuo ihmisiä yhteen ja luo muistoja. Jotkut oppivat soittamaan pienestä pitäen, toiset myöhemmin elämässä. Musiikki on lahja, joka säilyy koko elämän ajan."
       }
+    },
+    {
+      "id": "u20",
+      "title": "Communication and Media",
+      "description": "Learn words for communication and media.",
+      "words": [
+        {
+          "word": "message",
+          "translation": "viesti",
+          "pos": "noun",
+          "example": "I send a message.",
+          "exampleTranslation": "Lähetän viestin."
+        },
+        {
+          "word": "email",
+          "translation": "sähköposti",
+          "pos": "noun",
+          "example": "I write an email.",
+          "exampleTranslation": "Kirjoitan sähköpostia."
+        },
+        {
+          "word": "phone",
+          "translation": "puhelin",
+          "pos": "noun",
+          "example": "The phone rings.",
+          "exampleTranslation": "Puhelin soi."
+        },
+        {
+          "word": "application",
+          "translation": "sovellus",
+          "pos": "noun",
+          "example": "This application is good.",
+          "exampleTranslation": "Tämä sovellus on hyvä."
+        },
+        {
+          "word": "news",
+          "translation": "uutiset",
+          "pos": "noun",
+          "example": "I listen to the news.",
+          "exampleTranslation": "Kuuntelen uutiset."
+        },
+        {
+          "word": "newspaper",
+          "translation": "lehti",
+          "pos": "noun",
+          "example": "I read the newspaper.",
+          "exampleTranslation": "Luen lehteä."
+        },
+        {
+          "word": "internet connection",
+          "translation": "nettiyhteys",
+          "pos": "noun",
+          "example": "The internet connection is slow.",
+          "exampleTranslation": "Nettiyhteys on hidas."
+        },
+        {
+          "word": "user",
+          "translation": "käyttäjä",
+          "pos": "noun",
+          "example": "I am a new user.",
+          "exampleTranslation": "Olen uusi käyttäjä."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Will you send a message?",
+          "translation": "Lähetätkö viestin?"
+        },
+        {
+          "phrase": "I watch the news online.",
+          "translation": "Katson uutiset netistä."
+        },
+        {
+          "phrase": "The internet connection keeps cutting out.",
+          "translation": "Nettiyhteys katkeilee."
+        },
+        {
+          "phrase": "I heard about it on the radio.",
+          "translation": "Kuulin siitä radiosta."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How often do you read the news?",
+          "translation": "Kuinka usein luet uutisia?"
+        },
+        {
+          "speaker": "B",
+          "text": "I read them every day on my phone.",
+          "translation": "Luen ne joka päivä puhelimella."
+        },
+        {
+          "speaker": "A",
+          "text": "Do you have a favorite app?",
+          "translation": "Onko sinulla lempisovellusta?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I like the podcast app.",
+          "translation": "Kyllä, tykkään podcast-sovelluksesta."
+        }
+      ],
+      "reading": {
+        "title": "Communication Today",
+        "text": "People use many ways to communicate. Phones and email are common. Young people often use messaging apps. Through media we get news quickly.",
+        "translation": "Ihmiset käyttävät monia tapoja viestiä. Puhelimet ja sähköposti ovat yleisiä. Nuoret käyttävät usein viestisovelluksia. Median avulla saamme uutisia nopeasti."
+      }
+    },
+    {
+      "id": "u21",
+      "title": "Environment and Society",
+      "description": "Learn words for environment and society.",
+      "words": [
+        {
+          "word": "environment",
+          "translation": "ympäristö",
+          "pos": "noun",
+          "example": "The environment is important.",
+          "exampleTranslation": "Ympäristö on tärkeä."
+        },
+        {
+          "word": "waste",
+          "translation": "jäte",
+          "pos": "noun",
+          "example": "Sort the waste.",
+          "exampleTranslation": "Lajittele jätteet."
+        },
+        {
+          "word": "recycling",
+          "translation": "kierrätys",
+          "pos": "noun",
+          "example": "Recycling saves nature.",
+          "exampleTranslation": "Kierrätys säästää luontoa."
+        },
+        {
+          "word": "energy",
+          "translation": "energia",
+          "pos": "noun",
+          "example": "Energy is expensive.",
+          "exampleTranslation": "Energia on kallista."
+        },
+        {
+          "word": "to save",
+          "translation": "säästää",
+          "pos": "verb",
+          "example": "I want to save water.",
+          "exampleTranslation": "Haluan säästää vettä."
+        },
+        {
+          "word": "pollution",
+          "translation": "saaste",
+          "pos": "noun",
+          "example": "Pollution is a problem.",
+          "exampleTranslation": "Saaste on ongelma."
+        },
+        {
+          "word": "nature conservation",
+          "translation": "luonnonsuojelu",
+          "pos": "noun",
+          "example": "Nature conservation is important.",
+          "exampleTranslation": "Luonnonsuojelu on tärkeää."
+        },
+        {
+          "word": "sustainable",
+          "translation": "kestävä",
+          "pos": "adjective",
+          "example": "We want a sustainable future.",
+          "exampleTranslation": "Haluamme kestävän tulevaisuuden."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "I recycle bottles.",
+          "translation": "Kierrätän pulloja."
+        },
+        {
+          "phrase": "The environment is our responsibility.",
+          "translation": "Ympäristö on meidän vastuullamme."
+        },
+        {
+          "phrase": "We must reduce waste.",
+          "translation": "Meidän täytyy vähentää jätteitä."
+        },
+        {
+          "phrase": "Nature needs protection.",
+          "translation": "Luonto tarvitsee suojelua."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How can we protect the environment?",
+          "translation": "Miten voimme suojella ympäristöä?"
+        },
+        {
+          "speaker": "B",
+          "text": "We can reduce waste and recycle.",
+          "translation": "Voimme vähentää jätteitä ja kierrättää."
+        },
+        {
+          "speaker": "A",
+          "text": "Do you have recycling at home?",
+          "translation": "Onko sinun kotona kierrätystä?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, we sort paper, glass, and plastic.",
+          "translation": "Kyllä, lajitellaan paperi, lasi ja muovi."
+        }
+      ],
+      "reading": {
+        "title": "Protecting the Environment",
+        "text": "We must protect nature. Recycling reduces waste and saves energy. Small actions, like saving water, help. Everyone can participate for the good of the environment.",
+        "translation": "Meidän täytyy suojella luontoa. Kierrätys vähentää jätteitä ja säästää energiaa. Pienet teot, kuten veden säästäminen, auttavat. Jokainen voi osallistua ympäristön hyväksi."
+      }
     }
   ],
   "B1": [
@@ -6776,6 +7424,222 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "title": "Digital Life",
         "text": "Social media is part of our everyday life. It helps to keep in touch with friends and discover new things. But it can also increase anxiety and reduce face-to-face interaction. A good balance is important.",
         "translation": "Sosiaalinen media on osa arkeamme. Se auttaa pitämään yhteyttä ystäviin ja löytämään uusia asioita. Mutta se voi myös lisätä ahdistusta ja vähentää kasvokkain tapahtuvaa vuorovaikutusta. Hyvä tasapaino on tärkeää."
+      }
+    },
+    {
+      "id": "u20",
+      "title": "Future and Technology",
+      "description": "Discuss the future and technology.",
+      "words": [
+        {
+          "word": "artificial intelligence",
+          "translation": "tekoäly",
+          "pos": "noun",
+          "example": "Artificial intelligence changes the world.",
+          "exampleTranslation": "Tekoäly muuttaa maailmaa."
+        },
+        {
+          "word": "robot",
+          "translation": "robotti",
+          "pos": "noun",
+          "example": "The robot does work.",
+          "exampleTranslation": "Robotti tekee töitä."
+        },
+        {
+          "word": "automation",
+          "translation": "automaatio",
+          "pos": "noun",
+          "example": "Automation increases efficiency.",
+          "exampleTranslation": "Automaatio lisää tehokkuutta."
+        },
+        {
+          "word": "innovation",
+          "translation": "innovaatio",
+          "pos": "noun",
+          "example": "Innovation solves problems.",
+          "exampleTranslation": "Innovatio ratkaisee ongelmia."
+        },
+        {
+          "word": "to predict",
+          "translation": "ennustaa",
+          "pos": "verb",
+          "example": "It is difficult to predict the future.",
+          "exampleTranslation": "On vaikea ennustaa tulevaisuutta."
+        },
+        {
+          "word": "development",
+          "translation": "kehitys",
+          "pos": "noun",
+          "example": "Development is fast.",
+          "exampleTranslation": "Kehitys on nopeaa."
+        },
+        {
+          "word": "possibility",
+          "translation": "mahdollisuus",
+          "pos": "noun",
+          "example": "New technology offers possibilities.",
+          "exampleTranslation": "Uusi teknologia tarjoaa mahdollisuuksia."
+        },
+        {
+          "word": "challenge",
+          "translation": "haaste",
+          "pos": "noun",
+          "example": "Challenges must be solved.",
+          "exampleTranslation": "Haasteita pitää ratkaista."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "How does AI change work?",
+          "translation": "Miten tekoäly muuttaa työtä?"
+        },
+        {
+          "phrase": "Robotics brings possibilities.",
+          "translation": "Robotiikka tuo mahdollisuuksia."
+        },
+        {
+          "phrase": "The future is difficult to predict.",
+          "translation": "Tulevaisuus on vaikea ennustaa."
+        },
+        {
+          "phrase": "Innovations solve problems.",
+          "translation": "Innovation ratkaisevat ongelmia."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How is AI changing working life?",
+          "translation": "Miten tekoäly muuttaa työelämää?"
+        },
+        {
+          "speaker": "B",
+          "text": "It automates routine tasks and creates new jobs.",
+          "translation": "Se automaattistaa rutiinitehtäviä ja luo uusia työpaikkoja."
+        },
+        {
+          "speaker": "A",
+          "text": "Should we be afraid of this development?",
+          "translation": "Pitäisikö meidän pelätä tätä kehitystä?"
+        },
+        {
+          "speaker": "B",
+          "text": "Not necessarily, but we must adapt.",
+          "translation": "Ei välttämättä, mutta meidän täytyy sopeutua."
+        }
+      ],
+      "reading": {
+        "title": "Future Technology",
+        "text": "Artificial intelligence and robotics are changing working life. They can do routine tasks quickly. New technologies also bring challenges. People must learn new skills.",
+        "translation": "Tekoäly ja robotiikka muuttavat työelämää. Ne voivat tehdä rutiinitehtäviä nopeasti. Uudet teknologiat tuovat myös haasteita. Ihmisten täytyy oppia uusia taitoja."
+      }
+    },
+    {
+      "id": "u21",
+      "title": "Literature and Storytelling",
+      "description": "Discuss literature and storytelling.",
+      "words": [
+        {
+          "word": "literature",
+          "translation": "kirjallisuus",
+          "pos": "noun",
+          "example": "Literature reflects culture.",
+          "exampleTranslation": "Kirjallisuus heijastaa kulttuuria."
+        },
+        {
+          "word": "novel",
+          "translation": "romaani",
+          "pos": "noun",
+          "example": "I am reading an interesting novel.",
+          "exampleTranslation": "Luen mielenkiintoista romaania."
+        },
+        {
+          "word": "poem",
+          "translation": "runo",
+          "pos": "noun",
+          "example": "The poem is short and beautiful.",
+          "exampleTranslation": "Runo on lyhyt ja kaunis."
+        },
+        {
+          "word": "narrator",
+          "translation": "kertoja",
+          "pos": "noun",
+          "example": "The narrator tells the story.",
+          "exampleTranslation": "Kertoja kertoo tarinan."
+        },
+        {
+          "word": "character",
+          "translation": "henkilöhahmo",
+          "pos": "noun",
+          "example": "The character is complex.",
+          "exampleTranslation": "Henkilöhahmo on monimutkainen."
+        },
+        {
+          "word": "plot",
+          "translation": "juoni",
+          "pos": "noun",
+          "example": "The plot is surprising.",
+          "exampleTranslation": "Juoni on yllättävä."
+        },
+        {
+          "word": "symbol",
+          "translation": "symboli",
+          "pos": "noun",
+          "example": "The symbol means something profound.",
+          "exampleTranslation": "Symboli merkitsee jotain syvällistä."
+        },
+        {
+          "word": "theme",
+          "translation": "teema",
+          "pos": "noun",
+          "example": "The theme recurs in the story.",
+          "exampleTranslation": "Teema toistuu tarinassa."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Do you like this author?",
+          "translation": "Pidätkö tästä kirjailijasta?"
+        },
+        {
+          "phrase": "The plot is interesting.",
+          "translation": "Juoni on kiinnostava."
+        },
+        {
+          "phrase": "This theme is universal.",
+          "translation": "Tämä teema on universaali."
+        },
+        {
+          "phrase": "The book evoked a lot of thoughts.",
+          "translation": "Kirja herätti paljon ajatuksia."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "Have you read the new novel?",
+          "translation": "Oletko lukenut uutta romaania?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, its plot was surprising.",
+          "translation": "Kyllä, sen juoni oli yllättävä."
+        },
+        {
+          "speaker": "A",
+          "text": "What was the book's theme?",
+          "translation": "Mikä oli kirjan teema?"
+        },
+        {
+          "speaker": "B",
+          "text": "It dealt with identity and memory.",
+          "translation": "Se käsitteli identiteettiä ja muistoa."
+        }
+      ],
+      "reading": {
+        "title": "The Power of Literature",
+        "text": "Books offer new worlds and ideas. A good story carries the reader along. Characters and plot keep us interested. Literature helps us understand humanity.",
+        "translation": "Kirjat tarjoavat uusia maailmoja ja ajatuksia. Hyvä tarina vie lukijan mukanaan. Henkilöhahmot ja juoni pitävät meidät kiinnostuneina. Kirjallisuus auttaa meitä ymmärtämään ihmisyyttä."
       }
     }
   ],
@@ -8471,6 +9335,222 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "Leadership is not only power, but responsibility and the ability to inspire others. A good leader creates a safe atmosphere where people dare to take risks and learn from mistakes. When a team trusts its leader, it can achieve better collaboration and innovation.",
         "translation": "Johtajuus ei ole vain valtaa, vaan vastuuta ja kykyä innostaa muita. Hyvä johtaja luo turvallisen ilmapiirin, jossa ihmiset uskaltavat ottaa riskejä ja oppia virheistään. Kun tiimi luottaa johtajaansa, se pystyy parempaan yhteistyöhön ja innovointiin."
       }
+    },
+    {
+      "id": "u20",
+      "title": "Global Issues",
+      "description": "Discuss global issues.",
+      "words": [
+        {
+          "word": "inequality",
+          "translation": "epätasa-arvo",
+          "pos": "noun",
+          "example": "Inequality is a global problem.",
+          "exampleTranslation": "Epätasa-arvo on maailmanlaajuinen ongelma."
+        },
+        {
+          "word": "migration",
+          "translation": "muuttoliike",
+          "pos": "noun",
+          "example": "Migration affects societies.",
+          "exampleTranslation": "Muuttoliike vaikuttaa yhteiskuntiin."
+        },
+        {
+          "word": "refugee",
+          "translation": "pakolainen",
+          "pos": "noun",
+          "example": "Refugees need help.",
+          "exampleTranslation": "Pakolaiset tarvitsevat apua."
+        },
+        {
+          "word": "sustainable development",
+          "translation": "kestävä kehitys",
+          "pos": "noun",
+          "example": "Sustainable development is a common goal.",
+          "exampleTranslation": "Kestävä kehitys on yhteinen tavoite."
+        },
+        {
+          "word": "climate change",
+          "translation": "ilmastonmuutos",
+          "pos": "noun",
+          "example": "Climate change threatens ecosystems.",
+          "exampleTranslation": "Ilmastonmuutos uhkaa ekosysteemejä."
+        },
+        {
+          "word": "globalisation",
+          "translation": "globalisaatio",
+          "pos": "noun",
+          "example": "Globalisation connects economies.",
+          "exampleTranslation": "Globalisaatio yhdistää talouksia."
+        },
+        {
+          "word": "justice",
+          "translation": "oikeudenmukaisuus",
+          "pos": "noun",
+          "example": "Justice requires action.",
+          "exampleTranslation": "Oikeudenmukaisuus vaatii toimia."
+        },
+        {
+          "word": "cooperation",
+          "translation": "yhteistyö",
+          "pos": "noun",
+          "example": "Cooperation is the solution to many problems.",
+          "exampleTranslation": "Yhteistyö on ratkaisu moniin ongelmiin."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Climate change requires action.",
+          "translation": "Ilmastonmuutos vaatii toimia."
+        },
+        {
+          "phrase": "Migration increases tensions.",
+          "translation": "Muuttoliike lisää jännitteitä."
+        },
+        {
+          "phrase": "Cooperation is the solution.",
+          "translation": "Yhteistyö on ratkaisu."
+        },
+        {
+          "phrase": "Global justice is the goal.",
+          "translation": "Globaali oikeudenmukaisuus on tavoite."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is the biggest global challenge in your opinion?",
+          "translation": "Mikä on suurin globaali haaste mielestäsi?"
+        },
+        {
+          "speaker": "B",
+          "text": "I believe climate change is the most serious.",
+          "translation": "Uskon, että ilmastonmuutos on vakavin."
+        },
+        {
+          "speaker": "A",
+          "text": "How can we solve it?",
+          "translation": "Miten voimme ratkaista sen?"
+        },
+        {
+          "speaker": "B",
+          "text": "International cooperation is essential.",
+          "translation": "Kansainvälinen yhteistyö on välttämätöntä."
+        }
+      ],
+      "reading": {
+        "title": "Global Challenges",
+        "text": "The world faces many common challenges. Climate change, inequality, and migration require solutions. No single country can solve them alone. International cooperation is essential.",
+        "translation": "Maailma kohtaa monia yhteisiä haasteita. Ilmastonmuutos, epätasa-arvo ja muuttoliike vaativat ratkaisuja. Yksin mikään maa ei voi ratkaista niitä. Kansainvälinen yhteistyö on välttämätöntä."
+      }
+    },
+    {
+      "id": "u21",
+      "title": "Philosophy of Mind",
+      "description": "Discuss philosophy of mind and consciousness.",
+      "words": [
+        {
+          "word": "consciousness",
+          "translation": "tietoisuus",
+          "pos": "noun",
+          "example": "Consciousness is a philosophical puzzle.",
+          "exampleTranslation": "Tietoisuus on filosofinen arvoitus."
+        },
+        {
+          "word": "mind",
+          "translation": "mieli",
+          "pos": "noun",
+          "example": "The mind processes experiences.",
+          "exampleTranslation": "Mieli prosessoi kokemuksia."
+        },
+        {
+          "word": "identity",
+          "translation": "identiteetti",
+          "pos": "noun",
+          "example": "Identity is formed by experiences.",
+          "exampleTranslation": "Identiteetti muodostuu kokemuksista."
+        },
+        {
+          "word": "experience",
+          "translation": "kokemus",
+          "pos": "noun",
+          "example": "Experience affects thinking.",
+          "exampleTranslation": "Kokemus vaikuttaa ajatteluun."
+        },
+        {
+          "word": "perception",
+          "translation": "perception",
+          "pos": "noun",
+          "example": "Perception is linked to the senses.",
+          "exampleTranslation": "Perception linkittyy aisteihin."
+        },
+        {
+          "word": "thought",
+          "translation": "ajatus",
+          "pos": "noun",
+          "example": "A thought arises quickly.",
+          "exampleTranslation": "Ajatus syntyy nopeasti."
+        },
+        {
+          "word": "to feel",
+          "translation": "tuntea",
+          "pos": "verb",
+          "example": "We feel many things simultaneously.",
+          "exampleTranslation": "Tunnemme monia asioita samanaikaisesti."
+        },
+        {
+          "word": "self-esteem",
+          "translation": "itsetunto",
+          "pos": "noun",
+          "example": "Self-esteem affects well-being.",
+          "exampleTranslation": "Itsetunto vaikuttaa hyvinvointiin."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "The mind and body are connected.",
+          "translation": "Mieli ja keho ovat yhteydessä."
+        },
+        {
+          "phrase": "Consciousness is a complex phenomenon.",
+          "translation": "Tietoisuus on monimutkainen ilmiö."
+        },
+        {
+          "phrase": "Identity changes over a lifetime.",
+          "translation": "Identiteetti muuttuu elämän aikana."
+        },
+        {
+          "phrase": "Experiences shape thinking.",
+          "translation": "Kokemukset muokkaavat ajattelua."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What do you think about consciousness?",
+          "translation": "Mitä mieltä olet tietoisuudesta?"
+        },
+        {
+          "speaker": "B",
+          "text": "It is one of the most difficult philosophical questions.",
+          "translation": "Se on yksi vaikeimmista filosofisista kysymyksistä."
+        },
+        {
+          "speaker": "A",
+          "text": "Is the mind the same as the brain?",
+          "translation": "Onko mieli sama kuin aivot?"
+        },
+        {
+          "speaker": "B",
+          "text": "It depends on who you ask.",
+          "translation": "Se riippuu siitä, keneltä kysytään."
+        }
+      ],
+      "reading": {
+        "title": "Mind and Consciousness",
+        "text": "Consciousness is one of the most difficult phenomena. It asks how physical brains produce mental experience. Philosophers and researchers disagree on the answer. In any case, the topic concerns us all.",
+        "translation": "Tietoisuus on yksi vaikeimmista ilmiöistä. Se kysyy, miten fyysiset aivot tuottavat henkistä kokemusta. Filosofit ja tutkijat ovat eri mieltä vastauksesta. Joka tapauksessa aihe koskettaa meitä kaikkia."
+      }
     }
   ],
   "C1": [
@@ -10165,6 +11245,222 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "text": "We live in an era where information is abundant but truth is sometimes hard to find. Social media and algorithms create bubbles that reinforce one perspective. That is why media literacy and critical thinking are not just skills, but preconditions for democracy.",
         "translation": "Elämme aikakaudella, jossa informaatio on runsasta mutta totuus on joskus vaikea löytää. Sosiaalinen media ja algoritmit luovat kuplia, joissa vahvistetaan yhtä näkemystä. Siksi mediasivistys ja kriittinen ajattelu eivät ole vain taitoja, vaan demokratian elinehtoja."
       }
+    },
+    {
+      "id": "u20",
+      "title": "Advanced Rhetoric",
+      "description": "Discuss advanced rhetoric and persuasion.",
+      "words": [
+        {
+          "word": "rhetoric",
+          "translation": "retoriikka",
+          "pos": "noun",
+          "example": "Rhetoric is the art of persuasion.",
+          "exampleTranslation": "Retoriikka on vakuuttamisen taitoa."
+        },
+        {
+          "word": "argumentation",
+          "translation": "argumentaatio",
+          "pos": "noun",
+          "example": "Argumentation supports the viewpoint.",
+          "exampleTranslation": "Argumentaatio tukee näkemystä."
+        },
+        {
+          "word": "to convince",
+          "translation": "vakuuttaa",
+          "pos": "verb",
+          "example": "He can convince the audience.",
+          "exampleTranslation": "Hän osaa vakuuttaa kuulijat."
+        },
+        {
+          "word": "to perform",
+          "translation": "esiintyä",
+          "pos": "verb",
+          "example": "Performing requires practice.",
+          "exampleTranslation": "Esiintyminen vaatii harjoitusta."
+        },
+        {
+          "word": "tone",
+          "translation": "sävy",
+          "pos": "noun",
+          "example": "Tone affects how a message is received.",
+          "exampleTranslation": "Sävy vaikuttaa viestin vastaanottoon."
+        },
+        {
+          "word": "to emphasize",
+          "translation": "painottaa",
+          "pos": "verb",
+          "example": "She emphasized important points.",
+          "exampleTranslation": "Hän painotti tärkeitä kohtia."
+        },
+        {
+          "word": "to deny",
+          "translation": "kiistää",
+          "pos": "verb",
+          "example": "Do not deny facts.",
+          "exampleTranslation": "Älä kiellä tosiasioita."
+        },
+        {
+          "word": "influence",
+          "translation": "vaikutusvalta",
+          "pos": "noun",
+          "example": "Influence is used in many ways.",
+          "exampleTranslation": "Vaikutusvaltaa käytetään monella tavalla."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "His argumentation was convincing.",
+          "translation": "Hänen argumentointinsa oli vakuuttavaa."
+        },
+        {
+          "phrase": "The tone affected how the message was received.",
+          "translation": "Sävy vaikutti viestin vastaanottoon."
+        },
+        {
+          "phrase": "Rhetoric is used in politics.",
+          "translation": "Retoriikkaa käytetään politiikassa."
+        },
+        {
+          "phrase": "I emphasized the essential points.",
+          "translation": "Painotin olennaisia kohtia."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How do you convince the audience?",
+          "translation": "Miten vakuutat kuulijat?"
+        },
+        {
+          "speaker": "B",
+          "text": "I use logical argumentation and emotionally appealing language.",
+          "translation": "Käytän loogista argumentointia ja tunneälyä."
+        },
+        {
+          "speaker": "A",
+          "text": "Is it possible to misuse rhetoric?",
+          "translation": "Onko retoriikkaa mahdollista käyttää väärin?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, therefore critical thinking is important.",
+          "translation": "Kyllä, siksi kriittinen ajattelu on tärkeää."
+        }
+      ],
+      "reading": {
+        "title": "The Art of Persuasion",
+        "text": "Rhetoric is the art of persuasion. A good speaker uses logical arguments and emotional intelligence. However, rhetoric can also be used misleadingly. That is why the listener's critical thinking is important.",
+        "translation": "Retoriikka on vakuuttamisen taitoa. Hyvä puhuja käyttää loogisia argumentteja ja tunneälyä. Kuitenkin retoriikkaa voidaan käyttää myös harhaanjohtavasti. Siksi kuulijan kriittinen ajattelu on tärkeää."
+      }
+    },
+    {
+      "id": "u21",
+      "title": "Identity and Memory",
+      "description": "Discuss identity and memory.",
+      "words": [
+        {
+          "word": "memory",
+          "translation": "muisti",
+          "pos": "noun",
+          "example": "Memory preserves experiences.",
+          "exampleTranslation": "Muisti säilyttää kokemuksia."
+        },
+        {
+          "word": "nostalgia",
+          "translation": "nostalgia",
+          "pos": "noun",
+          "example": "Nostalgia strengthens identity.",
+          "exampleTranslation": "Nostalgia vahvistaa identiteettiä."
+        },
+        {
+          "word": "heritage",
+          "translation": "perintö",
+          "pos": "noun",
+          "example": "Cultural heritage connects generations.",
+          "exampleTranslation": "Kulttuuriperintö yhdistää sukupolvia."
+        },
+        {
+          "word": "trauma",
+          "translation": "trauma",
+          "pos": "noun",
+          "example": "Trauma can affect one for a long time.",
+          "exampleTranslation": "Trauma voi vaikuttaa pitkään."
+        },
+        {
+          "word": "memory image",
+          "translation": "muistokuva",
+          "pos": "noun",
+          "example": "The memory image changes over time.",
+          "exampleTranslation": "Muistokuva muuttuu ajan myötä."
+        },
+        {
+          "word": "self-knowledge",
+          "translation": "itsetuntemus",
+          "pos": "noun",
+          "example": "Self-knowledge helps one grow.",
+          "exampleTranslation": "Itsetuntemus auttaa kasvamaan."
+        },
+        {
+          "word": "narrative",
+          "translation": "kertomus",
+          "pos": "noun",
+          "example": "A biography is a personal narrative.",
+          "exampleTranslation": "Elämäkerta on henkilökohtainen kertomus."
+        },
+        {
+          "word": "social identity",
+          "translation": "sosiaalinen identiteetti",
+          "pos": "noun",
+          "example": "Social identity is built from group belonging.",
+          "exampleTranslation": "Sosiaalinen identiteetti rakentuu ryhmäkuuluvuudesta."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Memory shapes identity.",
+          "translation": "Muisto muovaa identiteettiä."
+        },
+        {
+          "phrase": "Heritage connects generations.",
+          "translation": "Perintö yhdistää sukupolvia."
+        },
+        {
+          "phrase": "Nostalgia is a powerful feeling.",
+          "translation": "Nostalgia on voimakas tunne."
+        },
+        {
+          "phrase": "Self-knowledge grows with experiences.",
+          "translation": "Itsetuntemus kasvaa kokemusten myötä."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "How does memory affect identity?",
+          "translation": "Miten muisti vaikuttaa identiteettiin?"
+        },
+        {
+          "speaker": "B",
+          "text": "Memories tell us who we are.",
+          "translation": "Muistot kertovat meille, keitä olemme."
+        },
+        {
+          "speaker": "A",
+          "text": "Can memories be shared in a confidential way?",
+          "translation": "Voiko muistoja luottamuksellisesti jakaa?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, through stories we pass on experiences.",
+          "translation": "Kyllä, tarinoiden kautta välitämme kokemuksia."
+        }
+      ],
+      "reading": {
+        "title": "Memory and Identity",
+        "text": "Memories shape who we are. They link to cultural heritage and personal experiences. Nostalgia can strengthen community. At the same time, we must recognize that memories can change over time.",
+        "translation": "Muistot muovaavat, keitä me olemme. Ne linkittyvät kulttuuriperintöön ja henkilökohtaisiin kokemuksiin. Nostalgia voi vahvistaa yhteisöllisyyttä. Samalla meidän täytyy tunnistaa, että muistot voivat muuttua ajan myötä."
+      }
     }
   ],
   "C2": [
@@ -11858,6 +13154,222 @@ export const ADDITIONAL_EN_UNITS: Record<string, any[]> = {
         "title": "The Art of Interpretation",
         "text": "Hermeneutics teaches that understanding is not passive reception, but an active dialogue between text, history, and one's own perspective. We always interpret from somewhere, but awareness of this can open deeper understanding. Interpretation is a skill that can be practiced throughout life.",
         "translation": "Hermeneutiikka opettaa, että ymmärtäminen ei ole passiivista vastaanottamista, vaan aktiivista vuoropuhelua tekstin, historian ja oman näkökulman välillä. Me tulkitsemme aina jostakin paikasta käsin, mutta tietoisuus tästä voi avata syvempää ymmärrystä. Tulkinta on taito, jota voi harjoittaa koko elämän ajan."
+      }
+    },
+    {
+      "id": "u20",
+      "title": "Metaphysics",
+      "description": "Discuss metaphysics and the nature of being.",
+      "words": [
+        {
+          "word": "metaphysics",
+          "translation": "metafysiikka",
+          "pos": "noun",
+          "example": "Metaphysics studies the nature of being.",
+          "exampleTranslation": "Metafysiikka tutkii olemisen olemusta."
+        },
+        {
+          "word": "existence",
+          "translation": "olemassaolo",
+          "pos": "noun",
+          "example": "Existence is a philosophical question.",
+          "exampleTranslation": "Olemassaolo on filosofinen kysymys."
+        },
+        {
+          "word": "essence",
+          "translation": "olemus",
+          "pos": "noun",
+          "example": "Essence defines what something is.",
+          "exampleTranslation": "Olemus määrittää, mikä jokin on."
+        },
+        {
+          "word": "causality",
+          "translation": "kausaliteetti",
+          "pos": "noun",
+          "example": "Causality explains chains of events.",
+          "exampleTranslation": "Kausaliteetti selittää tapahtumien ketjut."
+        },
+        {
+          "word": "modality",
+          "translation": "modaalisuus",
+          "pos": "noun",
+          "example": "Modality deals with possibility and necessity.",
+          "exampleTranslation": "Modaalisuus käsittelee mahdollisuutta ja välttämättömyyttä."
+        },
+        {
+          "word": "substance",
+          "translation": "substannssi",
+          "pos": "noun",
+          "example": "Substance is a fundamental metaphysical concept.",
+          "exampleTranslation": "Substanssi on metafyysinen peruskäsite."
+        },
+        {
+          "word": "universal",
+          "translation": "universaali",
+          "pos": "noun",
+          "example": "Universals are a subject of philosophical discussion.",
+          "exampleTranslation": "Universaalit ovat filosofisen keskustelun aihe."
+        },
+        {
+          "word": "determinism",
+          "translation": "determinismi",
+          "pos": "noun",
+          "example": "Determinism questions freedom.",
+          "exampleTranslation": "Determinismi kyseenalaistaa vapauden."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "Metaphysics asks what exists.",
+          "translation": "Metafysiikka kysyy, mikä on olemassa."
+        },
+        {
+          "phrase": "Essence and existence are different things.",
+          "translation": "Olemus ja olemassaolo ovat eri asioita."
+        },
+        {
+          "phrase": "Causality connects events.",
+          "translation": "Kausaliteetti yhdistää tapahtumat."
+        },
+        {
+          "phrase": "Determinism claims that everything is predictable.",
+          "translation": "Determinismi väittää, että kaikki on ennustettavissa."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What does metaphysics study?",
+          "translation": "Mitä metafysiikka tutkii?"
+        },
+        {
+          "speaker": "B",
+          "text": "It studies the nature of being, existence, and causation.",
+          "translation": "Se tutkii olemisen, olemassaolon ja kausaation luonnetta."
+        },
+        {
+          "speaker": "A",
+          "text": "Are there universal truths?",
+          "translation": "Onko olemassa universaaleja totuuksia?"
+        },
+        {
+          "speaker": "B",
+          "text": "That is one of metaphysics' discussions.",
+          "translation": "Se on yksi metafysiikan keskusteluista."
+        }
+      ],
+      "reading": {
+        "title": "Being and Its Nature",
+        "text": "Metaphysics is a branch of philosophy that studies being and its fundamental principles. It asks what exists and what makes things the way they are. Essence and existence are central concepts. Causality and modality help us understand the world more deeply.",
+        "translation": "Metafysiikka on filosofian osa-alue, joka tutkii olemista ja sen perusperiaatteita. Se kysyy, mitä on olemassa ja mikä tekee asioista sellaisia kuin ne ovat. Olemus ja olemassaolo ovat keskeisiä käsitteitä. Kausaaliteetti ja modaalisuus auttavat ymmärtämään maailmaa syvemmin."
+      }
+    },
+    {
+      "id": "u21",
+      "title": "Civilization and History",
+      "description": "Discuss civilization and the meaning of history.",
+      "words": [
+        {
+          "word": "civilization",
+          "translation": "sivilisaatio",
+          "pos": "noun",
+          "example": "Civilization developed slowly.",
+          "exampleTranslation": "Sivilisaatio kehittyi hitaasti."
+        },
+        {
+          "word": "history",
+          "translation": "historia",
+          "pos": "noun",
+          "example": "History teaches us a lot.",
+          "exampleTranslation": "Historia opettaa meille paljon."
+        },
+        {
+          "word": "tradition",
+          "translation": "perinne",
+          "pos": "noun",
+          "example": "Tradition is passed from generation to generation.",
+          "exampleTranslation": "Perinne välittyy sukupolvelta toiselle."
+        },
+        {
+          "word": "culture",
+          "translation": "kulttuuri",
+          "pos": "noun",
+          "example": "Culture is shaped over centuries.",
+          "exampleTranslation": "Kulttuuri muotoutuu vuosisatojen kuluessa."
+        },
+        {
+          "word": "humanity",
+          "translation": "ihmiskunta",
+          "pos": "noun",
+          "example": "Humanity faces common challenges.",
+          "exampleTranslation": "Ihmiskunta kohtaa yhteisiä haasteita."
+        },
+        {
+          "word": "archaeology",
+          "translation": "arkeologia",
+          "pos": "noun",
+          "example": "Archaeology studies the past.",
+          "exampleTranslation": "Arkeologia tutkii menneisyyttä."
+        },
+        {
+          "word": "document",
+          "translation": "dokumentti",
+          "pos": "noun",
+          "example": "The document tells about history.",
+          "exampleTranslation": "Dokumentti kertoo historiasta."
+        },
+        {
+          "word": "legacy",
+          "translation": "perintö",
+          "pos": "noun",
+          "example": "Historical legacy shapes the present.",
+          "exampleTranslation": "Historiallinen perintö muokkaa nykypäivää."
+        }
+      ],
+      "phrases": [
+        {
+          "phrase": "History teaches us important lessons.",
+          "translation": "Historia opettaa meille tärkeitä läksyjä."
+        },
+        {
+          "phrase": "Civilization developed over many centuries.",
+          "translation": "Sivilisaatio kehittyi monien vuosisatojen aikana."
+        },
+        {
+          "phrase": "Cultural heritage is a common treasure.",
+          "translation": "Kulttuuriperintö on yhteinen kalleus."
+        },
+        {
+          "phrase": "Humanity faces the same challenges at different times.",
+          "translation": "Ihmiskunta kohtaa samoja haasteita eri aikoina."
+        }
+      ],
+      "dialogue": [
+        {
+          "speaker": "A",
+          "text": "What is history's most important lesson?",
+          "translation": "Mikä on historian tärkein opetus?"
+        },
+        {
+          "speaker": "B",
+          "text": "Perhaps that humanity repeats the same mistakes.",
+          "translation": "Ehkä se, että ihmiskunta toistaa samoja virheitä."
+        },
+        {
+          "speaker": "A",
+          "text": "How does civilization develop?",
+          "translation": "Miten sivilisaatio kehittyy?"
+        },
+        {
+          "speaker": "B",
+          "text": "Through interaction, conflict, and cooperation.",
+          "translation": "Vuorovaikutuksessa, konflikteissa ja yhteistyössä."
+        }
+      ],
+      "reading": {
+        "title": "The Development of Civilization",
+        "text": "Civilization developed slowly over millennia. Early communities laid the foundation for today's cultures. History teaches us that progress is not linear. Humanity still faces the same ethical and social challenges.",
+        "translation": "Sivilisaatio kehittyi hitaasti vuosituhansien aikana. Varhaiset yhteisöt loivat perustan nykyisille kulttuureille. Historia opettaa meille, että edistys ei ole suoraviivaista. Ihmiskunta kohtaa edelleen samoja eettisiä ja sosiaalisia haasteita."
       }
     }
   ]
