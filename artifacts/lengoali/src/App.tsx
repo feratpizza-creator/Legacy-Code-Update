@@ -1,17 +1,14 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { FileText, BookOpen, Star, Volume2, Sun, Moon, Plus, X, Globe, ChevronDown, Palette, Edit3, Search, Shuffle, Award, RefreshCw, Brain, MessageSquare, GraduationCap } from "lucide-react";
 import LearnCenter from "./LearnCenter";
+import LearnWordVocab, { type WordSaveDetails } from "./components/LearnWordVocab";
 import { loadLanguagePacks, type LanguagePack } from "./learn-data";
 
 // ─── TTS helpers ──────────────────────────────────────────────────────────────
 
 function primeVoices() {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  const synth = window.speechSynthesis;
-  synth.getVoices();
-  if (typeof synth.onvoiceschanged !== "undefined") {
-    synth.onvoiceschanged = () => { synth.getVoices(); };
-  }
+  window.speechSynthesis.getVoices();
 }
 if (typeof window !== "undefined") primeVoices();
 
@@ -94,10 +91,26 @@ function speak(text: string, ttsLang: string) {
       const v = pickVoice(ttsLang);
       if (v) u.voice = v;
       let started = false;
-      u.onstart = () => { started = true; };
-      u.onerror = () => { if (!started) speakViaAudio(text, ttsLang); };
+      let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+      const clearFallbackTimer = () => {
+        if (fallbackTimer !== null) {
+          clearTimeout(fallbackTimer);
+          fallbackTimer = null;
+        }
+      };
+      u.onstart = () => { started = true; clearFallbackTimer(); };
+      u.onerror = () => {
+        clearFallbackTimer();
+        if (!started) speakViaAudio(text, ttsLang);
+      };
       synth.speak(u);
-      setTimeout(() => { if (!started) { try { synth.cancel(); } catch { /* ignore */ } speakViaAudio(text, ttsLang); } }, 800);
+      fallbackTimer = setTimeout(() => {
+        fallbackTimer = null;
+        if (!started) {
+          try { synth.cancel(); } catch { /* ignore */ }
+          speakViaAudio(text, ttsLang);
+        }
+      }, 800);
       return;
     } catch { /* ignore */ }
   }
@@ -318,6 +331,31 @@ const STR: Record<UiLang, Record<string, string>> = {
     youChose: "You chose",
     iWantToLearn: "I want to learn",
     myNativeLanguageIs: "My native language is",
+    learnWords: "New words",
+    wordSetupHint: "Choose the language you want to learn and the language for explanations.",
+    selectLangLearn: "Language to learn",
+    selectNativeLang: "Explanation language",
+    fetchWord: "Get a new word",
+    wordLoading: "Finding a new word…",
+    wordApiError: "The word service is unavailable right now. Try again.",
+    wordTranslation: "Translation",
+    wordExample: "Example",
+    wordSynonym: "Synonyms",
+    lessonProgress: "Lesson",
+    unitProgress: "Unit Progress",
+    levelProgress: "Level Progress",
+    previousLesson: "Previous Lesson",
+    nextLesson: "Next Lesson",
+    unitCompleted: "Unit Completed",
+    levelCompleted: "You completed Level {{level}}",
+    continueToNextUnit: "Continue to Next Unit",
+    continueToNextLevel: "Continue to Next Level",
+    curriculumCompletedTitle: "Congratulations!",
+    curriculumCompletedBody: "You have completed the entire Lengoali curriculum. Keep learning by reviewing vocabulary, reading texts, flashcards, and quizzes.",
+    reviewVocabulary: "Review Vocabulary",
+    practiceQuiz: "Practice Quiz",
+    openFlashcards: "Open Flashcards",
+    readAgain: "Read Again",
   },
   ar: {
     pasteHint: "الصق نصاً بأي لغة — الترجمة تلقائية.",
@@ -435,6 +473,31 @@ const STR: Record<UiLang, Record<string, string>> = {
     youChose: "اخترت",
     iWantToLearn: "أريد تعلم",
     myNativeLanguageIs: "لغتي الأم هي",
+    learnWords: "تعلّم كلمات جديدة",
+    wordSetupHint: "اختر اللغة التي تريد تعلمها ولغة الشرح.",
+    selectLangLearn: "لغة التعلم",
+    selectNativeLang: "لغة الشرح",
+    fetchWord: "جلب كلمة جديدة",
+    wordLoading: "جارٍ البحث عن كلمة جديدة…",
+    wordApiError: "خدمة الكلمات غير متاحة حالياً. حاول مرة أخرى.",
+    wordTranslation: "الترجمة",
+    wordExample: "مثال",
+    wordSynonym: "مرادفات",
+    lessonProgress: "الدرس",
+    unitProgress: "تقدم الوحدة",
+    levelProgress: "تقدم المستوى",
+    previousLesson: "الدرس السابق",
+    nextLesson: "الدرس التالي",
+    unitCompleted: "اكتملت الوحدة",
+    levelCompleted: "أكملت المستوى {{level}}",
+    continueToNextUnit: "تابع إلى الوحدة التالية",
+    continueToNextLevel: "تابع إلى المستوى التالي",
+    curriculumCompletedTitle: "تهانينا!",
+    curriculumCompletedBody: "لقد أكملت منهج Lengoali بالكامل. واصل التعلم بمراجعة المفردات والنصوص والبطاقات والاختبارات.",
+    reviewVocabulary: "مراجعة المفردات",
+    practiceQuiz: "تدريب الاختبار",
+    openFlashcards: "فتح البطاقات",
+    readAgain: "إعادة القراءة",
   },
   fi: {
     pasteHint: "Liitä tekstiä millä tahansa kielellä — käännös on automaattinen.",
@@ -552,6 +615,31 @@ const STR: Record<UiLang, Record<string, string>> = {
     youChose: "Valitsit",
     iWantToLearn: "Haluan oppia",
     myNativeLanguageIs: "Äidinkieleni on",
+    learnWords: "Uudet sanat",
+    wordSetupHint: "Valitse opittava kieli ja selityskieli.",
+    selectLangLearn: "Opittava kieli",
+    selectNativeLang: "Selityskieli",
+    fetchWord: "Hae uusi sana",
+    wordLoading: "Etsitään uutta sanaa…",
+    wordApiError: "Sanapalvelu ei ole juuri nyt käytettävissä. Yritä uudelleen.",
+    wordTranslation: "Käännös",
+    wordExample: "Esimerkki",
+    wordSynonym: "Synonyymit",
+    lessonProgress: "Oppitunti",
+    unitProgress: "Yksikön edistyminen",
+    levelProgress: "Tason edistyminen",
+    previousLesson: "Edellinen oppitunti",
+    nextLesson: "Seuraava oppitunti",
+    unitCompleted: "Yksikkö suoritettu",
+    levelCompleted: "Suoritit tason {{level}}",
+    continueToNextUnit: "Jatka seuraavaan yksikköön",
+    continueToNextLevel: "Jatka seuraavalle tasolle",
+    curriculumCompletedTitle: "Onneksi olkoon!",
+    curriculumCompletedBody: "Olet suorittanut koko Lengoali-opetussuunnitelman. Jatka kertaamalla sanastoa, tekstejä, muistikortteja ja kokeita.",
+    reviewVocabulary: "Kertaa sanasto",
+    practiceQuiz: "Harjoittele testiä",
+    openFlashcards: "Avaa muistikortit",
+    readAgain: "Lue uudelleen",
   },
   es: {
     pasteHint: "Pega texto en cualquier idioma — la traducción es automática.",
@@ -669,6 +757,31 @@ const STR: Record<UiLang, Record<string, string>> = {
     youChose: "Elegiste",
     iWantToLearn: "Quiero aprender",
     myNativeLanguageIs: "Mi idioma nativo es",
+    learnWords: "Palabras nuevas",
+    wordSetupHint: "Elige el idioma que quieres aprender y el idioma de explicación.",
+    selectLangLearn: "Idioma de aprendizaje",
+    selectNativeLang: "Idioma de explicación",
+    fetchWord: "Obtener una palabra nueva",
+    wordLoading: "Buscando una palabra nueva…",
+    wordApiError: "El servicio de palabras no está disponible. Inténtalo de nuevo.",
+    wordTranslation: "Traducción",
+    wordExample: "Ejemplo",
+    wordSynonym: "Sinónimos",
+    lessonProgress: "Lección",
+    unitProgress: "Progreso de la unidad",
+    levelProgress: "Progreso del nivel",
+    previousLesson: "Lección anterior",
+    nextLesson: "Siguiente lección",
+    unitCompleted: "Unidad completada",
+    levelCompleted: "Has completado el nivel {{level}}",
+    continueToNextUnit: "Continuar a la siguiente unidad",
+    continueToNextLevel: "Continuar al siguiente nivel",
+    curriculumCompletedTitle: "¡Felicidades!",
+    curriculumCompletedBody: "Has completado todo el currículo de Lengoali. Sigue aprendiendo repasando vocabulario, textos, tarjetas y cuestionarios.",
+    reviewVocabulary: "Repasar vocabulario",
+    practiceQuiz: "Practicar cuestionario",
+    openFlashcards: "Abrir tarjetas",
+    readAgain: "Leer de nuevo",
   },
   fr: {
     pasteHint: "Collez du texte dans n'importe quelle langue — la traduction est automatique.",
@@ -786,6 +899,31 @@ const STR: Record<UiLang, Record<string, string>> = {
     youChose: "Vous avez choisi",
     iWantToLearn: "Je veux apprendre",
     myNativeLanguageIs: "Ma langue maternelle est",
+    learnWords: "Nouveaux mots",
+    wordSetupHint: "Choisissez la langue à apprendre et la langue d'explication.",
+    selectLangLearn: "Langue à apprendre",
+    selectNativeLang: "Langue d'explication",
+    fetchWord: "Obtenir un nouveau mot",
+    wordLoading: "Recherche d'un nouveau mot…",
+    wordApiError: "Le service de mots est indisponible. Réessayez.",
+    wordTranslation: "Traduction",
+    wordExample: "Exemple",
+    wordSynonym: "Synonymes",
+    lessonProgress: "Leçon",
+    unitProgress: "Progression de l'unité",
+    levelProgress: "Progression du niveau",
+    previousLesson: "Leçon précédente",
+    nextLesson: "Leçon suivante",
+    unitCompleted: "Unité terminée",
+    levelCompleted: "Vous avez terminé le niveau {{level}}",
+    continueToNextUnit: "Continuer vers l'unité suivante",
+    continueToNextLevel: "Continuer vers le niveau suivant",
+    curriculumCompletedTitle: "Félicitations !",
+    curriculumCompletedBody: "Vous avez terminé tout le programme Lengoali. Continuez en révisant le vocabulaire, les textes, les cartes et les quiz.",
+    reviewVocabulary: "Revoir le vocabulaire",
+    practiceQuiz: "Pratiquer le quiz",
+    openFlashcards: "Ouvrir les cartes",
+    readAgain: "Relire",
   },
 };
 

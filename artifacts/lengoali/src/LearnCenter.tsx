@@ -9,7 +9,7 @@ import {
   type Exercise,
 } from "./learn-data";
 import LessonNavigation, { loadProgressStore, saveLessonLocation } from "./components/LessonNavigation";
-import LearnWordVocab from "./components/LearnWordVocab";
+import LearnWordVocab, { type WordSaveDetails } from "./components/LearnWordVocab";
 import {
   BookOpen,
   ChevronLeft,
@@ -86,6 +86,8 @@ function SpeakBtn({ text, lang, t }: { text: string; lang: string; t: Theme }) {
         e.stopPropagation();
         speak(text, lang);
       }}
+      type="button"
+      aria-label="Listen"
       title="Listen"
       style={{
         display: "inline-flex",
@@ -119,6 +121,14 @@ function Card({ children, onClick, t, active = false }: { children: React.ReactN
   return (
     <div
       onClick={onClick}
+      onKeyDown={(event) => {
+        if (onClick && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          onClick();
+        }
+      }}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
       style={{
         background: t.card,
         border: `1px solid ${active ? "#60a5fa" : t.border}`,
@@ -148,7 +158,7 @@ type LearnCenterProps = {
   s: Record<string, string>;
   languagePacks: LanguagePack[];
   onReadText: (text: string, srcLang: string) => void;
-  onSaveWord: (word: string, srcLang: string, translation: string) => void;
+  onSaveWord: (word: string, srcLang: string, translation: string, details?: WordSaveDetails) => void;
   onTranslateText?: (text: string, sourceLang: string, targetLang: string) => Promise<string | null>;
 };
 
@@ -278,11 +288,11 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
         onBack={() => setActiveLesson(null)}
         onTranslateText={translateText}
         onReadText={onReadText}
-        onSaveWord={(word, translation) => {
+        onSaveWord={(word, translation, details) => {
           const key = `${selectedPack.targetLang}:${word}`;
           if (savedVocab.has(key)) return;
           setSavedVocab((prev) => new Set([...Array.from(prev), key]));
-          onSaveWord(word, selectedPack.targetLang, translation);
+          onSaveWord(word, selectedPack.targetLang, translation, details);
         }}
         onNavigate={(next) => {
           setSelectedLevel(next.level);
@@ -590,7 +600,7 @@ function LessonView({
   onBack: () => void;
   onTranslateText: (text: string, sourceLang: string, targetLang: string) => Promise<string | null>;
   onReadText: (text: string, srcLang: string) => void;
-  onSaveWord: (word: string, translation: string) => void;
+  onSaveWord: (word: string, translation: string, details?: WordSaveDetails) => void;
   onNavigate: (next: { level: Level; unit: Unit; lesson: Lesson }) => void;
   t: Theme;
   s: Record<string, string>;
@@ -781,7 +791,7 @@ function LessonView({
   );
 }
 
-function VocabCard({ v, pack, t, s, onSaveWord }: { v: VocabularyItem; pack: LanguagePack; t: Theme; s: Record<string, string>; onSaveWord: (word: string, translation: string) => void }) {
+function VocabCard({ v, pack, t, s, onSaveWord }: { v: VocabularyItem; pack: LanguagePack; t: Theme; s: Record<string, string>; onSaveWord: (word: string, translation: string, details?: WordSaveDetails) => void }) {
   const [saved, setSaved] = useState(false);
   return (
     <Card t={t}>
@@ -793,7 +803,17 @@ function VocabCard({ v, pack, t, s, onSaveWord }: { v: VocabularyItem; pack: Lan
         </div>
         <SpeakBtn text={v.word} lang={pack.targetLang} t={t} />
         <button
-          onClick={() => { if (!saved) { onSaveWord(v.word, v.translation); setSaved(true); } }}
+          onClick={() => {
+            if (!saved) {
+              onSaveWord(v.word, v.translation, {
+                translationLang: pack.explanationLangs[0] || "en",
+                pos: v.pos,
+                example: v.example,
+                exampleTranslation: v.exampleTranslation,
+              });
+              setSaved(true);
+            }
+          }}
           title={saved ? s.saved || "Saved" : s.saveWord || "Save word"}
           style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 32, height: 32, borderRadius: "50%", border: "none", background: saved ? "#fbbf2422" : t.card2, color: saved ? "#fbbf24" : t.textMuted, cursor: saved ? "default" : "pointer" }}
         >

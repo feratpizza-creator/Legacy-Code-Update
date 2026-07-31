@@ -13,13 +13,22 @@ type Theme = {
   inputBorder: string;
 };
 
+export type WordSaveDetails = {
+  /** Language of the saved translation, not the word being learned. */
+  translationLang: string;
+  pos?: string;
+  synonym?: string;
+  example?: string;
+  exampleTranslation?: string;
+};
+
 type WordVocabProps = {
   t: Theme;
   s: Record<string, string>;
   defaultTargetLang: string;
   defaultNativeLang: string;
   onTranslateText: (text: string, sourceLang: string, targetLang: string) => Promise<string | null>;
-  onSaveWord: (word: string, sourceLang: string, translation: string) => void;
+  onSaveWord: (word: string, sourceLang: string, translation: string, details?: WordSaveDetails) => void;
 };
 
 type WordEntry = {
@@ -119,13 +128,19 @@ function firstText(value: unknown): string {
   return "";
 }
 
-async function fetchEnglishWord(word: string): Promise<WordEntry | null> {
-  const response = await fetch(`https://en-word.net/api/lemma/${encodeURIComponent(word)}`);
-  if (!response.ok) return null;
-  const records = await response.json() as Array<Record<string, unknown>>;
-  const record = records.find((item) => Array.isArray(item.definition)) || records[0];
-  if (!record) return null;
+async function fetchJsonWithTimeout(url: string): Promise<unknown> {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 7000);
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) return null;
+    return await response.json() as unknown;
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
 
+function buildEnglishEntry(word: string, record: Record<string, unknown>): WordEntry | null {
   const definitions = Array.isArray(record.definition)
     ? record.definition.filter((item): item is string => typeof item === "string")
     : [];
@@ -137,6 +152,7 @@ async function fetchEnglishWord(word: string): Promise<WordEntry | null> {
     .filter((lemma, index, values) => values.indexOf(lemma) === index)
     .slice(0, 6);
 
+  if (!definitions.length && !examples.length) return null;
   return {
     word,
     sourceLang: "en",
@@ -149,16 +165,83 @@ async function fetchEnglishWord(word: string): Promise<WordEntry | null> {
   };
 }
 
+function buildDictionaryApiEntry(word: string, data: unknown): WordEntry | null {
+  if (!Array.isArray(data)) return null;
+  const record = data[0];
+  if (!record || typeof record !== "object") return null;
+  const meanings = Array.isArray((record as { meanings?: unknown }).meanings)
+    ? (record as { meanings: unknown[] }).meanings
+    : [];
+  const definitions: string[] = [];
+  const examples: string[] = [];
+  const synonyms: string[] = [];
+  let pos = "word";
+  for (const meaning of meanings) {
+    if (!meaning || typeof meaning !== "object") continue;
+    const item = meaning as { partOfSpeech?: unknown; definitions?: unknown; synonyms?: unknown };
+    if (typeof item.partOfSpeech === "string" && pos === "word") pos = item.partOfSpeech;
+    if (Array.isArray(item.synonyms)) synonyms.push(...item.synonyms.filter((value): value is string => typeof value === "string"));
+    if (!Array.isArray(item.definitions)) continue;
+    for (const definition of item.definitions) {
+      if (!definition || typeof definition !== "object") continue;
+      const itemDefinition = definition as { definition?: unknown; example?: unknown; synonyms?: unknown };
+      if (typeof itemDefinition.definition === "string") definitions.push(itemDefinition.definition);
+      if (typeof itemDefinition.example === "string") examples.push(itemDefinition.example);
+      if (Array.isArray(itemDefinition.synonyms)) synonyms.push(...itemDefinition.synonyms.filter((value): value is string => typeof value === "string"));
+    }
+  }
+  if (!definitions.length && !examples.length) return null;
+  return {
+    word,
+    sourceLang: "en",
+    pos,
+    definition: definitions[0] || `A useful English word to explore: ${word}.`,
+    example: examples[0] || `I used the word ${word} in a sentence today.`,
+    synonyms: synonyms.filter((value, index, values) => value.toLowerCase() !== word.toLowerCase() && values.indexOf(value) === index).slice(0, 6),
+    translation: "",
+    exampleTranslation: "",
+  };
+}
+
+function fallbackEnglishEntry(word: string): WordEntry {
+  return {
+    word,
+    sourceLang: "en",
+    pos: "word",
+    definition: `An English word to practise: ${word}.`,
+    example: `I am learning how to use ${word} in English.`,
+    synonyms: [],
+    translation: "",
+    exampleTranslation: "",
+  };
+}
+
+async function fetchEnglishWord(word: string): Promise<WordEntry | null> {
+  try {
+    const data = await fetchJsonWithTimeout(`https://en-word.net/api/lemma/${encodeURIComponent(word)}`);
+    if (Array.isArray(data)) {
+      const record = data.find((item): item is Record<string, unknown> => Boolean(item && typeof item === "object" && Array.isArray((item as Record<string, unknown>).definition)));
+      const entry = record ? buildEnglishEntry(word, record) : null;
+      if (entry) return entry;
+    }
+  } catch { /* try the second browser-safe source */ }
+
+  try {
+    const data = await fetchJsonWithTimeout(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+    const entry = buildDictionaryApiEntry(word, data);
+    if (entry) return entry;
+  } catch { /* use the bundled graceful fallback */ }
+
+  return fallbackEnglishEntry(word);
+}
+
 async function fetchFinnishWord(word: Omit<WordEntry, "translation" | "exampleTranslation">): Promise<WordEntry> {
   try {
     const url = `https://fi.wiktionary.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&titles=${encodeURIComponent(word.word)}&format=json&origin=*`;
-    const response = await fetch(url);
-    if (response.ok) {
-      const data = await response.json() as { query?: { pages?: Record<string, { extract?: string }> } };
-      const page = data.query?.pages ? Object.values(data.query.pages)[0] : undefined;
-      const extract = page?.extract?.trim();
-      if (extract) return { ...word, definition: extract.split(/\n+/)[0].slice(0, 280), translation: "", exampleTranslation: "" };
-    }
+    const data = await fetchJsonWithTimeout(url) as { query?: { pages?: Record<string, { extract?: string }> } } | null;
+    const page = data?.query?.pages ? Object.values(data.query.pages)[0] : undefined;
+    const extract = page?.extract?.trim();
+    if (extract) return { ...word, definition: extract.split(/\n+/)[0].slice(0, 280), translation: "", exampleTranslation: "" };
   } catch { /* static Finnish fallback remains available */ }
   return { ...word, translation: "", exampleTranslation: "" };
 }
@@ -293,7 +376,13 @@ export default function LearnWordVocab({ t, s, defaultTargetLang, defaultNativeL
             <div style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, marginBottom: 8 }}>{s.wordSynonym || "Synonyms"}</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{entry.synonyms.map((synonym) => <span key={synonym} style={{ display: "inline-flex", alignItems: "center", gap: 5, background: t.card2, border: `1px solid ${t.border}`, color: t.textMuted, borderRadius: 18, padding: "5px 9px", fontSize: 13 }}>{synonym}<SpeakButton text={synonym} lang={targetLang} t={t} /></span>)}</div>
           </div>}
-          <button type="button" onClick={() => { onSaveWord(entry.word, targetLang, entry.translation); setSaved(true); }} disabled={saved} style={{ ...primaryButtonStyle(), opacity: saved ? 0.65 : 1 }}><Star size={16} fill={saved ? "currentColor" : "none"} /> {saved ? (s.saved || "Saved") : (s.saveWord || "Save word")}</button>
+          <button type="button" onClick={() => { onSaveWord(entry.word, targetLang, entry.translation, {
+              translationLang: nativeLang,
+              pos: entry.pos,
+              synonym: entry.synonyms.join(", "),
+              example: entry.example,
+              exampleTranslation: entry.exampleTranslation,
+            }); setSaved(true); }} disabled={saved} style={{ ...primaryButtonStyle(), opacity: saved ? 0.65 : 1 }}><Star size={16} fill={saved ? "currentColor" : "none"} /> {saved ? (s.saved || "Saved") : (s.saveWord || "Save word")}</button>
         </div>
       )}
       {!loading && <button type="button" onClick={() => void loadNextWord()} style={secondaryButtonStyle(t)}><RefreshCw size={15} /> {s.fetchWord || "Get a new word"}</button>}
