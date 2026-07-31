@@ -12,7 +12,8 @@ import type {
   QuizQuestion,
   ReadingText,
 } from "./learn-data";
-import { ADDITIONAL_FI_UNITS } from "./curriculum-data-more";
+import { ADDITIONAL_FI_UNITS as BASE_ADDITIONAL_FI_UNITS } from "./curriculum-data-more";
+import { ADDITIONAL_FI_PART3_UNITS } from "./curriculum-data-part3";
 
 // ------------------------------------------------------------------------
 // Helpers
@@ -192,6 +193,18 @@ function buildLevel(seed: LevelSeed, levelIndex: number, additionalUnits: UnitSe
     units: [...builtUnits, ...extraUnits],
   };
 }
+
+function mergeAdditionalUnits(...sources: Array<Record<string, UnitSeed[]>>): Record<string, UnitSeed[]> {
+  const merged: Record<string, UnitSeed[]> = {};
+  for (const source of sources) {
+    for (const [level, units] of Object.entries(source)) {
+      merged[level] = [...(merged[level] ?? []), ...units];
+    }
+  }
+  return merged;
+}
+
+const ADDITIONAL_FI_UNITS = mergeAdditionalUnits(BASE_ADDITIONAL_FI_UNITS, ADDITIONAL_FI_PART3_UNITS);
 
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
