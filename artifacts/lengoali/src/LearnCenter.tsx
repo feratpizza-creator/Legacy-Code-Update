@@ -473,7 +473,7 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
               onChange={(e) => setExplanationLang(e.target.value)}
               style={{ background: t.inputBg, color: t.text, border: `1px solid ${t.inputBorder}`, borderRadius: 8, padding: "4px 8px" }}
             >
-              {selectedPack.explanationLangs.map((lng) => (
+              {Array.from(new Set([...selectedPack.explanationLangs, ...(nativeLang ? [nativeLang] : [])])).map((lng) => (
                 <option key={lng} value={lng}>{lng.toUpperCase()}</option>
               ))}
             </select>
@@ -568,6 +568,7 @@ function LessonView({
   const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
   const [quizChecked, setQuizChecked] = useState(false);
   const [translatedExplanations, setTranslatedExplanations] = useState<Record<string, string>>({});
+  const [translatedVocabulary, setTranslatedVocabulary] = useState<Record<string, { translation: string; exampleTranslation?: string }>>({});
   const translateRef = useRef(onTranslateText);
   translateRef.current = onTranslateText;
 
@@ -606,6 +607,36 @@ function LessonView({
       setTranslatedExplanations(Object.fromEntries(results.filter(([, text]) => text)));
     });
 
+    return () => { cancelled = true; };
+  }, [explanationLang, lesson.id, pack.targetLang]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const sourceForPack = pack.targetLang === "en" ? "es" : "en";
+    const requests = lesson.vocabulary
+      .filter((item) => (item.translationLang || sourceForPack) !== explanationLang)
+      .map(async (item) => {
+        const sourceLang = item.translationLang || sourceForPack;
+        const [translation, exampleTranslation] = await Promise.all([
+          translateRef.current(item.translation, sourceLang, explanationLang),
+          item.exampleTranslation
+            ? translateRef.current(item.exampleTranslation, sourceLang, explanationLang)
+            : Promise.resolve(null),
+        ]);
+        return [item.word, {
+          translation: translation || item.translation,
+          exampleTranslation: exampleTranslation || item.exampleTranslation,
+        }] as const;
+      });
+
+    if (!requests.length) {
+      setTranslatedVocabulary({});
+      return () => { cancelled = true; };
+    }
+
+    void Promise.all(requests).then((results) => {
+      if (!cancelled) setTranslatedVocabulary(Object.fromEntries(results));
+    });
     return () => { cancelled = true; };
   }, [explanationLang, lesson.id, pack.targetLang]);
 
@@ -653,7 +684,17 @@ function LessonView({
         <SectionTitle t={t}>{s.vocabulary || "Vocabulary"}</SectionTitle>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 16 }}>
           {lesson.vocabulary.map((v) => (
-            <VocabCard key={v.word} v={v} pack={pack} t={t} s={s} onSaveWord={onSaveWord} />
+            <VocabCard
+              key={v.word}
+              v={v}
+              pack={pack}
+              t={t}
+              s={s}
+              translation={translatedVocabulary[v.word]?.translation || v.translation}
+              exampleTranslation={translatedVocabulary[v.word]?.exampleTranslation || v.exampleTranslation}
+              translationLang={explanationLang}
+              onSaveWord={onSaveWord}
+            />
           ))}
         </div>
       </div>
@@ -751,34 +792,68 @@ function LessonView({
   );
 }
 
-function VocabCard({ v, pack, t, s, onSaveWord }: { v: VocabularyItem; pack: LanguagePack; t: Theme; s: Record<string, string>; onSaveWord: (word: string, translation: string, details?: WordSaveDetails) => void }) {
+function metadataValues(value: string[] | string | undefined): string[] {
+  if (Array.isArray(value)) return value.filter(Boolean);
+  return value ? value.split(/[,;|]/).map((item) => item.trim()).filter(Boolean) : [];
+}
+
+function MetadataList({ label, value, t }: { label: string; value: string[] | string | undefined; t: Theme }) {
+  const values = metadataValues(value);
+  if (!values.length) return null;
+  return (
+    <div style={{ marginTop: 7, color: t.textFaint, fontSize: 12 }}>
+      <strong style={{ color: t.textDim }}>{label}:</strong> {values.join(", ")}
+    </div>
+  );
+}
+
+function VocabCard({ v, pack, t, s, translation, exampleTranslation, translationLang, onSaveWord }: { v: VocabularyItem; pack: LanguagePack; t: Theme; s: Record<string, string>; translation: string; exampleTranslation?: string; translationLang: string; onSaveWord: (word: string, translation: string, details?: WordSaveDetails) => void }) {
   const [saved, setSaved] = useState(false);
   return (
     <Card t={t}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <div style={{ flex: 1 }}>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ color: t.text, fontWeight: 700, fontSize: 16, marginBottom: 2 }}>{v.word}</div>
-          <div style={{ color: t.textDim, fontSize: 13 }}>{v.translation}{v.pos ? ` · ${v.pos}` : ""}</div>
-          {v.example && <div style={{ color: t.textFaint, fontSize: 12, marginTop: 4 }}>{v.example}</div>}
+          {v.ipa && <div style={{ color: t.textFaint, fontFamily: "monospace", fontSize: 12, marginBottom: 2 }}>{v.ipa}</div>}
+          <div style={{ color: t.textDim, fontSize: 13 }}>{translation}{v.pos ? ` · ${v.pos}` : ""}</div>
+          {v.definition && <div style={{ color: t.text, fontSize: 12, lineHeight: 1.5, marginTop: 5 }}>{v.definition}</div>}
+          {v.example && <div style={{ color: t.textFaint, fontSize: 12, marginTop: 4, fontStyle: "italic" }}>{v.example}</div>}
+          {exampleTranslation && <div style={{ color: t.textFaint, fontSize: 12, marginTop: 2 }}>{exampleTranslation}</div>}
+          <MetadataList label="Synonyms" value={v.synonyms} t={t} />
+          <MetadataList label="Antonyms" value={v.antonyms} t={t} />
+          <MetadataList label="Collocations" value={v.collocations} t={t} />
+          <MetadataList label="Word family" value={v.wordFamily} t={t} />
+          <MetadataList label="Tags" value={v.tags} t={t} />
+          {v.category && <div style={{ marginTop: 7, color: t.textFaint, fontSize: 12 }}><strong style={{ color: t.textDim }}>Category:</strong> {v.category}</div>}
         </div>
-        <SpeakBtn text={v.word} lang={pack.targetLang} t={t} />
-        <button
-          onClick={() => {
-            if (!saved) {
-              onSaveWord(v.word, v.translation, {
-                translationLang: pack.explanationLangs[0] || "en",
-                pos: v.pos,
-                example: v.example,
-                exampleTranslation: v.exampleTranslation,
-              });
-              setSaved(true);
-            }
-          }}
-          title={saved ? s.saved || "Saved" : s.saveWord || "Save word"}
-          style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 32, height: 32, borderRadius: "50%", border: "none", background: saved ? "#fbbf2422" : t.card2, color: saved ? "#fbbf24" : t.textMuted, cursor: saved ? "default" : "pointer" }}
-        >
-          <Star size={16} fill={saved ? "#fbbf24" : "none"} />
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+          <SpeakBtn text={v.word} lang={pack.targetLang} t={t} />
+          <button
+            onClick={() => {
+              if (!saved) {
+                onSaveWord(v.word, translation, {
+                  translationLang,
+                  pos: v.pos,
+                  synonym: metadataValues(v.synonyms).join(", "),
+                  antonym: metadataValues(v.antonyms).join(", "),
+                  collocation: metadataValues(v.collocations).join(", "),
+                  wordFamily: metadataValues(v.wordFamily).join(", "),
+                  example: v.example,
+                  exampleTranslation,
+                  ipa: v.ipa,
+                  definition: v.definition,
+                  tags: metadataValues(v.tags).join(", "),
+                });
+                setSaved(true);
+              }
+            }}
+            title={saved ? s.saved || "Saved" : s.saveWord || "Save word"}
+            aria-label={saved ? s.saved || "Saved" : s.saveWord || "Save word"}
+            style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 32, height: 32, borderRadius: "50%", border: "none", background: saved ? "#fbbf2422" : t.card2, color: saved ? "#fbbf24" : t.textMuted, cursor: saved ? "default" : "pointer" }}
+          >
+            <Star size={16} fill={saved ? "#fbbf24" : "none"} />
+          </button>
+        </div>
       </div>
     </Card>
   );

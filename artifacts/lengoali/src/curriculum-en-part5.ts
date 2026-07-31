@@ -90,7 +90,7 @@ export const ADDITIONAL_EN_PART5_UNITS: Record<string, Unit[]> = {
       w("update", "actualización", "noun", "Please send me an update.", "Por favor, envíame una actualización."),
       w("clarify", "aclarar", "verb", "Could you clarify the last point?", "¿Podrías aclarar el último punto?"),
       w("confirm", "confirmar", "verb", "Please confirm your availability.", "Por favor, confirma tu disponibilidad."),
-      w(" postpone", "posponer", "verb", "We had to postpone the meeting.", "Tuvimos que posponer la reunión."),
+      w("postpone", "posponer", "verb", "We had to postpone the meeting.", "Tuvimos que posponer la reunión."),
       w("attend", "asistir", "verb", "All team members attended the call.", "Todos los miembros del equipo asistieron a la llamada."),
     ]),
     u("u33", "Health and Lifestyle", "Discuss habits that support physical and mental health.", [
