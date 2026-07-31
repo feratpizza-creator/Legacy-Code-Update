@@ -58,6 +58,11 @@ type StateFilter = "all" | VocabularyState | "due";
 const PREFS_KEY = "lengoali_word_vocab_v3";
 const LEVELS: LevelFilter[] = ["all", "A0", "A1", "A2", "B1", "B2", "C1", "C2"];
 
+// Learn Words supports exactly three explanation languages. Spanish, French,
+// and other legacy curriculum languages are intentionally excluded so a
+// Spanish translation can never be selected or displayed in this section.
+const EXPLANATION_LANGS = ["ar", "en", "fi"];
+
 function loadPrefs(): VocabPrefs | null {
   try {
     const raw = localStorage.getItem(PREFS_KEY);
@@ -118,7 +123,13 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
     : languagePacks.some((pack) => pack.targetLang === defaultTargetLang)
       ? defaultTargetLang
       : languagePacks[0]?.targetLang || "en";
-  const initialNative = stored?.nativeLang || defaultNativeLang || "ar";
+  // Arabic is the default explanation language; stored or inherited values that
+  // fall outside the allowed set (e.g. legacy "es") are normalized to Arabic.
+  const initialNative = EXPLANATION_LANGS.includes(stored?.nativeLang ?? "")
+    ? stored!.nativeLang
+    : EXPLANATION_LANGS.includes(defaultNativeLang)
+      ? defaultNativeLang
+      : "ar";
   const [targetLang, setTargetLang] = useState(initialTarget);
   const [nativeLang, setNativeLang] = useState(initialNative);
   const [level, setLevel] = useState<LevelFilter>("all");
@@ -165,11 +176,26 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
   const display = current ? {
     ...current,
     ...enriched,
-    // A curriculum meaning is only valid for the language it declares. This
-    // prevents a failed/slow runtime translation from exposing Finnish or
-    // Spanish text under an Arabic label.
-    nativeMeaning: enriched.nativeMeaning ?? (current.nativeMeaningLang === nativeLang ? current.nativeMeaning : ""),
-    exampleTranslation: enriched.exampleTranslation ?? (current.nativeMeaningLang === nativeLang ? current.exampleTranslation : ""),
+    // The selected native language is the single source of truth for every
+    // translated field. A curriculum value is only shown when it declares that
+    // exact language; when the learner studies in the same language (English +
+    // English) the curriculum definition doubles as the explanation; otherwise
+    // the runtime translation pipeline supplies the value, and a failed
+    // request leaves the field blank instead of leaking Spanish or Finnish text.
+    nativeMeaning: enriched.nativeMeaning ?? (
+      current.nativeMeaningLang === nativeLang
+        ? current.nativeMeaning
+        : nativeLang === current.language
+          ? current.definition || current.word
+          : ""
+    ),
+    exampleTranslation: enriched.exampleTranslation ?? (
+      current.nativeMeaningLang === nativeLang ? current.exampleTranslation : ""
+    ),
+    // Definitions are authored in the target language; they are only displayed
+    // as-is in same-language mode, otherwise they come from the runtime
+    // translation (and stay blank if that fails).
+    definition: enriched.definition ?? (nativeLang === current.language ? current.definition : ""),
   } : null;
   const currentReview = current ? getVocabularyReview(progress, current.id) : null;
 
@@ -178,13 +204,21 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
     setSaved(false);
     const currentRequest = ++requestId.current;
     if (!current || !pack) return;
+    // Same-language study (e.g. English + English) needs no runtime
+    // translation: the curriculum definition is the explanation.
+    if (nativeLang === current.language) return;
     const curriculumMeaningLang = current.nativeMeaningLang || pack.explanationLangs[0] || "en";
-    if (nativeLang === curriculumMeaningLang || nativeLang === current.language) return;
+    const needsMeaning = nativeLang !== curriculumMeaningLang;
+    // Definitions are written in the target language, so they are translated
+    // whenever the explanation language differs from the target language.
+    const needsDefinition = Boolean(current.definition);
+    if (!needsMeaning && !needsDefinition) return;
     let active = true;
     void Promise.all([
-      onTranslateText(current.word, current.language, nativeLang),
-      current.example ? onTranslateText(current.example, current.language, nativeLang) : Promise.resolve(null),
-    ]).then(([translation, exampleTranslation]) => {
+      needsMeaning ? onTranslateText(current.word, current.language, nativeLang) : Promise.resolve(null),
+      needsMeaning && current.example ? onTranslateText(current.example, current.language, nativeLang) : Promise.resolve(null),
+      needsDefinition ? onTranslateText(current.definition, current.language, nativeLang) : Promise.resolve(null),
+    ]).then(([translation, exampleTranslation, definition]) => {
       if (!active || currentRequest !== requestId.current) return;
       setEnriched({
         // Never show a curriculum value in the wrong language when the runtime
@@ -192,6 +226,7 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
         // Finnish/Spanish explanation into an Arabic vocabulary view.
         nativeMeaning: translation ?? (current.nativeMeaningLang === nativeLang ? current.nativeMeaning : ""),
         exampleTranslation: exampleTranslation ?? (current.nativeMeaningLang === nativeLang ? current.exampleTranslation : ""),
+        definition: definition ?? "",
       });
     }).catch(() => { /* local curriculum remains the source of truth */ });
     return () => { active = false; };
@@ -220,7 +255,10 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
   }
 
   function saveCurrent() {
-    if (!display) return;
+    // Never persist a card whose explanation is missing: a failed runtime
+    // translation leaves the meaning blank rather than leaking Spanish, and a
+    // blank card must not be saved to the learner's library.
+    if (!display || !display.nativeMeaning) return;
     onSaveWord(display.word, display.language, display.nativeMeaning, {
       translationLang: nativeLang,
       pos: display.pos,
@@ -264,7 +302,7 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
           </button>
         ))}
         <select aria-label={s.selectNativeLang || "Explanation language"} value={nativeLang} onChange={(event) => chooseNative(event.target.value)} style={{ marginLeft: "auto", minWidth: 130, padding: "5px 8px", borderRadius: 20, border: `1px solid ${t.border}`, background: t.card2, color: t.text, fontSize: 11 }}>
-          {Array.from(new Set(["ar", "en", "fi", "es", "fr", "de", ...pack.explanationLangs])).map((code) => <option key={code} value={code}>{code.toUpperCase()}</option>)}
+          {EXPLANATION_LANGS.map((code) => <option key={code} value={code}>{code.toUpperCase()}</option>)}
         </select>
       </div>
 
@@ -306,7 +344,7 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
             </div>
 
             {display?.ipa && <div style={{ color: t.textDim, fontFamily: "monospace", fontSize: 14 }}>/{display.ipa}/</div>}
-            {display?.definition && <InfoBlock title={s.wordDefinition || "Definition"} value={display.definition} t={t} />}
+            {display?.definition && display.definition !== display.nativeMeaning && <InfoBlock title={s.wordDefinition || "Definition"} value={display.definition} t={t} />}
             <InfoBlock title={`${s.wordTranslation || "Meaning"} · ${nativeLang.toUpperCase()}`} value={display?.nativeMeaning || "—"} t={t} direction={nativeLang === "ar" ? "rtl" : "ltr"} />
 
             {display?.example && <div style={{ background: t.card2, borderRadius: 11, padding: 13 }}>
@@ -321,7 +359,7 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
             <DetailList title={s.wordFamily || "Word family"} values={display?.wordFamily || []} t={t} lang={display?.language || targetLang} />
 
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              <button type="button" onClick={saveCurrent} disabled={saved} style={{ ...primaryButtonStyle(), flex: "1 1 160px", opacity: saved ? 0.65 : 1 }}><Star size={16} fill={saved ? "currentColor" : "none"} /> {saved ? (s.saved || "Saved") : (s.saveWord || "Save word")}</button>
+              <button type="button" onClick={saveCurrent} disabled={saved || !display?.nativeMeaning} style={{ ...primaryButtonStyle(), flex: "1 1 160px", opacity: saved || !display?.nativeMeaning ? 0.65 : 1 }}><Star size={16} fill={saved ? "currentColor" : "none"} /> {saved ? (s.saved || "Saved") : (s.saveWord || "Save word")}</button>
               <button type="button" onClick={() => review("again")} style={{ ...reviewButtonStyle("#f97316", t), flex: "1 1 100px" }}><RotateCcw size={14} /> {s.reviewAgain || "Again"}</button>
               <button type="button" onClick={() => review("good")} style={{ ...reviewButtonStyle("#22c55e", t), flex: "1 1 100px" }}><Check size={14} /> {s.reviewGood || "Good"}</button>
               <button type="button" onClick={() => review("easy")} style={{ ...reviewButtonStyle("#a78bfa", t), flex: "1 1 100px" }}><Zap size={14} /> {s.reviewEasy || "Easy"}</button>
