@@ -2468,18 +2468,21 @@ textarea:focus,input:focus,button:focus{outline:none}
               handleRead();
             }, 0);
           }}
-          onSaveWord={(word, srcLang, translation) => {
+          onSaveWord={(word, srcLang, translation, details) => {
             const existing = saved.find((w) => w.word === word && w.srcLang === srcLang);
             if (existing) return;
+            const translationLang = details?.translationLang || srcLang;
             const detail: WordDetail = {
               word,
               srcLang,
-              pos: null,
-              synonym: null,
+              pos: details?.pos || null,
+              synonym: details?.synonym || null,
               pronunciation: null,
               emoji: findEmoji(translation) || findEmoji(word) || null,
-              translations: { [srcLang]: translation },
+              translations: { [translationLang]: translation },
               altMeanings: {},
+              exampleSentence: details?.example,
+              exampleTranslations: details?.exampleTranslation ? { [translationLang]: details.exampleTranslation } : undefined,
               savedAt: Date.now(),
               errorCount: 0,
               successCount: 0,
