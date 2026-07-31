@@ -170,8 +170,8 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
     setSaved(false);
     const currentRequest = ++requestId.current;
     if (!current || !pack) return;
-    const defaultExplanation = pack.explanationLangs[0] || "en";
-    if (nativeLang === defaultExplanation || nativeLang === current.language) return;
+    const curriculumMeaningLang = current.nativeMeaningLang || pack.explanationLangs[0] || "en";
+    if (nativeLang === curriculumMeaningLang || nativeLang === current.language) return;
     let active = true;
     void Promise.all([
       onTranslateText(current.word, current.language, nativeLang),

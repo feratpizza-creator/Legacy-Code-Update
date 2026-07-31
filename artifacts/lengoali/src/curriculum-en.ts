@@ -12,7 +12,7 @@ import type {
   QuizQuestion,
   ReadingText,
 } from "./learn-data";
-import { ADDITIONAL_EN_UNITS as BASE_ADDITIONAL_EN_UNITS } from "./curriculum-en-more";
+import { ADDITIONAL_EN_UNITS as BASE_ADDITIONAL_EN_UNITS } from "./curriculum-en-clean";
 import { ADDITIONAL_EN_PART3_UNITS } from "./curriculum-en-part3";
 
 // ------------------------------------------------------------------------
@@ -218,9 +218,22 @@ function buildLanguagePack(
   additionalUnits: Record<string, UnitSeed[]> = {},
   manualA0U1?: Unit
 ): LanguagePack {
+  const defaultTranslationLang = targetLang === "en" ? "es" : "en";
   const builtLevels = levels.map((l, i) => buildLevel(l, i, additionalUnits[l.cefr]));
+  const localizedLevels = builtLevels.map((level) => ({
+    ...level,
+    units: level.units.map((unit) => ({
+      ...unit,
+      lessons: unit.lessons.map((lesson) => ({
+        ...lesson,
+        vocabulary: lesson.vocabulary.map((item) => item.translationLang
+          ? item
+          : { ...item, translationLang: defaultTranslationLang }),
+      })),
+    })),
+  }));
   if (manualA0U1) {
-    builtLevels[0]!.units[0] = manualA0U1;
+    localizedLevels[0]!.units[0] = manualA0U1;
   }
   return {
     id: `${targetLang}-${explanationLangs[0]}`,
@@ -229,7 +242,7 @@ function buildLanguagePack(
     explanationLangs: explanationLangs as any,
     flag,
     description,
-    levels: builtLevels,
+    levels: localizedLevels,
   };
 }
 

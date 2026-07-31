@@ -26,6 +26,7 @@ export type CurriculumVocabularyWord = {
   audioUrl: string;
   pos: string;
   nativeMeaning: string;
+  nativeMeaningLang: string;
   definition: string;
   example: string;
   exampleTranslation: string;
@@ -86,6 +87,7 @@ function normalizeWord(
     audioUrl: item.audioUrl || "",
     pos: item.pos || "word",
     nativeMeaning: item.translation || "",
+    nativeMeaningLang: item.translationLang || pack.explanationLangs[0] || "en",
     definition: item.definition || "",
     example: item.example || "",
     exampleTranslation: item.exampleTranslation || "",

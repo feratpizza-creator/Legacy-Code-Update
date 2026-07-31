@@ -57,6 +57,8 @@ export type Lesson = {
 export type VocabularyItem = {
   word: string;
   translation: string;
+  /** Language of `translation`; defaults to the pack's primary explanation language. */
+  translationLang?: string;
   pos?: string;
   example?: string;
   exampleTranslation?: string;
