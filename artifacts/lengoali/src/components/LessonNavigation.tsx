@@ -44,6 +44,25 @@ function saveProgress(store: ProgressStore) {
   }
 }
 
+export function saveLessonLocation(
+  pack: LanguagePack,
+  level: Level,
+  unit: Unit,
+  lesson: Lesson
+) {
+  const store = loadProgress() || {};
+  const previous = store[pack.id];
+  store[pack.id] = {
+    packId: pack.id,
+    levelId: level.id,
+    unitId: unit.id,
+    lessonId: lesson.id,
+    completedLessonIds: previous?.completedLessonIds || [],
+    timestamp: Date.now(),
+  };
+  saveProgress(store);
+}
+
 export function markLessonCompleted(
   pack: LanguagePack,
   level: Level,

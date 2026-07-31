@@ -8,7 +8,8 @@ import {
   type QuizQuestion,
   type Exercise,
 } from "./learn-data";
-import LessonNavigation, { loadProgressStore } from "./components/LessonNavigation";
+import LessonNavigation, { loadProgressStore, saveLessonLocation } from "./components/LessonNavigation";
+import LearnWordVocab from "./components/LearnWordVocab";
 import {
   BookOpen,
   ChevronLeft,
@@ -62,11 +63,8 @@ const ONBOARDING_KEY = "lengoali-learn-onboarding";
 function scrollToTop() {
   if (typeof window === "undefined") return;
   const main = document.querySelector("main");
-  if (main) {
-    main.scrollTo({ top: 0, behavior: "smooth" });
-  } else {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  if (main instanceof HTMLElement) main.scrollTop = 0;
+  window.scrollTo(0, 0);
 }
 
 function speak(text: string, lang: string) {
@@ -151,6 +149,7 @@ type LearnCenterProps = {
   languagePacks: LanguagePack[];
   onReadText: (text: string, srcLang: string) => void;
   onSaveWord: (word: string, srcLang: string, translation: string) => void;
+  onTranslateText?: (text: string, sourceLang: string, targetLang: string) => Promise<string | null>;
 };
 
 function loadOnboarding() {
@@ -167,7 +166,25 @@ function saveOnboarding(targetLang: string, nativeLang: string) {
   } catch { /* ignore */ }
 }
 
-export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWord }: LearnCenterProps) {
+async function translateInBrowser(text: string, sourceLang: string, targetLang: string): Promise<string | null> {
+  if (!text.trim() || sourceLang === targetLang) return text;
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(sourceLang)}&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(text)}`;
+    const response = await fetch(url);
+    if (!response.ok) return null;
+    const data = await response.json() as unknown;
+    if (!Array.isArray(data) || !Array.isArray(data[0])) return null;
+    const result = data[0]
+      .map((part) => Array.isArray(part) && typeof part[0] === "string" ? part[0] : "")
+      .join("")
+      .trim();
+    return result || null;
+  } catch {
+    return null;
+  }
+}
+
+export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWord, onTranslateText }: LearnCenterProps) {
   const saved = loadOnboarding();
   const [selectedPack, setSelectedPack] = useState<LanguagePack | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
@@ -179,6 +196,8 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
   const [targetLang, setTargetLang] = useState<string | null>(saved?.targetLang || null);
   const [nativeLang, setNativeLang] = useState<string | null>(saved?.nativeLang || null);
   const [hasResumed, setHasResumed] = useState<boolean>(false);
+  const [learnSubTab, setLearnSubTab] = useState<"lessons" | "words">("lessons");
+  const translateText = onTranslateText || translateInBrowser;
 
   const targetLanguages = useMemo(() => {
     return languagePacks.map((pack) => ({ code: pack.targetLang, name: pack.name, flag: pack.flag }));
@@ -189,32 +208,35 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
     return languagePacks.filter((pack) => pack.targetLang === targetLang);
   }, [languagePacks, targetLang]);
 
-  const allLevels = useMemo(() => {
-    return languagePacks.flatMap((p) => p.levels.map((lvl) => ({ pack: p, level: lvl })));
-  }, [languagePacks]);
-
-  // Auto-resume saved progress on mount
+  // Auto-resume the latest lesson for the selected target language. The saved
+  // location is independent from completion, so leaving Learn also preserves it.
   useEffect(() => {
-    if (hasResumed || selectedPack || languagePacks.length === 0) return;
+    if (hasResumed || selectedPack || languagePacks.length === 0 || !targetLang) return;
     const store = loadProgressStore();
-    if (!store) return;
-    for (const pack of languagePacks) {
-      const loc = store[pack.id];
-      if (!loc) continue;
-      const level = pack.levels.find((l) => l.id === loc.levelId);
-      const unit = level?.units.find((u) => u.id === loc.unitId);
-      const lesson = unit?.lessons.find((ls) => ls.id === loc.lessonId);
-      if (level && unit && lesson) {
-        setSelectedPack(pack);
-        setSelectedLevel(level);
-        setSelectedUnit(unit);
-        setActiveLesson(lesson);
-        setShowOnboarding(false);
-        setHasResumed(true);
-        break;
-      }
+    const pack = languagePacks.find((candidate) => candidate.targetLang === targetLang);
+    const loc = pack ? store?.[pack.id] : undefined;
+    if (!pack || !loc) {
+      setHasResumed(true);
+      return;
     }
-  }, [hasResumed, languagePacks, selectedPack]);
+    const level = pack.levels.find((candidate) => candidate.id === loc.levelId);
+    const unit = level?.units.find((candidate) => candidate.id === loc.unitId);
+    const lesson = unit?.lessons.find((candidate) => candidate.id === loc.lessonId);
+    if (level && unit && lesson) {
+      setSelectedPack(pack);
+      setSelectedLevel(level);
+      setSelectedUnit(unit);
+      setActiveLesson(lesson);
+      setShowOnboarding(false);
+    }
+    setHasResumed(true);
+  }, [hasResumed, languagePacks, selectedPack, targetLang]);
+
+  useEffect(() => {
+    if (selectedPack && selectedLevel && selectedUnit && activeLesson) {
+      saveLessonLocation(selectedPack, selectedLevel, selectedUnit, activeLesson);
+    }
+  }, [activeLesson, selectedLevel, selectedPack, selectedUnit]);
 
   const handleSelectTarget = (code: string) => {
     setTargetLang(code);
@@ -254,6 +276,7 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
         unit={selectedUnit}
         explanationLang={explanationLang}
         onBack={() => setActiveLesson(null)}
+        onTranslateText={translateText}
         onReadText={onReadText}
         onSaveWord={(word, translation) => {
           const key = `${selectedPack.targetLang}:${word}`;
@@ -265,6 +288,7 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
           setSelectedLevel(next.level);
           setSelectedUnit(next.unit);
           setActiveLesson(next.lesson);
+          if (selectedPack) saveLessonLocation(selectedPack, next.level, next.unit, next.lesson);
         }}
         t={t}
         s={s}
@@ -412,9 +436,48 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
     );
   }
 
+  if (learnSubTab === "words") {
+    return (
+      <div style={{ padding: "16px 16px 100px" }}>
+        <div style={{ display: "flex", gap: 8, padding: 4, marginBottom: 16, borderRadius: 12, background: t.card2, border: `1px solid ${t.border}` }}>
+          {(["lessons", "words"] as const).map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              onClick={() => setLearnSubTab(tab)}
+              style={{ flex: 1, padding: "9px 8px", border: "none", borderRadius: 9, background: tab === learnSubTab ? t.card : "transparent", color: tab === learnSubTab ? t.text : t.textDim, cursor: "pointer", fontWeight: 700, fontSize: 13 }}
+            >
+              {tab === "lessons" ? (s.lessons || "Lessons") : (s.learnWords || "New words")}
+            </button>
+          ))}
+        </div>
+        <LearnWordVocab
+          t={t}
+          s={s}
+          defaultTargetLang={targetLang || languagePacks[0]?.targetLang || "en"}
+          defaultNativeLang={nativeLang || "en"}
+          onTranslateText={translateText}
+          onSaveWord={onSaveWord}
+        />
+      </div>
+    );
+  }
+
   // ─── Pack / landing view ───────────────────────────────────────────────────
   return (
     <div style={{ padding: "16px 16px 100px" }}>
+      <div style={{ display: "flex", gap: 8, padding: 4, marginBottom: 16, borderRadius: 12, background: t.card2, border: `1px solid ${t.border}` }}>
+        {(["lessons", "words"] as const).map((tab) => (
+          <button
+            key={tab}
+            type="button"
+            onClick={() => setLearnSubTab(tab)}
+            style={{ flex: 1, padding: "9px 8px", border: "none", borderRadius: 9, background: tab === learnSubTab ? t.card : "transparent", color: tab === learnSubTab ? t.text : t.textDim, cursor: "pointer", fontWeight: 700, fontSize: 13 }}
+          >
+            {tab === "lessons" ? (s.lessons || "Lessons") : (s.learnWords || "New words")}
+          </button>
+        ))}
+      </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
         <div>
           <h1 style={{ color: t.text, margin: "0 0 4px", fontSize: 22 }}>{s.learn || "Learn"}</h1>
@@ -512,6 +575,7 @@ function LessonView({
   unit,
   explanationLang,
   onBack,
+  onTranslateText,
   onReadText,
   onSaveWord,
   onNavigate,
@@ -524,6 +588,7 @@ function LessonView({
   unit: Unit;
   explanationLang: string;
   onBack: () => void;
+  onTranslateText: (text: string, sourceLang: string, targetLang: string) => Promise<string | null>;
   onReadText: (text: string, srcLang: string) => void;
   onSaveWord: (word: string, translation: string) => void;
   onNavigate: (next: { level: Level; unit: Unit; lesson: Lesson }) => void;
@@ -532,10 +597,47 @@ function LessonView({
 }) {
   const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
   const [quizChecked, setQuizChecked] = useState(false);
+  const [translatedExplanations, setTranslatedExplanations] = useState<Record<string, string>>({});
 
   useEffect(() => {
     scrollToTop();
   }, [lesson.id]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const requests: Array<{ key: string; text: string; sourceLang: string }> = [];
+    const add = (key: string, text: string | undefined, sourceLang: string) => {
+      if (text && text.trim() && sourceLang !== explanationLang) requests.push({ key, text, sourceLang });
+    };
+
+    add("objective", lesson.objective, pack.targetLang);
+    lesson.grammar.forEach((grammar, grammarIndex) => {
+      add(`grammar-title-${grammarIndex}`, grammar.title, pack.targetLang);
+      add(`grammar-explanation-${grammarIndex}`, grammar.explanation, pack.targetLang);
+      grammar.examples.forEach((example, exampleIndex) => {
+        add(`grammar-meaning-${grammarIndex}-${exampleIndex}`, example.meaning, "en");
+      });
+    });
+    add("reading-title", lesson.reading.title, pack.targetLang);
+    add("reading-translation", lesson.reading.translation, "en");
+
+    if (!requests.length) {
+      setTranslatedExplanations({});
+      return () => { cancelled = true; };
+    }
+
+    Promise.all(requests.map(async ({ key, text, sourceLang }) => {
+      const translated = await onTranslateText(text, sourceLang, explanationLang);
+      return [key, translated || ""] as const;
+    })).then((results) => {
+      if (cancelled) return;
+      setTranslatedExplanations(Object.fromEntries(results.filter(([, text]) => text)));
+    });
+
+    return () => { cancelled = true; };
+  }, [explanationLang, lesson, onTranslateText, pack.targetLang]);
+
+  const explanation = (key: string, fallback: string) => translatedExplanations[key] || fallback;
 
   const vocabRef = useRef<HTMLDivElement>(null);
   const readingRef = useRef<HTMLDivElement>(null);
@@ -573,7 +675,7 @@ function LessonView({
       </button>
 
       <h2 style={{ color: t.text, margin: "0 0 6px" }}>{lesson.title}</h2>
-      <p style={{ color: t.textDim, margin: "0 0 16px", fontSize: 14 }}>{lesson.objective}</p>
+      <p style={{ color: t.textDim, margin: "0 0 16px", fontSize: 14 }}>{explanation("objective", lesson.objective)}</p>
 
       <div ref={vocabRef}>
         <SectionTitle t={t}>{s.vocabulary || "Vocabulary"}</SectionTitle>
@@ -591,14 +693,14 @@ function LessonView({
             <Card key={g.title} t={t}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                 <Lightbulb size={16} color="#fbbf24" />
-                <span style={{ color: t.text, fontWeight: 700 }}>{g.title}</span>
+                <span style={{ color: t.text, fontWeight: 700 }}>{explanation(`grammar-title-${lesson.grammar.indexOf(g)}`, g.title)}</span>
               </div>
-              <p style={{ color: t.textDim, fontSize: 13, margin: "0 0 10px" }}>{g.explanation}</p>
+              <p style={{ color: t.textDim, fontSize: 13, margin: "0 0 10px" }}>{explanation(`grammar-explanation-${lesson.grammar.indexOf(g)}`, g.explanation)}</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                 {g.examples.map((ex, idx) => (
                   <div key={idx} style={{ background: t.card2, borderRadius: 8, padding: 10 }}>
                     <div style={{ color: t.text, fontWeight: 600 }}>{ex.target}</div>
-                    <div style={{ color: t.textDim, fontSize: 12 }}>{ex.meaning}</div>
+                    <div style={{ color: t.textDim, fontSize: 12 }}>{explanation(`grammar-meaning-${lesson.grammar.indexOf(g)}-${idx}`, ex.meaning)}</div>
                   </div>
                 ))}
               </div>
@@ -610,9 +712,9 @@ function LessonView({
       <div ref={readingRef}>
         <SectionTitle t={t}>{s.reading || "Reading"}</SectionTitle>
         <Card t={t}>
-          {lesson.reading.title && <div style={{ color: t.text, fontWeight: 700, marginBottom: 8 }}>{lesson.reading.title}</div>}
+          {lesson.reading.title && <div style={{ color: t.text, fontWeight: 700, marginBottom: 8 }}>{explanation("reading-title", lesson.reading.title)}</div>}
           <p style={{ color: t.text, margin: "0 0 10px", fontSize: 15, lineHeight: 1.6 }}>{lesson.reading.text}</p>
-          {lesson.reading.translation && <p style={{ color: t.textDim, margin: 0, fontSize: 13 }}>{lesson.reading.translation}</p>}
+          {lesson.reading.translation && <p style={{ color: t.textDim, margin: 0, fontSize: 13 }}>{explanation("reading-translation", lesson.reading.translation)}</p>}
           <button
             onClick={() => onReadText(lesson.reading.text, pack.targetLang)}
             style={{ marginTop: 12, width: "100%", padding: 12, borderRadius: 10, border: "none", background: "#2563eb", color: "#fff", fontSize: 14, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
