@@ -28,6 +28,7 @@ import { ADDITIONAL_EN_PART14_UNITS } from "./curriculum-en-part14";
 import { ADDITIONAL_EN_PART15_UNITS } from "./curriculum-en-part15";
 import { ADDITIONAL_EN_PART16_UNITS } from "./curriculum-en-part16";
 import { ADDITIONAL_EN_PART17_UNITS } from "./curriculum-en-part17";
+import { ENGLISH_UNIT_ENRICHMENTS } from "./curriculum-en-enrichment";
 
 // ------------------------------------------------------------------------
 // Helpers (mirrors curriculum-data.ts helpers to avoid circular imports)
@@ -239,6 +240,20 @@ function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
+function enrichEnglishAdditionalUnits(additionalUnits: Record<string, UnitSeed[]>): Record<string, UnitSeed[]> {
+  return Object.fromEntries(
+    Object.entries(additionalUnits).map(([level, units]) => [
+      level,
+      units.map((unit) => {
+        const enrichment = ENGLISH_UNIT_ENRICHMENTS[level]?.[unit.id] ?? [];
+        return enrichment.length > 0
+          ? { ...unit, words: [...unit.words, ...enrichment] }
+          : unit;
+      }),
+    ]),
+  );
+}
+
 function buildLanguagePack(
   name: string,
   targetLang: string,
@@ -250,7 +265,10 @@ function buildLanguagePack(
   manualA0U1?: Unit
 ): LanguagePack {
   const defaultTranslationLang = targetLang === "en" ? "es" : "en";
-  const builtLevels = levels.map((l, i) => buildLevel(l, i, additionalUnits[l.cefr]));
+  const curriculumUnits = targetLang === "en"
+    ? enrichEnglishAdditionalUnits(additionalUnits)
+    : additionalUnits;
+  const builtLevels = levels.map((l, i) => buildLevel(l, i, curriculumUnits[l.cefr]));
   const localizedLevels = builtLevels.map((level) => ({
     ...level,
     units: level.units.map((unit) => ({
