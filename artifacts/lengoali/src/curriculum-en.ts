@@ -18,6 +18,7 @@ import { ADDITIONAL_EN_PART4_UNITS } from "./curriculum-en-part4";
 import { ADDITIONAL_EN_PART5_UNITS } from "./curriculum-en-part5";
 import { ADDITIONAL_EN_PART6_UNITS } from "./curriculum-en-part6";
 import { ADDITIONAL_EN_PART7_UNITS } from "./curriculum-en-part7";
+import { ADDITIONAL_EN_PART8_UNITS } from "./curriculum-en-part8";
 
 // ------------------------------------------------------------------------
 // Helpers (mirrors curriculum-data.ts helpers to avoid circular imports)
@@ -206,7 +207,7 @@ function mergeAdditionalUnits(...sources: Array<Record<string, UnitSeed[]>>): Re
   return merged;
 }
 
-const ADDITIONAL_EN_UNITS = mergeAdditionalUnits(BASE_ADDITIONAL_EN_UNITS, ADDITIONAL_EN_PART3_UNITS, ADDITIONAL_EN_PART4_UNITS, ADDITIONAL_EN_PART5_UNITS, ADDITIONAL_EN_PART6_UNITS, ADDITIONAL_EN_PART7_UNITS);
+const ADDITIONAL_EN_UNITS = mergeAdditionalUnits(BASE_ADDITIONAL_EN_UNITS, ADDITIONAL_EN_PART3_UNITS, ADDITIONAL_EN_PART4_UNITS, ADDITIONAL_EN_PART5_UNITS, ADDITIONAL_EN_PART6_UNITS, ADDITIONAL_EN_PART7_UNITS, ADDITIONAL_EN_PART8_UNITS);
 
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
