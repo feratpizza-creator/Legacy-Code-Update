@@ -25,6 +25,7 @@ import { ADDITIONAL_EN_PART11_UNITS } from "./curriculum-en-part11";
 import { ADDITIONAL_EN_PART12_UNITS } from "./curriculum-en-part12";
 import { ADDITIONAL_EN_PART13_UNITS } from "./curriculum-en-part13";
 import { ADDITIONAL_EN_PART14_UNITS } from "./curriculum-en-part14";
+import { ADDITIONAL_EN_PART15_UNITS } from "./curriculum-en-part15";
 
 // ------------------------------------------------------------------------
 // Helpers (mirrors curriculum-data.ts helpers to avoid circular imports)
@@ -227,6 +228,7 @@ const ADDITIONAL_EN_UNITS = mergeAdditionalUnits(
   ADDITIONAL_EN_PART12_UNITS,
   ADDITIONAL_EN_PART13_UNITS,
   ADDITIONAL_EN_PART14_UNITS,
+  ADDITIONAL_EN_PART15_UNITS,
 );
 
 function shuffle<T>(arr: T[]): T[] {
