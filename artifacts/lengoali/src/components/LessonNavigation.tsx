@@ -148,6 +148,7 @@ function getNextTarget(
   // Next unit in same level
   if (unitIndex < level.units.length - 1) {
     const nextUnit = level.units[unitIndex + 1];
+    if (!nextUnit?.lessons.length) return null;
     return { type: "unit", level, unit: nextUnit, lesson: nextUnit.lessons[0] };
   }
 
@@ -155,6 +156,7 @@ function getNextTarget(
   if (levelIndex < pack.levels.length - 1) {
     const nextLevel = pack.levels[levelIndex + 1];
     const nextUnit = nextLevel.units[0];
+    if (!nextUnit?.lessons.length) return null;
     return { type: "level", level: nextLevel, unit: nextUnit, lesson: nextUnit.lessons[0] };
   }
 
@@ -178,12 +180,14 @@ function getPrevTarget(
 
   if (unitIndex > 0) {
     const prevUnit = level.units[unitIndex - 1];
+    if (!prevUnit?.lessons.length) return null;
     return { level, unit: prevUnit, lesson: prevUnit.lessons[prevUnit.lessons.length - 1] };
   }
 
   if (levelIndex > 0) {
     const prevLevel = pack.levels[levelIndex - 1];
     const prevUnit = prevLevel.units[prevLevel.units.length - 1];
+    if (!prevUnit?.lessons.length) return null;
     return { level: prevLevel, unit: prevUnit, lesson: prevUnit.lessons[prevUnit.lessons.length - 1] };
   }
 
@@ -226,6 +230,15 @@ function FlashcardReview({ items, t }: { items: VocabularyItem[]; t: Theme }) {
     >
       <div
         onClick={() => setFlipped((f) => !f)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            setFlipped((f) => !f);
+          }
+        }}
+        role="button"
+        tabIndex={0}
+        aria-label={flipped ? "Show the word" : "Show the translation"}
         style={{
           minHeight: 120,
           display: "flex",
@@ -243,13 +256,13 @@ function FlashcardReview({ items, t }: { items: VocabularyItem[]; t: Theme }) {
         </span>
       </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12 }}>
-        <button onClick={prev} style={iconButtonStyle(t)}>
+        <button type="button" onClick={prev} aria-label="Previous flashcard" style={iconButtonStyle(t)}>
           <ChevronLeft size={18} />
         </button>
         <span style={{ fontSize: 12, color: t.textDim }}>
           {idx + 1}/{items.length}
         </span>
-        <button onClick={next} style={iconButtonStyle(t)}>
+        <button type="button" onClick={next} aria-label="Next flashcard" style={iconButtonStyle(t)}>
           <ChevronRight size={18} />
         </button>
       </div>
