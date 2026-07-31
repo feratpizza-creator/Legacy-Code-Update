@@ -70,19 +70,8 @@ function normalizeWord(
   lesson: { id: string; title: string },
   item: VocabularyItem,
 ): CurriculumVocabularyWord {
-  const enriched = item as VocabularyItem & {
-    ipa?: string;
-    audioUrl?: string;
-    definition?: string;
-    synonyms?: string[] | string;
-    antonyms?: string[] | string;
-    collocations?: string[] | string;
-    wordFamily?: string[] | string;
-    tags?: string[] | string;
-    category?: string;
-  };
-  const category = enriched.category || unit.title;
-  const tags = cleanList(enriched.tags);
+  const category = item.category || unit.title;
+  const tags = cleanList(item.tags);
   return {
     id: `${pack.targetLang}:${level}:${unit.id}:${slug(item.word)}`,
     word: item.word,
@@ -93,17 +82,17 @@ function normalizeWord(
     lessonId: lesson.id,
     lessonTitle: lesson.title,
     category,
-    ipa: enriched.ipa || "",
-    audioUrl: enriched.audioUrl || "",
+    ipa: item.ipa || "",
+    audioUrl: item.audioUrl || "",
     pos: item.pos || "word",
     nativeMeaning: item.translation || "",
-    definition: enriched.definition || "",
+    definition: item.definition || "",
     example: item.example || "",
     exampleTranslation: item.exampleTranslation || "",
-    synonyms: cleanList(enriched.synonyms),
-    antonyms: cleanList(enriched.antonyms),
-    collocations: cleanList(enriched.collocations),
-    wordFamily: cleanList(enriched.wordFamily),
+    synonyms: cleanList(item.synonyms),
+    antonyms: cleanList(item.antonyms),
+    collocations: cleanList(item.collocations),
+    wordFamily: cleanList(item.wordFamily),
     cefr: level,
     tags: tags.length ? tags : unitTags(unit.title),
   };
@@ -121,7 +110,9 @@ export function buildVocabularyCatalog(pack: LanguagePack): CurriculumVocabulary
     for (const unit of level.units) {
       for (const lesson of unit.lessons) {
         for (const item of lesson.vocabulary) {
-          const key = `${level.cefr}:${slug(item.word)}`;
+          // Preserve the same word when it is intentionally taught in another
+          // unit, while still removing duplicate entries within one unit.
+          const key = `${level.cefr}:${unit.id}:${slug(item.word)}`;
           if (seen.has(key)) continue;
           seen.add(key);
           result.push(normalizeWord(pack, level.cefr, unit, lesson, item));

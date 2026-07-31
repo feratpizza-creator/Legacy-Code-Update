@@ -60,6 +60,16 @@ export type VocabularyItem = {
   pos?: string;
   example?: string;
   exampleTranslation?: string;
+  /** Optional local/API enrichment; the curriculum remains valid without it. */
+  ipa?: string;
+  audioUrl?: string;
+  definition?: string;
+  synonyms?: string[] | string;
+  antonyms?: string[] | string;
+  collocations?: string[] | string;
+  wordFamily?: string[] | string;
+  tags?: string[] | string;
+  category?: string;
 };
 
 export type GrammarItem = {
