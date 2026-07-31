@@ -598,6 +598,8 @@ function LessonView({
   const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
   const [quizChecked, setQuizChecked] = useState(false);
   const [translatedExplanations, setTranslatedExplanations] = useState<Record<string, string>>({});
+  const translateRef = useRef(onTranslateText);
+  translateRef.current = onTranslateText;
 
   useEffect(() => {
     scrollToTop();
@@ -627,7 +629,7 @@ function LessonView({
     }
 
     Promise.all(requests.map(async ({ key, text, sourceLang }) => {
-      const translated = await onTranslateText(text, sourceLang, explanationLang);
+      const translated = await translateRef.current(text, sourceLang, explanationLang);
       return [key, translated || ""] as const;
     })).then((results) => {
       if (cancelled) return;
@@ -635,7 +637,7 @@ function LessonView({
     });
 
     return () => { cancelled = true; };
-  }, [explanationLang, lesson, onTranslateText, pack.targetLang]);
+  }, [explanationLang, lesson.id, pack.targetLang]);
 
   const explanation = (key: string, fallback: string) => translatedExplanations[key] || fallback;
 
