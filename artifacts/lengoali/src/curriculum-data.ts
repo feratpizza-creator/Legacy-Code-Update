@@ -14,6 +14,7 @@ import type {
 } from "./learn-data";
 import { ADDITIONAL_FI_UNITS as BASE_ADDITIONAL_FI_UNITS } from "./curriculum-data-more";
 import { ADDITIONAL_FI_PART3_UNITS } from "./curriculum-data-part3";
+import { ADDITIONAL_FI_PART4_UNITS } from "./curriculum-data-part4";
 
 // ------------------------------------------------------------------------
 // Helpers
@@ -204,7 +205,7 @@ function mergeAdditionalUnits(...sources: Array<Record<string, UnitSeed[]>>): Re
   return merged;
 }
 
-const ADDITIONAL_FI_UNITS = mergeAdditionalUnits(BASE_ADDITIONAL_FI_UNITS, ADDITIONAL_FI_PART3_UNITS);
+const ADDITIONAL_FI_UNITS = mergeAdditionalUnits(BASE_ADDITIONAL_FI_UNITS, ADDITIONAL_FI_PART3_UNITS, ADDITIONAL_FI_PART4_UNITS);
 
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
