@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { RefreshCw, Star, Volume2 } from "lucide-react";
 
 type Theme = {
@@ -176,6 +176,13 @@ export default function LearnWordVocab({ t, s, defaultTargetLang, defaultNativeL
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
+  const requestId = useRef(0);
+
+  useEffect(() => {
+    return () => {
+      requestId.current += 1;
+    };
+  }, []);
 
   useEffect(() => {
     if (!stored && defaultNativeLang) {
@@ -185,6 +192,7 @@ export default function LearnWordVocab({ t, s, defaultTargetLang, defaultNativeL
   }, [defaultNativeLang, stored]);
 
   const loadNextWord = async (lang = targetLang, native = nativeLang) => {
+    const currentRequest = ++requestId.current;
     setLoading(true);
     setError("");
     setSaved(false);
@@ -201,14 +209,18 @@ export default function LearnWordVocab({ t, s, defaultTargetLang, defaultNativeL
         next = await fetchFinnishWord(word);
       }
       if (!next) throw new Error("word-not-found");
+      if (currentRequest !== requestId.current) return;
 
       const translation = native === lang ? next.definition : await onTranslateText(next.definition, lang, native);
+      if (currentRequest !== requestId.current) return;
       const exampleTranslation = native === lang ? next.example : await onTranslateText(next.example, lang, native);
+      if (currentRequest !== requestId.current) return;
       setEntry({ ...next, translation: translation || next.definition, exampleTranslation: exampleTranslation || next.example });
     } catch {
+      if (currentRequest !== requestId.current) return;
       setError(s.wordApiError || "The word service is unavailable right now. Try again.");
     } finally {
-      setLoading(false);
+      if (currentRequest === requestId.current) setLoading(false);
     }
   };
 
@@ -241,7 +253,7 @@ export default function LearnWordVocab({ t, s, defaultTargetLang, defaultNativeL
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
         <div style={{ color: t.textDim, fontSize: 13 }}>{sourceInfo.flag} {sourceInfo.label} → {nativeInfo.flag} {nativeInfo.label}</div>
-        <button type="button" onClick={() => setConfigured(false)} style={secondaryButtonStyle(t)}>{s.changeLanguage || "Change language"}</button>
+        <button type="button" onClick={() => { requestId.current += 1; setConfigured(false); }} style={secondaryButtonStyle(t)}>{s.changeLanguage || "Change language"}</button>
       </div>
       {loading && <div style={{ color: t.textDim, textAlign: "center", padding: 36 }}>{s.wordLoading || "Finding a new word…"}</div>}
       {error && !loading && <div style={{ color: "#fca5a5", background: "#450a0a", border: "1px solid #7f1d1d", borderRadius: 12, padding: 14, textAlign: "center" }}>{error}</div>}
