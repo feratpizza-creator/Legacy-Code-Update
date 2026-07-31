@@ -39,7 +39,7 @@ function normalizeUnit(finnishUnit: CurriculumUnit, legacyUnit?: CurriculumUnit)
   const words = finnishUnit.words.map((finnishWord, index) => {
     const legacyWord = legacyWords[index];
     return legacyWord && !isContaminatedWord(legacyWord, finnishWord)
-      ? { ...legacyWord, translationLang: "ar" }
+      ? { ...legacyWord, translationLang: inferTranslationLang(legacyWord) }
       : invertFinnishWord(finnishWord);
   });
   const hasContaminatedWord = finnishUnit.words.some((finnishWord, index) => {
@@ -64,9 +64,24 @@ function normalizeUnit(finnishUnit: CurriculumUnit, legacyUnit?: CurriculumUnit)
 
 function isContaminatedWord(legacyWord: VocabularyItem, finnishWord: VocabularyItem): boolean {
   return legacyWord.word === finnishWord.word
+    || legacyWord.translation === finnishWord.word
     || legacyWord.example === finnishWord.example
+    || legacyWord.exampleTranslation === finnishWord.example
     || hasFinnishCharacters(legacyWord.word)
-    || hasFinnishCharacters(legacyWord.example);
+    || hasFinnishCharacters(legacyWord.translation)
+    || hasFinnishCharacters(legacyWord.example)
+    || hasFinnishCharacters(legacyWord.exampleTranslation);
+}
+
+function inferTranslationLang(word: VocabularyItem): string {
+  const values = [word.translation, word.exampleTranslation].filter((value): value is string => Boolean(value));
+  if (values.some(hasArabicCharacters)) return "ar";
+  if (values.some(hasFinnishCharacters)) return "fi";
+  return "es";
+}
+
+function hasArabicCharacters(value: string | undefined): boolean {
+  return typeof value === "string" && /[\u0600-\u06ff]/u.test(value);
 }
 
 function invertFinnishWord(word: VocabularyItem): VocabularyItem {

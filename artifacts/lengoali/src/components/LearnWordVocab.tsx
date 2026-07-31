@@ -162,7 +162,15 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
   }, [filtered, selectedId]);
 
   const current = filtered.find((word) => word.id === selectedId) || filtered[0] || null;
-  const display = current ? { ...current, ...enriched } : null;
+  const display = current ? {
+    ...current,
+    ...enriched,
+    // A curriculum meaning is only valid for the language it declares. This
+    // prevents a failed/slow runtime translation from exposing Finnish or
+    // Spanish text under an Arabic label.
+    nativeMeaning: enriched.nativeMeaning ?? (current.nativeMeaningLang === nativeLang ? current.nativeMeaning : ""),
+    exampleTranslation: enriched.exampleTranslation ?? (current.nativeMeaningLang === nativeLang ? current.exampleTranslation : ""),
+  } : null;
   const currentReview = current ? getVocabularyReview(progress, current.id) : null;
 
   useEffect(() => {
@@ -179,8 +187,11 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
     ]).then(([translation, exampleTranslation]) => {
       if (!active || currentRequest !== requestId.current) return;
       setEnriched({
-        nativeMeaning: translation || current.nativeMeaning,
-        exampleTranslation: exampleTranslation || current.exampleTranslation,
+        // Never show a curriculum value in the wrong language when the runtime
+        // translation request fails. A blank value is safer than leaking a
+        // Finnish/Spanish explanation into an Arabic vocabulary view.
+        nativeMeaning: translation ?? (current.nativeMeaningLang === nativeLang ? current.nativeMeaning : ""),
+        exampleTranslation: exampleTranslation ?? (current.nativeMeaningLang === nativeLang ? current.exampleTranslation : ""),
       });
     }).catch(() => { /* local curriculum remains the source of truth */ });
     return () => { active = false; };
