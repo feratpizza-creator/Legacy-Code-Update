@@ -1,5 +1,17 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { RefreshCw, Star, Volume2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { Check, Search, Star, Volume2, RotateCcw, Zap } from "lucide-react";
+import type { LanguagePack } from "../learn-data";
+import {
+  buildVocabularyCatalog,
+  countVocabularyStates,
+  getVocabularyReview,
+  loadVocabularyProgress,
+  reviewVocabularyWord,
+  saveVocabularyProgress,
+  type CurriculumVocabularyWord,
+  type VocabularyProgress,
+  type VocabularyState,
+} from "../vocabulary-data";
 
 type Theme = {
   card: string;
@@ -18,64 +30,33 @@ export type WordSaveDetails = {
   translationLang: string;
   pos?: string;
   synonym?: string;
+  antonym?: string;
+  collocation?: string;
+  wordFamily?: string;
   example?: string;
   exampleTranslation?: string;
+  ipa?: string;
+  definition?: string;
+  cefr?: string;
+  tags?: string;
 };
 
 type WordVocabProps = {
   t: Theme;
   s: Record<string, string>;
+  languagePacks: LanguagePack[];
   defaultTargetLang: string;
   defaultNativeLang: string;
   onTranslateText: (text: string, sourceLang: string, targetLang: string) => Promise<string | null>;
   onSaveWord: (word: string, sourceLang: string, translation: string, details?: WordSaveDetails) => void;
 };
 
-type WordEntry = {
-  word: string;
-  sourceLang: "en" | "fi";
-  pos: string;
-  definition: string;
-  example: string;
-  synonyms: string[];
-  translation: string;
-  exampleTranslation: string;
-};
-
 type VocabPrefs = { targetLang: string; nativeLang: string };
+type LevelFilter = "all" | "A0" | "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+type StateFilter = "all" | VocabularyState | "due";
 
-type LanguageOption = { code: string; label: string; flag: string; tts: string };
-
-const PREFS_KEY = "lengoali_word_vocab_v2";
-const ENGLISH_WORDS = [
-  "adapt", "bright", "curious", "discover", "gentle", "journey", "notice",
-  "patient", "prepare", "reliable", "share", "steady", "support", "wonder",
-];
-
-const FINNISH_WORDS: Array<Omit<WordEntry, "translation" | "exampleTranslation">> = [
-  { word: "ystävä", sourceLang: "fi", pos: "substantiivi", definition: "ihminen, josta pidät ja johon luotat", example: "Uusi ystäväni asuu lähellä.", synonyms: ["kaveri", "toveri"] },
-  { word: "oppia", sourceLang: "fi", pos: "verbi", definition: "saada uusia tietoja tai taitoja", example: "Haluan oppia uuden sanan joka päivä.", synonyms: ["omaksua", "harjoitella"] },
-  { word: "kaunis", sourceLang: "fi", pos: "adjektiivi", definition: "miellyttävä nähdä tai kokea", example: "Tänään on kaunis aamu.", synonyms: ["ihana", "viehättävä"] },
-  { word: "matka", sourceLang: "fi", pos: "substantiivi", definition: "siirtyminen paikasta toiseen yleensä vapaa-ajalla", example: "Matka alkaa aikaisin aamulla.", synonyms: ["retki", "reissu"] },
-  { word: "tarvita", sourceLang: "fi", pos: "verbi", definition: "olla jonkin tarpeessa", example: "Tarvitsen apua tämän tehtävän kanssa.", synonyms: ["kaivata", "vaatia"] },
-  { word: "tärkeä", sourceLang: "fi", pos: "adjektiivi", definition: "sellainen, jolla on suuri merkitys", example: "Harjoittelu on tärkeä osa oppimista.", synonyms: ["merkittävä", "olennainen"] },
-  { word: "ympäristö", sourceLang: "fi", pos: "substantiivi", definition: "ihmistä tai asiaa ympäröivä kokonaisuus", example: "Pidämme yhdessä huolta ympäristöstä.", synonyms: ["luonto", "elinpiiri"] },
-  { word: "rohkea", sourceLang: "fi", pos: "adjektiivi", definition: "joka toimii pelosta huolimatta", example: "Hän oli rohkea ja kysyi neuvoa.", synonyms: ["urhea", "peloton"] },
-];
-
-const TARGET_LANGUAGES: LanguageOption[] = [
-  { code: "en", label: "English", flag: "🇬🇧", tts: "en-US" },
-  { code: "fi", label: "Suomi", flag: "🇫🇮", tts: "fi-FI" },
-];
-
-const NATIVE_LANGUAGES: LanguageOption[] = [
-  { code: "ar", label: "العربية", flag: "🇸🇦", tts: "ar-SA" },
-  { code: "en", label: "English", flag: "🇬🇧", tts: "en-US" },
-  { code: "fi", label: "Suomi", flag: "🇫🇮", tts: "fi-FI" },
-  { code: "es", label: "Español", flag: "🇪🇸", tts: "es-ES" },
-  { code: "fr", label: "Français", flag: "🇫🇷", tts: "fr-FR" },
-  { code: "de", label: "Deutsch", flag: "🇩🇪", tts: "de-DE" },
-];
+const PREFS_KEY = "lengoali_word_vocab_v3";
+const LEVELS: LevelFilter[] = ["all", "A0", "A1", "A2", "B1", "B2", "C1", "C2"];
 
 function loadPrefs(): VocabPrefs | null {
   try {
@@ -87,12 +68,7 @@ function loadPrefs(): VocabPrefs | null {
 }
 
 function savePrefs(prefs: VocabPrefs) {
-  try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch { /* ignore */ }
-}
-
-function languageInfo(code: string): LanguageOption {
-  return [...TARGET_LANGUAGES, ...NATIVE_LANGUAGES].find((language) => language.code === code)
-    || { code, label: code.toUpperCase(), flag: "🌐", tts: code };
+  try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch { /* storage can be unavailable */ }
 }
 
 function speak(text: string, lang: string) {
@@ -101,310 +77,271 @@ function speak(text: string, lang: string) {
     const synth = window.speechSynthesis;
     synth.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = languageInfo(lang).tts;
+    utterance.lang = lang === "en" ? "en-US" : lang === "fi" ? "fi-FI" : lang === "ar" ? "ar-SA" : lang;
     utterance.rate = 0.9;
     synth.speak(utterance);
-  } catch { /* ignore */ }
+  } catch { /* ignore unavailable TTS */ }
 }
 
-function SpeakButton({ text, lang, t }: { text: string; lang: string; t: Theme }) {
+function SpeakButton({ text, lang, t, label = "Listen" }: { text: string; lang: string; t: Theme; label?: string }) {
   return (
     <button
       type="button"
       onClick={() => speak(text, lang)}
-      title="Listen"
-      style={{ width: 32, height: 32, borderRadius: "50%", border: `1px solid ${t.border}`, background: t.card2, color: "#60a5fa", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}
+      title={label}
+      aria-label={`${label}: ${text}`}
+      style={{ width: 34, height: 34, borderRadius: "50%", border: `1px solid ${t.border}`, background: t.card2, color: "#60a5fa", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}
     >
       <Volume2 size={15} />
     </button>
   );
 }
 
-function firstText(value: unknown): string {
-  if (typeof value === "string") return value;
-  if (value && typeof value === "object" && typeof (value as { text?: unknown }).text === "string") {
-    return (value as { text: string }).text;
-  }
-  return "";
+function labelForState(state: VocabularyState, s: Record<string, string>): string {
+  if (state === "learned") return s.learned || "Learned";
+  if (state === "learning") return s.learning || "Learning";
+  return s.new || "New";
 }
 
-async function fetchJsonWithTimeout(url: string): Promise<unknown> {
-  const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), 7000);
-  try {
-    const response = await fetch(url, { signal: controller.signal });
-    if (!response.ok) return null;
-    return await response.json() as unknown;
-  } finally {
-    window.clearTimeout(timeout);
-  }
+function statusColor(state: VocabularyState): string {
+  return state === "learned" ? "#22c55e" : state === "learning" ? "#f59e0b" : "#60a5fa";
 }
 
-function buildEnglishEntry(word: string, record: Record<string, unknown>): WordEntry | null {
-  const definitions = Array.isArray(record.definition)
-    ? record.definition.filter((item): item is string => typeof item === "string")
-    : [];
-  const examples = Array.isArray(record.example) ? record.example.map(firstText).filter(Boolean) : [];
-  const members = Array.isArray(record.members) ? record.members : [];
-  const synonyms = members
-    .map((member) => member && typeof member === "object" ? (member as { lemma?: unknown }).lemma : "")
-    .filter((lemma): lemma is string => typeof lemma === "string" && lemma.toLowerCase() !== word.toLowerCase())
-    .filter((lemma, index, values) => values.indexOf(lemma) === index)
-    .slice(0, 6);
-
-  if (!definitions.length && !examples.length) return null;
-  return {
-    word,
-    sourceLang: "en",
-    pos: typeof record.partOfSpeech === "string" ? record.partOfSpeech : "word",
-    definition: definitions[0] || `A useful English word to explore: ${word}.`,
-    example: examples[0] || `I used the word ${word} in a sentence today.`,
-    synonyms,
-    translation: "",
-    exampleTranslation: "",
-  };
+function pillStyle(color: string, t: Theme): CSSProperties {
+  return { border: `1px solid ${color}55`, background: `${color}18`, color, borderRadius: 20, padding: "4px 9px", fontSize: 11, fontWeight: 700, whiteSpace: "nowrap" };
 }
 
-function buildDictionaryApiEntry(word: string, data: unknown): WordEntry | null {
-  if (!Array.isArray(data)) return null;
-  const record = data[0];
-  if (!record || typeof record !== "object") return null;
-  const meanings = Array.isArray((record as { meanings?: unknown }).meanings)
-    ? (record as { meanings: unknown[] }).meanings
-    : [];
-  const definitions: string[] = [];
-  const examples: string[] = [];
-  const synonyms: string[] = [];
-  let pos = "word";
-  for (const meaning of meanings) {
-    if (!meaning || typeof meaning !== "object") continue;
-    const item = meaning as { partOfSpeech?: unknown; definitions?: unknown; synonyms?: unknown };
-    if (typeof item.partOfSpeech === "string" && pos === "word") pos = item.partOfSpeech;
-    if (Array.isArray(item.synonyms)) synonyms.push(...item.synonyms.filter((value): value is string => typeof value === "string"));
-    if (!Array.isArray(item.definitions)) continue;
-    for (const definition of item.definitions) {
-      if (!definition || typeof definition !== "object") continue;
-      const itemDefinition = definition as { definition?: unknown; example?: unknown; synonyms?: unknown };
-      if (typeof itemDefinition.definition === "string") definitions.push(itemDefinition.definition);
-      if (typeof itemDefinition.example === "string") examples.push(itemDefinition.example);
-      if (Array.isArray(itemDefinition.synonyms)) synonyms.push(...itemDefinition.synonyms.filter((value): value is string => typeof value === "string"));
-    }
-  }
-  if (!definitions.length && !examples.length) return null;
-  return {
-    word,
-    sourceLang: "en",
-    pos,
-    definition: definitions[0] || `A useful English word to explore: ${word}.`,
-    example: examples[0] || `I used the word ${word} in a sentence today.`,
-    synonyms: synonyms.filter((value, index, values) => value.toLowerCase() !== word.toLowerCase() && values.indexOf(value) === index).slice(0, 6),
-    translation: "",
-    exampleTranslation: "",
-  };
-}
-
-function fallbackEnglishEntry(word: string): WordEntry {
-  return {
-    word,
-    sourceLang: "en",
-    pos: "word",
-    definition: `An English word to practise: ${word}.`,
-    example: `I am learning how to use ${word} in English.`,
-    synonyms: [],
-    translation: "",
-    exampleTranslation: "",
-  };
-}
-
-async function fetchEnglishWord(word: string): Promise<WordEntry | null> {
-  try {
-    const data = await fetchJsonWithTimeout(`https://en-word.net/api/lemma/${encodeURIComponent(word)}`);
-    if (Array.isArray(data)) {
-      const record = data.find((item): item is Record<string, unknown> => Boolean(item && typeof item === "object" && Array.isArray((item as Record<string, unknown>).definition)));
-      const entry = record ? buildEnglishEntry(word, record) : null;
-      if (entry) return entry;
-    }
-  } catch { /* try the second browser-safe source */ }
-
-  try {
-    const data = await fetchJsonWithTimeout(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
-    const entry = buildDictionaryApiEntry(word, data);
-    if (entry) return entry;
-  } catch { /* use the bundled graceful fallback */ }
-
-  return fallbackEnglishEntry(word);
-}
-
-async function fetchFinnishWord(word: Omit<WordEntry, "translation" | "exampleTranslation">): Promise<WordEntry> {
-  try {
-    const url = `https://fi.wiktionary.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&titles=${encodeURIComponent(word.word)}&format=json&origin=*`;
-    const data = await fetchJsonWithTimeout(url) as { query?: { pages?: Record<string, { extract?: string }> } } | null;
-    const page = data?.query?.pages ? Object.values(data.query.pages)[0] : undefined;
-    const extract = page?.extract?.trim();
-    if (extract) return { ...word, definition: extract.split(/\n+/)[0].slice(0, 280), translation: "", exampleTranslation: "" };
-  } catch { /* static Finnish fallback remains available */ }
-  return { ...word, translation: "", exampleTranslation: "" };
-}
-
-export default function LearnWordVocab({ t, s, defaultTargetLang, defaultNativeLang, onTranslateText, onSaveWord }: WordVocabProps) {
+export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang, defaultNativeLang, onTranslateText, onSaveWord }: WordVocabProps) {
   const stored = loadPrefs();
-  const initialTarget = stored?.targetLang || defaultTargetLang || "en";
-  const initialNative = stored?.nativeLang || defaultNativeLang || "en";
+  const initialTarget = languagePacks.some((pack) => pack.targetLang === stored?.targetLang)
+    ? stored!.targetLang
+    : languagePacks.some((pack) => pack.targetLang === defaultTargetLang)
+      ? defaultTargetLang
+      : languagePacks[0]?.targetLang || "en";
+  const initialNative = stored?.nativeLang || defaultNativeLang || "ar";
   const [targetLang, setTargetLang] = useState(initialTarget);
   const [nativeLang, setNativeLang] = useState(initialNative);
-  const [configured, setConfigured] = useState(Boolean(stored));
-  const [draftTarget, setDraftTarget] = useState(initialTarget);
-  const [draftNative, setDraftNative] = useState(initialNative);
-  const [entry, setEntry] = useState<WordEntry | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [level, setLevel] = useState<LevelFilter>("all");
+  const [unitId, setUnitId] = useState("all");
+  const [stateFilter, setStateFilter] = useState<StateFilter>("all");
+  const [search, setSearch] = useState("");
+  const [progress, setProgress] = useState<VocabularyProgress>(() => loadVocabularyProgress());
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
+  const [enriched, setEnriched] = useState<Partial<CurriculumVocabularyWord>>({});
   const requestId = useRef(0);
 
-  useEffect(() => {
-    return () => {
-      requestId.current += 1;
-    };
-  }, []);
+  const pack = languagePacks.find((candidate) => candidate.targetLang === targetLang) || languagePacks[0];
+  const catalog = useMemo(() => pack ? buildVocabularyCatalog(pack) : [], [pack]);
+  const counts = useMemo(() => countVocabularyStates(catalog, progress), [catalog, progress]);
+  const units = useMemo(() => {
+    const byId = new Map<string, { id: string; title: string }>();
+    for (const word of catalog) byId.set(word.unitId, { id: word.unitId, title: word.unitTitle });
+    return Array.from(byId.values());
+  }, [catalog]);
+
+  const filtered = useMemo(() => {
+    const query = search.trim().toLocaleLowerCase();
+    return catalog.filter((word) => {
+      const review = getVocabularyReview(progress, word.id);
+      if (level !== "all" && word.level !== level) return false;
+      if (unitId !== "all" && word.unitId !== unitId) return false;
+      if (stateFilter === "due" && !(review.dueAt <= Date.now() && review.state !== "new")) return false;
+      if (stateFilter !== "all" && stateFilter !== "due" && review.state !== stateFilter) return false;
+      if (!query) return true;
+      return [word.word, word.nativeMeaning, word.unitTitle, word.category, ...word.tags].some((value) => value.toLocaleLowerCase().includes(query));
+    });
+  }, [catalog, level, progress, search, stateFilter, unitId]);
 
   useEffect(() => {
-    if (!stored && defaultNativeLang) {
-      setNativeLang(defaultNativeLang);
-      setDraftNative(defaultNativeLang);
+    if (!filtered.length) {
+      setSelectedId(null);
+      return;
     }
-  }, [defaultNativeLang, stored]);
+    if (!selectedId || !filtered.some((word) => word.id === selectedId)) setSelectedId(filtered[0]!.id);
+  }, [filtered, selectedId]);
 
-  const loadNextWord = async (lang = targetLang, native = nativeLang) => {
-    const currentRequest = ++requestId.current;
-    setLoading(true);
-    setError("");
+  const current = filtered.find((word) => word.id === selectedId) || filtered[0] || null;
+  const display = current ? { ...current, ...enriched } : null;
+  const currentReview = current ? getVocabularyReview(progress, current.id) : null;
+
+  useEffect(() => {
+    setEnriched({});
     setSaved(false);
-    try {
-      let next: WordEntry | null;
-      if (lang === "en") {
-        const start = Math.floor(Math.random() * ENGLISH_WORDS.length);
-        next = null;
-        for (let i = 0; i < ENGLISH_WORDS.length && !next; i += 1) {
-          next = await fetchEnglishWord(ENGLISH_WORDS[(start + i) % ENGLISH_WORDS.length]);
-        }
-      } else {
-        const word = FINNISH_WORDS[Math.floor(Math.random() * FINNISH_WORDS.length)];
-        next = await fetchFinnishWord(word);
-      }
-      if (!next) throw new Error("word-not-found");
-      if (currentRequest !== requestId.current) return;
+    const currentRequest = ++requestId.current;
+    if (!current || !pack) return;
+    const defaultExplanation = pack.explanationLangs[0] || "en";
+    if (nativeLang === defaultExplanation || nativeLang === current.language) return;
+    let active = true;
+    void Promise.all([
+      onTranslateText(current.word, current.language, nativeLang),
+      current.example ? onTranslateText(current.example, current.language, nativeLang) : Promise.resolve(null),
+    ]).then(([translation, exampleTranslation]) => {
+      if (!active || currentRequest !== requestId.current) return;
+      setEnriched({
+        nativeMeaning: translation || current.nativeMeaning,
+        exampleTranslation: exampleTranslation || current.exampleTranslation,
+      });
+    }).catch(() => { /* local curriculum remains the source of truth */ });
+    return () => { active = false; };
+  }, [current, nativeLang, onTranslateText, pack]);
 
-      const translation = native === lang ? next.definition : await onTranslateText(next.definition, lang, native);
-      if (currentRequest !== requestId.current) return;
-      const exampleTranslation = native === lang ? next.example : await onTranslateText(next.example, lang, native);
-      if (currentRequest !== requestId.current) return;
-      setEntry({ ...next, translation: translation || next.definition, exampleTranslation: exampleTranslation || next.example });
-    } catch {
-      if (currentRequest !== requestId.current) return;
-      setError(s.wordApiError || "The word service is unavailable right now. Try again.");
-    } finally {
-      if (currentRequest === requestId.current) setLoading(false);
-    }
-  };
-
-  const confirmSetup = () => {
-    const nextPrefs = { targetLang: draftTarget, nativeLang: draftNative };
-    setTargetLang(nextPrefs.targetLang);
-    setNativeLang(nextPrefs.nativeLang);
-    savePrefs(nextPrefs);
-    setConfigured(true);
-    void loadNextWord(nextPrefs.targetLang, nextPrefs.nativeLang);
-  };
-
-  if (!configured) {
-    return (
-      <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-        <div>
-          <h2 style={{ color: t.text, margin: "0 0 5px", fontSize: 18 }}>{s.learnWords || "New words"}</h2>
-          <p style={{ color: t.textDim, margin: 0, fontSize: 13 }}>{s.wordSetupHint || "Choose the language you want to learn and the language for explanations."}</p>
-        </div>
-        <LanguageChoice title={s.selectLangLearn || "Language to learn"} options={TARGET_LANGUAGES} value={draftTarget} onChange={setDraftTarget} t={t} />
-        <LanguageChoice title={s.selectNativeLang || "Explanation language"} options={NATIVE_LANGUAGES} value={draftNative} onChange={setDraftNative} t={t} />
-        <button type="button" onClick={confirmSetup} style={primaryButtonStyle()}>{s.fetchWord || "Get a new word"} →</button>
-      </div>
-    );
+  function chooseLanguage(code: string) {
+    setTargetLang(code);
+    setLevel("all");
+    setUnitId("all");
+    savePrefs({ targetLang: code, nativeLang });
   }
 
-  const sourceInfo = languageInfo(targetLang);
-  const nativeInfo = languageInfo(nativeLang);
+  function chooseNative(code: string) {
+    setNativeLang(code);
+    savePrefs({ targetLang, nativeLang: code });
+  }
+
+  function review(result: "again" | "good" | "easy") {
+    if (!current) return;
+    const nextProgress = reviewVocabularyWord(progress, current.id, result);
+    setProgress(nextProgress);
+    saveVocabularyProgress(nextProgress);
+    setSaved(false);
+    const index = filtered.findIndex((word) => word.id === current.id);
+    setSelectedId(filtered[(index + 1) % Math.max(filtered.length, 1)]?.id || null);
+  }
+
+  function saveCurrent() {
+    if (!display) return;
+    onSaveWord(display.word, display.language, display.nativeMeaning, {
+      translationLang: nativeLang,
+      pos: display.pos,
+      synonym: display.synonyms.join(", "),
+      antonym: display.antonyms.join(", "),
+      collocation: display.collocations.join(", "),
+      wordFamily: display.wordFamily.join(", "),
+      example: display.example,
+      exampleTranslation: display.exampleTranslation,
+      ipa: display.ipa,
+      definition: display.definition,
+      cefr: display.cefr,
+      tags: display.tags.join(", "),
+    });
+    setSaved(true);
+  }
+
+  if (!pack) {
+    return <div style={{ color: t.textDim, padding: 24, textAlign: "center" }}>{s.wordLoading || "Loading the local vocabulary curriculum…"}</div>;
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-        <div style={{ color: t.textDim, fontSize: 13 }}>{sourceInfo.flag} {sourceInfo.label} → {nativeInfo.flag} {nativeInfo.label}</div>
-        <button type="button" onClick={() => { requestId.current += 1; setConfigured(false); }} style={secondaryButtonStyle(t)}>{s.changeLanguage || "Change language"}</button>
+      <header style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        <h2 style={{ color: t.text, margin: 0, fontSize: 22 }}>{s.learnWords || "New words"}</h2>
+        <p style={{ color: t.textDim, margin: 0, fontSize: 13, lineHeight: 1.6 }}>{s.vocabCurriculumHint || "Study a structured CEFR vocabulary curriculum — not random words."}</p>
+      </header>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 7 }}>
+        {(["new", "learning", "learned"] as const).map((state) => (
+          <button key={state} type="button" onClick={() => setStateFilter(state)} style={{ ...pillStyle(statusColor(state), t), cursor: "pointer", opacity: stateFilter === state ? 1 : 0.7, textAlign: "left" }}>
+            {counts[state]} <span style={{ fontWeight: 500 }}>{labelForState(state, s)}</span>
+          </button>
+        ))}
       </div>
-      {loading && <div style={{ color: t.textDim, textAlign: "center", padding: 36 }}>{s.wordLoading || "Finding a new word…"}</div>}
-      {error && !loading && <div style={{ color: "#fca5a5", background: "#450a0a", border: "1px solid #7f1d1d", borderRadius: 12, padding: 14, textAlign: "center" }}>{error}</div>}
-      {entry && !loading && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <div style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 16, padding: 18 }}>
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
-              <div>
-                <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-                  <strong style={{ color: t.text, fontSize: 28 }}>{entry.word}</strong>
-                  <span style={{ color: "#60a5fa", background: "#60a5fa22", borderRadius: 6, padding: "3px 8px", fontSize: 11 }}>{entry.pos}</span>
-                </div>
-                <div style={{ color: t.textDim, marginTop: 8, fontSize: 14 }}>{entry.definition}</div>
-              </div>
-              <SpeakButton text={entry.word} lang={targetLang} t={t} />
-            </div>
-            <div style={{ background: t.card2, borderRadius: 10, padding: "11px 13px", marginTop: 14, direction: nativeLang === "ar" ? "rtl" : "ltr" }}>
-              <div style={{ color: t.textFaint, fontSize: 11, marginBottom: 4 }}>{nativeInfo.flag} {s.wordTranslation || "Translation"}</div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "space-between" }}>
-                <strong style={{ color: t.text, fontSize: 17 }}>{entry.translation}</strong>
-                <SpeakButton text={entry.translation} lang={nativeLang} t={t} />
-              </div>
-            </div>
-          </div>
-          <div style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 12, padding: 14 }}>
-            <div style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, marginBottom: 6 }}>{s.wordExample || "Example"}</div>
-            <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ color: t.text, fontStyle: "italic", flex: 1 }}>{entry.example}</span>
-              <SpeakButton text={entry.example} lang={targetLang} t={t} />
-            </div>
-            <div style={{ display: "flex", gap: 8, alignItems: "flex-start", marginTop: 8, direction: nativeLang === "ar" ? "rtl" : "ltr" }}>
-              <span style={{ color: t.textDim, flex: 1 }}>{entry.exampleTranslation}</span>
-              <SpeakButton text={entry.exampleTranslation} lang={nativeLang} t={t} />
-            </div>
-          </div>
-          {entry.synonyms.length > 0 && <div style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 12, padding: 14 }}>
-            <div style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, marginBottom: 8 }}>{s.wordSynonym || "Synonyms"}</div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{entry.synonyms.map((synonym) => <span key={synonym} style={{ display: "inline-flex", alignItems: "center", gap: 5, background: t.card2, border: `1px solid ${t.border}`, color: t.textMuted, borderRadius: 18, padding: "5px 9px", fontSize: 13 }}>{synonym}<SpeakButton text={synonym} lang={targetLang} t={t} /></span>)}</div>
-          </div>}
-          <button type="button" onClick={() => { onSaveWord(entry.word, targetLang, entry.translation, {
-              translationLang: nativeLang,
-              pos: entry.pos,
-              synonym: entry.synonyms.join(", "),
-              example: entry.example,
-              exampleTranslation: entry.exampleTranslation,
-            }); setSaved(true); }} disabled={saved} style={{ ...primaryButtonStyle(), opacity: saved ? 0.65 : 1 }}><Star size={16} fill={saved ? "currentColor" : "none"} /> {saved ? (s.saved || "Saved") : (s.saveWord || "Save word")}</button>
+
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        {languagePacks.map((candidate) => (
+          <button key={candidate.targetLang} type="button" onClick={() => chooseLanguage(candidate.targetLang)} style={{ ...pillStyle(candidate.targetLang === targetLang ? "#60a5fa" : t.textMuted, t), cursor: "pointer", opacity: candidate.targetLang === targetLang ? 1 : 0.7 }}>
+            {candidate.flag} {candidate.name}
+          </button>
+        ))}
+        <select aria-label={s.selectNativeLang || "Explanation language"} value={nativeLang} onChange={(event) => chooseNative(event.target.value)} style={{ marginLeft: "auto", minWidth: 130, padding: "5px 8px", borderRadius: 20, border: `1px solid ${t.border}`, background: t.card2, color: t.text, fontSize: 11 }}>
+          {Array.from(new Set(["ar", "en", "fi", "es", "fr", "de", ...pack.explanationLangs])).map((code) => <option key={code} value={code}>{code.toUpperCase()}</option>)}
+        </select>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: 8 }}>
+        <select aria-label={s.levels || "CEFR level"} value={level} onChange={(event) => { setLevel(event.target.value as LevelFilter); setUnitId("all"); }} style={filterStyle(t)}>
+          <option value="all">{s.levels || "All levels"}</option>
+          {LEVELS.slice(1).map((value) => <option key={value} value={value}>{value}</option>)}
+        </select>
+        <select aria-label={s.units || "Unit"} value={unitId} onChange={(event) => setUnitId(event.target.value)} style={filterStyle(t)}>
+          <option value="all">{s.units || "All units"}</option>
+          {units.map((unit) => <option key={unit.id} value={unit.id}>{unit.id} · {unit.title}</option>)}
+        </select>
+      </div>
+      <div style={{ display: "flex", gap: 8 }}>
+        <div style={{ position: "relative", flex: 1 }}>
+          <Search size={14} style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: t.textFaint }} />
+          <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={s.searchVocabulary || "Search this curriculum…"} style={{ ...filterStyle(t), width: "100%", paddingLeft: 32 }} />
         </div>
+        <button type="button" onClick={() => setStateFilter(stateFilter === "due" ? "all" : "due")} style={{ ...filterStyle(t), color: stateFilter === "due" ? "#f59e0b" : t.textMuted, cursor: "pointer", width: "auto" }} title={s.reviewDue || "Due for review"}>🔁</button>
+      </div>
+
+      {!current ? <div style={{ color: t.textDim, textAlign: "center", padding: 28 }}>{s.noVocabularyMatches || "No words match these filters."}</div> : (
+        <>
+          <div style={{ color: t.textDim, fontSize: 12 }}>{filtered.length} {s.words || "words"} · {current.unitTitle} · {current.lessonTitle}</div>
+          <article style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 16, padding: 18, display: "flex", flexDirection: "column", gap: 14 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start" }}>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+                  <strong style={{ color: t.text, fontSize: 30, lineHeight: 1.1 }}>{display?.word}</strong>
+                  <span style={pillStyle(statusColor(currentReview!.state), t)}>{labelForState(currentReview!.state, s)}</span>
+                </div>
+                <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginTop: 10 }}>
+                  <span style={pillStyle("#a78bfa", t)}>{display?.cefr}</span>
+                  <span style={pillStyle("#38bdf8", t)}>{display?.pos}</span>
+                  {display?.tags.map((tag) => <span key={tag} style={pillStyle(t.textMuted, t)}>{tag}</span>)}
+                </div>
+              </div>
+              <SpeakButton text={display?.word || ""} lang={display?.language || targetLang} t={t} />
+            </div>
+
+            {display?.ipa && <div style={{ color: t.textDim, fontFamily: "monospace", fontSize: 14 }}>/{display.ipa}/</div>}
+            {display?.definition && <InfoBlock title={s.wordDefinition || "Definition"} value={display.definition} t={t} />}
+            <InfoBlock title={`${s.wordTranslation || "Meaning"} · ${nativeLang.toUpperCase()}`} value={display?.nativeMeaning || "—"} t={t} direction={nativeLang === "ar" ? "rtl" : "ltr"} />
+
+            {display?.example && <div style={{ background: t.card2, borderRadius: 11, padding: 13 }}>
+              <div style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, marginBottom: 6 }}>{s.wordExample || "Example"}</div>
+              <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}><span style={{ color: t.text, fontStyle: "italic", flex: 1 }}>{display.example}</span><SpeakButton text={display.example} lang={display.language} t={t} /></div>
+              {display.exampleTranslation && <div style={{ color: t.textDim, marginTop: 8, direction: nativeLang === "ar" ? "rtl" : "ltr" }}>{display.exampleTranslation}</div>}
+            </div>}
+
+            <DetailList title={s.wordSynonym || "Synonyms"} values={display?.synonyms || []} t={t} lang={display?.language || targetLang} />
+            <DetailList title={s.wordAntonym || "Antonyms"} values={display?.antonyms || []} t={t} lang={display?.language || targetLang} />
+            <DetailList title={s.wordCollocation || "Common collocations"} values={display?.collocations || []} t={t} lang={display?.language || targetLang} />
+            <DetailList title={s.wordFamily || "Word family"} values={display?.wordFamily || []} t={t} lang={display?.language || targetLang} />
+
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <button type="button" onClick={saveCurrent} disabled={saved} style={{ ...primaryButtonStyle(), flex: "1 1 160px", opacity: saved ? 0.65 : 1 }}><Star size={16} fill={saved ? "currentColor" : "none"} /> {saved ? (s.saved || "Saved") : (s.saveWord || "Save word")}</button>
+              <button type="button" onClick={() => review("again")} style={{ ...reviewButtonStyle("#f97316", t), flex: "1 1 100px" }}><RotateCcw size={14} /> {s.reviewAgain || "Again"}</button>
+              <button type="button" onClick={() => review("good")} style={{ ...reviewButtonStyle("#22c55e", t), flex: "1 1 100px" }}><Check size={14} /> {s.reviewGood || "Good"}</button>
+              <button type="button" onClick={() => review("easy")} style={{ ...reviewButtonStyle("#a78bfa", t), flex: "1 1 100px" }}><Zap size={14} /> {s.reviewEasy || "Easy"}</button>
+            </div>
+          </article>
+          <div style={{ display: "flex", gap: 7, overflowX: "auto", paddingBottom: 2 }}>
+            {filtered.slice(0, 20).map((word) => <button type="button" key={word.id} onClick={() => setSelectedId(word.id)} aria-label={word.word} style={{ minWidth: 9, width: 9, height: 9, padding: 0, borderRadius: "50%", border: 0, background: word.id === current.id ? "#60a5fa" : statusColor(getVocabularyReview(progress, word.id).state), opacity: word.id === current.id ? 1 : 0.55, cursor: "pointer" }} />)}
+          </div>
+        </>
       )}
-      {!loading && <button type="button" onClick={() => void loadNextWord()} style={secondaryButtonStyle(t)}><RefreshCw size={15} /> {s.fetchWord || "Get a new word"}</button>}
     </div>
   );
 }
 
-function LanguageChoice({ title, options, value, onChange, t }: { title: string; options: LanguageOption[]; value: string; onChange: (value: string) => void; t: Theme }) {
-  return (
-    <div>
-      <div style={{ color: t.text, fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{title}</div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 8 }}>
-        {options.map((option) => <button type="button" key={option.code} onClick={() => onChange(option.code)} style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 11px", borderRadius: 10, border: `1px solid ${value === option.code ? "#60a5fa" : t.border}`, background: value === option.code ? "#60a5fa22" : t.card, color: t.text, cursor: "pointer", textAlign: "left" }}><span>{option.flag}</span><span>{option.label}</span>{value === option.code && <span style={{ marginLeft: "auto", color: "#60a5fa" }}>✓</span>}</button>)}
-      </div>
-    </div>
-  );
+function InfoBlock({ title, value, t, direction }: { title: string; value: string; t: Theme; direction?: "ltr" | "rtl" }) {
+  return <div style={{ background: t.card2, borderRadius: 11, padding: 13, color: t.text, lineHeight: 1.65, direction }}><div style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, marginBottom: 3 }}>{title}</div>{value}</div>;
+}
+
+function DetailList({ title, values, t, lang }: { title: string; values: string[]; t: Theme; lang: string }) {
+  if (!values.length) return null;
+  return <div><div style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, marginBottom: 7 }}>{title}</div><div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>{values.map((value) => <span key={value} style={{ display: "inline-flex", gap: 5, alignItems: "center", border: `1px solid ${t.border}`, background: t.card2, color: t.textMuted, borderRadius: 18, padding: "5px 8px", fontSize: 12 }}>{value}<SpeakButton text={value} lang={lang} t={t} /></span>)}</div></div>;
+}
+
+function filterStyle(t: Theme): CSSProperties {
+  return { padding: "9px 10px", borderRadius: 10, border: `1px solid ${t.inputBorder}`, background: t.inputBg, color: t.text, fontSize: 12, minWidth: 0 };
 }
 
 function primaryButtonStyle(): CSSProperties {
-  return { width: "100%", padding: 12, borderRadius: 10, border: "none", background: "#2563eb", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontWeight: 700 };
+  return { padding: 12, borderRadius: 10, border: "none", background: "#2563eb", color: "#fff", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, fontWeight: 700 };
 }
 
-function secondaryButtonStyle(t: Theme): CSSProperties {
-  return { padding: "8px 11px", borderRadius: 9, border: `1px solid ${t.border}`, background: t.card2, color: t.textMuted, cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, fontSize: 12 };
+function reviewButtonStyle(color: string, t: Theme): CSSProperties {
+  return { padding: 10, borderRadius: 10, border: `1px solid ${color}66`, background: `${color}18`, color, cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 5, fontSize: 12, fontWeight: 700 };
 }

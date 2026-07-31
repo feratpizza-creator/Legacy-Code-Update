@@ -341,6 +341,10 @@ const STR: Record<UiLang, Record<string, string>> = {
     wordTranslation: "Translation",
     wordExample: "Example",
     wordSynonym: "Synonyms",
+    wordDefinition: "Definition",
+    wordAntonym: "Antonyms",
+    wordCollocation: "Common collocations",
+    wordFamily: "Word family",
     lessonProgress: "Lesson",
     unitProgress: "Unit Progress",
     levelProgress: "Level Progress",
@@ -483,6 +487,10 @@ const STR: Record<UiLang, Record<string, string>> = {
     wordTranslation: "الترجمة",
     wordExample: "مثال",
     wordSynonym: "مرادفات",
+    wordDefinition: "التعريف",
+    wordAntonym: "المتضادات",
+    wordCollocation: "المصاحبات الشائعة",
+    wordFamily: "عائلة الكلمة",
     lessonProgress: "الدرس",
     unitProgress: "تقدم الوحدة",
     levelProgress: "تقدم المستوى",
@@ -625,6 +633,10 @@ const STR: Record<UiLang, Record<string, string>> = {
     wordTranslation: "Käännös",
     wordExample: "Esimerkki",
     wordSynonym: "Synonyymit",
+    wordDefinition: "Määritelmä",
+    wordAntonym: "Vastakohdat",
+    wordCollocation: "Yleiset sanaparit",
+    wordFamily: "Sanaperhe",
     lessonProgress: "Oppitunti",
     unitProgress: "Yksikön edistyminen",
     levelProgress: "Tason edistyminen",
@@ -767,6 +779,10 @@ const STR: Record<UiLang, Record<string, string>> = {
     wordTranslation: "Traducción",
     wordExample: "Ejemplo",
     wordSynonym: "Sinónimos",
+    wordDefinition: "Definición",
+    wordAntonym: "Antónimos",
+    wordCollocation: "Colocaciones comunes",
+    wordFamily: "Familia de palabras",
     lessonProgress: "Lección",
     unitProgress: "Progreso de la unidad",
     levelProgress: "Progreso del nivel",
@@ -909,6 +925,10 @@ const STR: Record<UiLang, Record<string, string>> = {
     wordTranslation: "Traduction",
     wordExample: "Exemple",
     wordSynonym: "Synonymes",
+    wordDefinition: "Définition",
+    wordAntonym: "Antonymes",
+    wordCollocation: "Collocations courantes",
+    wordFamily: "Famille de mots",
     lessonProgress: "Leçon",
     unitProgress: "Progression de l'unité",
     levelProgress: "Progression du niveau",
@@ -1405,6 +1425,13 @@ type WordDetail = {
   userNote?: string;                          // free-form note
   exampleSentence?: string;                   // source-lang example
   exampleTranslations?: Record<string, string>; // cached sentence translations per lang
+  antonyms?: string[];
+  collocations?: string[];
+  wordFamily?: string[];
+  ipa?: string | null;
+  definition?: string | null;
+  cefr?: string | null;
+  tags?: string[];
   needsReview?: boolean;
   errorCount?: number;
   successCount?: number;
@@ -2461,6 +2488,7 @@ textarea:focus,input:focus,button:focus{outline:none}
           <LearnWordVocab
             t={t}
             s={s}
+            languagePacks={languagePacks}
             defaultTargetLang={languagePacks[0]?.targetLang || "en"}
             defaultNativeLang={targetLangs.find((code) => code !== "en" && code !== "auto") || "ar"}
             onTranslateText={googleTranslateSentence}
@@ -2473,12 +2501,19 @@ textarea:focus,input:focus,button:focus{outline:none}
                 srcLang,
                 pos: details?.pos || null,
                 synonym: details?.synonym || null,
-                pronunciation: null,
+                pronunciation: details?.ipa || null,
                 emoji: findEmoji(translation) || findEmoji(word) || null,
                 translations: { [translationLang]: translation },
                 altMeanings: {},
                 exampleSentence: details?.example,
                 exampleTranslations: details?.exampleTranslation ? { [translationLang]: details.exampleTranslation } : undefined,
+                antonyms: details?.antonym ? details.antonym.split(",").map((value) => value.trim()).filter(Boolean) : undefined,
+                collocations: details?.collocation ? details.collocation.split(",").map((value) => value.trim()).filter(Boolean) : undefined,
+                wordFamily: details?.wordFamily ? details.wordFamily.split(",").map((value) => value.trim()).filter(Boolean) : undefined,
+                ipa: details?.ipa || null,
+                definition: details?.definition || null,
+                cefr: details?.cefr || null,
+                tags: details?.tags ? details.tags.split(",").map((value) => value.trim()).filter(Boolean) : undefined,
                 savedAt: Date.now(),
                 errorCount: 0,
                 successCount: 0,
@@ -2510,12 +2545,19 @@ textarea:focus,input:focus,button:focus{outline:none}
               srcLang,
               pos: details?.pos || null,
               synonym: details?.synonym || null,
-              pronunciation: null,
+              pronunciation: details?.ipa || null,
               emoji: findEmoji(translation) || findEmoji(word) || null,
               translations: { [translationLang]: translation },
               altMeanings: {},
               exampleSentence: details?.example,
               exampleTranslations: details?.exampleTranslation ? { [translationLang]: details.exampleTranslation } : undefined,
+              antonyms: details?.antonym ? details.antonym.split(",").map((value) => value.trim()).filter(Boolean) : undefined,
+              collocations: details?.collocation ? details.collocation.split(",").map((value) => value.trim()).filter(Boolean) : undefined,
+              wordFamily: details?.wordFamily ? details.wordFamily.split(",").map((value) => value.trim()).filter(Boolean) : undefined,
+              ipa: details?.ipa || null,
+              definition: details?.definition || null,
+              cefr: details?.cefr || null,
+              tags: details?.tags ? details.tags.split(",").map((value) => value.trim()).filter(Boolean) : undefined,
               savedAt: Date.now(),
               errorCount: 0,
               successCount: 0,
@@ -2865,12 +2907,23 @@ function SavedCard({ w, t, s, isEditing, setEditing, onDelete, onSetUserTr, onUp
         </div>
       </div>
 
-      {(w.synonym || w.pronunciation) && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, fontSize: 12, color: t.textDim }}>
+      {(w.synonym || w.pronunciation || w.definition || w.cefr || w.tags?.length) && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", fontSize: 12, color: t.textDim }}>
           {w.synonym && <span>≈ <span style={{ direction: srcInfo.dir, fontStyle: "italic" }}>{w.synonym}</span></span>}
           {w.pronunciation && <span style={{ fontFamily: "monospace" }}>/{w.pronunciation}/</span>}
+          {w.definition && <span style={{ flex: "1 1 100%", lineHeight: 1.5 }}>{s.wordDefinition || "Definition"}: {w.definition}</span>}
+          {w.cefr && <span style={{ fontSize: 10, padding: "2px 8px", borderRadius: 20, background: "#a78bfa22", color: "#a78bfa", fontWeight: 700 }}>{w.cefr}</span>}
+          {w.tags?.map((tag) => <span key={tag} style={{ fontSize: 10, padding: "2px 8px", borderRadius: 20, background: `${t.textMuted}18`, color: t.textMuted }}>{tag}</span>)}
         </div>
       )}
+
+      {(w.antonyms?.length || w.collocations?.length || w.wordFamily?.length) ? (
+        <div style={{ display: "flex", flexDirection: "column", gap: 4, fontSize: 12, color: t.textDim }}>
+          {w.antonyms?.length ? <span><strong>{s.wordAntonym || "Antonyms"}:</strong> {w.antonyms.join(", ")}</span> : null}
+          {w.collocations?.length ? <span><strong>{s.wordCollocation || "Collocations"}:</strong> {w.collocations.join(", ")}</span> : null}
+          {w.wordFamily?.length ? <span><strong>{s.wordFamily || "Word family"}:</strong> {w.wordFamily.join(", ")}</span> : null}
+        </div>
+      ) : null}
 
       <div style={{
         display: "grid",
