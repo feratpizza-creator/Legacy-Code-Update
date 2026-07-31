@@ -1959,7 +1959,7 @@ export default function App() {
   }
 
   // App state
-  const [tab, setTab] = useState<"input" | "reader" | "learn" | "saved" | "quiz">("input");
+  const [tab, setTab] = useState<"input" | "reader" | "learn" | "words" | "saved" | "quiz">("input");
   const [rawText, setRawText] = useState("");
   const [paragraphs, setParagraphs] = useState<Paragraph[]>([]);
   const [sheet, setSheet] = useState<WordDetail | null>(null);
@@ -2456,6 +2456,39 @@ textarea:focus,input:focus,button:focus{outline:none}
             onWrong={onQuizWrong}
           />
         )}
+        {/* NEW WORDS TAB */}
+        {tab === "words" && (
+          <LearnWordVocab
+            t={t}
+            s={s}
+            defaultTargetLang={languagePacks[0]?.targetLang || "en"}
+            defaultNativeLang={targetLangs.find((code) => code !== "en" && code !== "auto") || "ar"}
+            onTranslateText={googleTranslateSentence}
+            onSaveWord={(word, srcLang, translation, details) => {
+              const existing = saved.find((w) => w.word === word && w.srcLang === srcLang);
+              if (existing) return;
+              const translationLang = details?.translationLang || srcLang;
+              const detail: WordDetail = {
+                word,
+                srcLang,
+                pos: details?.pos || null,
+                synonym: details?.synonym || null,
+                pronunciation: null,
+                emoji: findEmoji(translation) || findEmoji(word) || null,
+                translations: { [translationLang]: translation },
+                altMeanings: {},
+                exampleSentence: details?.example,
+                exampleTranslations: details?.exampleTranslation ? { [translationLang]: details.exampleTranslation } : undefined,
+                savedAt: Date.now(),
+                errorCount: 0,
+                successCount: 0,
+                needsReview: true,
+              };
+              setSaved((prev) => [detail, ...prev]);
+            }}
+          />
+        )}
+
       {tab === "learn" && (
         <LearnCenter
           t={t}
@@ -2500,6 +2533,7 @@ textarea:focus,input:focus,button:focus{outline:none}
           { id: "input" as const, Icon: FileText, label: s.text },
           { id: "reader" as const, Icon: BookOpen, label: s.reader },
           { id: "learn" as const, Icon: GraduationCap, label: s.learn },
+          { id: "words" as const, Icon: Plus, label: s.learnWords },
           { id: "saved" as const, Icon: Star, label: `${s.saved} (${saved.length})` },
           { id: "quiz" as const, Icon: Brain, label: s.quiz },
         ]).map(({ id, Icon, label }) => (

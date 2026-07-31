@@ -9,7 +9,7 @@ import {
   type Exercise,
 } from "./learn-data";
 import LessonNavigation, { loadProgressStore, saveLessonLocation } from "./components/LessonNavigation";
-import LearnWordVocab, { type WordSaveDetails } from "./components/LearnWordVocab";
+import type { WordSaveDetails } from "./components/LearnWordVocab";
 import {
   BookOpen,
   ChevronLeft,
@@ -206,7 +206,6 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
   const [targetLang, setTargetLang] = useState<string | null>(saved?.targetLang || null);
   const [nativeLang, setNativeLang] = useState<string | null>(saved?.nativeLang || null);
   const [hasResumed, setHasResumed] = useState<boolean>(false);
-  const [learnSubTab, setLearnSubTab] = useState<"lessons" | "words">("lessons");
   const translateText = onTranslateText || translateInBrowser;
 
   const targetLanguages = useMemo(() => {
@@ -446,48 +445,9 @@ export default function LearnCenter({ t, s, languagePacks, onReadText, onSaveWor
     );
   }
 
-  if (learnSubTab === "words") {
-    return (
-      <div style={{ padding: "16px 16px 100px" }}>
-        <div style={{ display: "flex", gap: 8, padding: 4, marginBottom: 16, borderRadius: 12, background: t.card2, border: `1px solid ${t.border}` }}>
-          {(["lessons", "words"] as const).map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => setLearnSubTab(tab)}
-              style={{ flex: 1, padding: "9px 8px", border: "none", borderRadius: 9, background: tab === learnSubTab ? t.card : "transparent", color: tab === learnSubTab ? t.text : t.textDim, cursor: "pointer", fontWeight: 700, fontSize: 13 }}
-            >
-              {tab === "lessons" ? (s.lessons || "Lessons") : (s.learnWords || "New words")}
-            </button>
-          ))}
-        </div>
-        <LearnWordVocab
-          t={t}
-          s={s}
-          defaultTargetLang={targetLang || languagePacks[0]?.targetLang || "en"}
-          defaultNativeLang={nativeLang || "en"}
-          onTranslateText={translateText}
-          onSaveWord={onSaveWord}
-        />
-      </div>
-    );
-  }
-
   // ─── Pack / landing view ───────────────────────────────────────────────────
   return (
     <div style={{ padding: "16px 16px 100px" }}>
-      <div style={{ display: "flex", gap: 8, padding: 4, marginBottom: 16, borderRadius: 12, background: t.card2, border: `1px solid ${t.border}` }}>
-        {(["lessons", "words"] as const).map((tab) => (
-          <button
-            key={tab}
-            type="button"
-            onClick={() => setLearnSubTab(tab)}
-            style={{ flex: 1, padding: "9px 8px", border: "none", borderRadius: 9, background: tab === learnSubTab ? t.card : "transparent", color: tab === learnSubTab ? t.text : t.textDim, cursor: "pointer", fontWeight: 700, fontSize: 13 }}
-          >
-            {tab === "lessons" ? (s.lessons || "Lessons") : (s.learnWords || "New words")}
-          </button>
-        ))}
-      </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
         <div>
           <h1 style={{ color: t.text, margin: "0 0 4px", fontSize: 22 }}>{s.learn || "Learn"}</h1>
