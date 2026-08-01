@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { FileText, BookOpen, Star, Volume2, Sun, Moon, Plus, X, Globe, ChevronDown, Palette, Edit3, Search, Shuffle, Award, RefreshCw, Brain, MessageSquare, GraduationCap } from "lucide-react";
+import { FileText, BookOpen, Star, Volume2, Sun, Moon, Coffee, Leaf, Plus, X, Globe, ChevronDown, Palette, Edit3, Search, Shuffle, Award, RefreshCw, Brain, MessageSquare, GraduationCap } from "lucide-react";
 import LearnCenter from "./LearnCenter";
 import LearnWordVocab, { type WordSaveDetails } from "./components/LearnWordVocab";
 import { loadLanguagePacks, type LanguagePack } from "./learn-data";
@@ -136,19 +136,69 @@ function SpeakBtn({ text, ttsLang, size = 14, color = "#60a5fa" }: { text: strin
 
 // ─── Theme ─────────────────────────────────────────────────────────────────────
 
-const DARK = {
+const DARK_BASE = {
   bg: "#0c0f14", card: "#111827", card2: "#0d1117", border: "#1e2533",
   text: "#e2e8f0", textMuted: "#94a3b8", textDim: "#475569", textFaint: "#334155",
   textGhost: "#2d3748", navBg: "#0c0f14", inputBg: "#111827", inputBorder: "#1e2d3d",
   pillBg: "#0c0f14", overlay: "#000000b0", overlayFull: "#0c0f14", sheetBg: "#111827",
 };
-const LIGHT = {
+const LIGHT_BASE = {
   bg: "#f1f5f9", card: "#ffffff", card2: "#f8fafc", border: "#e2e8f0",
   text: "#0f172a", textMuted: "#334155", textDim: "#64748b", textFaint: "#94a3b8",
   textGhost: "#cbd5e1", navBg: "#ffffff", inputBg: "#ffffff", inputBorder: "#cbd5e1",
   pillBg: "#f8fafc", overlay: "#00000060", overlayFull: "#f1f5f9", sheetBg: "#ffffff",
 };
-type Theme = typeof DARK;
+const BROWN = {
+  bg: "#f5efe6", card: "#fffaf3", card2: "#f8f1e7", border: "#e6d5c0",
+  text: "#3b2a20", textMuted: "#6f5543", textDim: "#927965", textFaint: "#bda797",
+  textGhost: "#d8c6b6", navBg: "#fffaf3", inputBg: "#fffaf3", inputBorder: "#d9bea4",
+  pillBg: "#f8f1e7", overlay: "#3b2a2090", overlayFull: "#f5efe6", sheetBg: "#fffaf3",
+};
+const GREEN = {
+  bg: "#eef7f1", card: "#f8fffb", card2: "#f2faf5", border: "#cfe7d7",
+  text: "#153b2a", textMuted: "#35634b", textDim: "#6b907b", textFaint: "#9bbbab",
+  textGhost: "#c7ded0", navBg: "#f8fffb", inputBg: "#f8fffb", inputBorder: "#b9d8c4",
+  pillBg: "#f2faf5", overlay: "#102a1d90", overlayFull: "#eef7f1", sheetBg: "#f8fffb",
+};
+type Theme = typeof DARK_BASE;
+type ThemeMode = "dark" | "light" | "brown" | "green";
+const THEME_MODES: ThemeMode[] = ["dark", "light", "brown", "green"];
+const THEMES: Record<ThemeMode, Theme> = { dark: DARK_BASE, light: LIGHT_BASE, brown: BROWN, green: GREEN };
+
+function readThemeMode(): ThemeMode {
+  try {
+    const saved = localStorage.getItem("lengoali_theme");
+    return saved && THEME_MODES.includes(saved as ThemeMode) ? saved as ThemeMode : "dark";
+  } catch { return "dark"; }
+}
+
+// The legacy shell still owns a boolean theme state. These lightweight proxies
+// keep that shell compatible while allowing the single button to cycle through
+// all four palettes without changing unrelated application state.
+const themeProxy = (fallback: Theme): Theme => new Proxy(fallback, {
+  get(target, property, receiver) {
+    const selected = THEMES[readThemeMode()];
+    return Reflect.get(selected, property, receiver) ?? Reflect.get(target, property, receiver);
+  },
+});
+const DARK = themeProxy(DARK_BASE);
+const LIGHT = themeProxy(LIGHT_BASE);
+
+if (typeof window !== "undefined") {
+  const storagePrototype = Storage.prototype as Storage & { __lengoaliThemeCycle?: boolean };
+  if (!storagePrototype.__lengoaliThemeCycle) {
+    const originalSetItem = storagePrototype.setItem;
+    storagePrototype.setItem = function (key: string, value: string) {
+      if (key === "lengoali_theme") {
+        const current = readThemeMode();
+        const next = THEME_MODES[(THEME_MODES.indexOf(current) + 1) % THEME_MODES.length];
+        return originalSetItem.call(this, key, next);
+      }
+      return originalSetItem.call(this, key, value);
+    };
+    storagePrototype.__lengoaliThemeCycle = true;
+  }
+}
 
 // ─── Language registry ────────────────────────────────────────────────────────
 
@@ -305,6 +355,10 @@ const STR: Record<UiLang, Record<string, string>> = {
     savedWordsTitle: "Saved Words",
     light: "Light mode",
     dark: "Dark mode",
+    themeLight: "Light mode",
+    themeDark: "Dark mode",
+    themeBrown: "Brown theme",
+    themeGreen: "Green theme",
     uiLanguage: "Interface language",
     noFlashcards: "No saved words to study.",
     learn: "Learn",
@@ -451,6 +505,10 @@ const STR: Record<UiLang, Record<string, string>> = {
     savedWordsTitle: "الكلمات المحفوظة",
     light: "الوضع الفاتح",
     dark: "الوضع الداكن",
+    themeLight: "الثيم الفاتح",
+    themeDark: "الثيم الداكن",
+    themeBrown: "الثيم البني",
+    themeGreen: "الثيم الأخضر",
     uiLanguage: "لغة الواجهة",
     noFlashcards: "لا توجد كلمات محفوظة للدراسة.",
     learn: "تعلّم",
@@ -597,6 +655,10 @@ const STR: Record<UiLang, Record<string, string>> = {
     savedWordsTitle: "Tallennetut sanat",
     light: "Vaalea tila",
     dark: "Tumma tila",
+    themeLight: "Vaalea tila",
+    themeDark: "Tumma tila",
+    themeBrown: "Ruskea teema",
+    themeGreen: "Vihreä teema",
     uiLanguage: "Käyttöliittymän kieli",
     noFlashcards: "Ei tallennettuja sanoja opiskeltavaksi.",
     learn: "Opi",
@@ -743,6 +805,10 @@ const STR: Record<UiLang, Record<string, string>> = {
     savedWordsTitle: "Palabras Guardadas",
     light: "Modo claro",
     dark: "Modo oscuro",
+    themeLight: "Modo claro",
+    themeDark: "Modo oscuro",
+    themeBrown: "Tema marrón",
+    themeGreen: "Tema verde",
     uiLanguage: "Idioma de la interfaz",
     noFlashcards: "No hay palabras guardadas para estudiar.",
     learn: "Aprender",
@@ -889,6 +955,10 @@ const STR: Record<UiLang, Record<string, string>> = {
     savedWordsTitle: "Mots Enregistrés",
     light: "Mode clair",
     dark: "Mode sombre",
+    themeLight: "Mode clair",
+    themeDark: "Mode sombre",
+    themeBrown: "Thème brun",
+    themeGreen: "Thème vert",
     uiLanguage: "Langue de l'interface",
     noFlashcards: "Aucun mot enregistré à étudier.",
     learn: "Apprendre",
