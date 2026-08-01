@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: Validate English curriculum
+        run: pnpm --filter @workspace/scripts run validate:curriculum
+
       - name: Build Lengoali
         run: pnpm --filter @workspace/lengoali run build
         env:
