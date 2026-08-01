@@ -149,16 +149,16 @@ const LIGHT_BASE = {
   pillBg: "#f8fafc", overlay: "#00000060", overlayFull: "#f1f5f9", sheetBg: "#ffffff",
 };
 const BROWN = {
-  bg: "#f5efe6", card: "#fffaf3", card2: "#f8f1e7", border: "#e6d5c0",
-  text: "#3b2a20", textMuted: "#6f5543", textDim: "#927965", textFaint: "#bda797",
-  textGhost: "#d8c6b6", navBg: "#fffaf3", inputBg: "#fffaf3", inputBorder: "#d9bea4",
-  pillBg: "#f8f1e7", overlay: "#3b2a2090", overlayFull: "#f5efe6", sheetBg: "#fffaf3",
+  bg: "#241812", card: "#342218", card2: "#402a1d", border: "#6b4934",
+  text: "#fff4e8", textMuted: "#dfbda3", textDim: "#bd9373", textFaint: "#8f6953",
+  textGhost: "#674839", navBg: "#342218", inputBg: "#2d1e16", inputBorder: "#7c553b",
+  pillBg: "#402a1d", overlay: "#160d09b8", overlayFull: "#241812", sheetBg: "#342218",
 };
 const GREEN = {
-  bg: "#eef7f1", card: "#f8fffb", card2: "#f2faf5", border: "#cfe7d7",
-  text: "#153b2a", textMuted: "#35634b", textDim: "#6b907b", textFaint: "#9bbbab",
-  textGhost: "#c7ded0", navBg: "#f8fffb", inputBg: "#f8fffb", inputBorder: "#b9d8c4",
-  pillBg: "#f2faf5", overlay: "#102a1d90", overlayFull: "#eef7f1", sheetBg: "#f8fffb",
+  bg: "#071f16", card: "#0d2d20", card2: "#123a29", border: "#2d6548",
+  text: "#e5fff0", textMuted: "#b7dfc6", textDim: "#82b799", textFaint: "#5d8d71",
+  textGhost: "#2d6248", navBg: "#0d2d20", inputBg: "#0b271b", inputBorder: "#397957",
+  pillBg: "#123a29", overlay: "#03140db8", overlayFull: "#071f16", sheetBg: "#0d2d20",
 };
 type Theme = typeof DARK_BASE;
 type ThemeMode = "dark" | "light" | "brown" | "green";
