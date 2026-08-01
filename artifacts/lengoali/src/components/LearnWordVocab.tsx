@@ -61,7 +61,101 @@ const LEVELS: LevelFilter[] = ["all", "A0", "A1", "A2", "B1", "B2", "C1", "C2"];
 // Learn Words supports exactly three explanation languages. Spanish, French,
 // and other legacy curriculum languages are intentionally excluded so a
 // Spanish translation can never be selected or displayed in this section.
-const EXPLANATION_LANGS = ["ar", "en", "fi"];
+const EXPLANATION_LANGS = ["ar", "en", "fi"] as const;
+
+type ExplanationLanguage = (typeof EXPLANATION_LANGS)[number];
+
+const WORD_UI: Record<ExplanationLanguage, Record<string, string>> = {
+  ar: {
+    learnWords: "تعلّم كلمات جديدة",
+    vocabCurriculumHint: "ادرس مفردات منظمة وفق مستويات CEFR، وليس كلمات عشوائية.",
+    learned: "تم التعلم",
+    learning: "قيد التعلم",
+    new: "جديدة",
+    selectNativeLang: "لغة الشرح",
+    levels: "المستويات",
+    units: "الوحدات",
+    words: "كلمات",
+    searchVocabulary: "ابحث في هذا المنهج…",
+    reviewDue: "حان وقت المراجعة",
+    noVocabularyMatches: "لا توجد كلمات تطابق هذه المرشحات.",
+    wordLoading: "جارٍ تحميل منهج المفردات…",
+    wordDefinition: "التعريف",
+    wordTranslation: "المعنى",
+    wordExample: "مثال",
+    wordSynonym: "المرادفات",
+    wordAntonym: "المتضادات",
+    wordCollocation: "المصاحبات الشائعة",
+    wordFamily: "عائلة الكلمة",
+    saved: "محفوظة",
+    saveWord: "حفظ الكلمة",
+    reviewAgain: "مرة أخرى",
+    reviewGood: "جيد",
+    reviewEasy: "سهل",
+  },
+  en: {
+    learnWords: "Learn new words",
+    vocabCurriculumHint: "Study a structured CEFR vocabulary curriculum — not random words.",
+    learned: "Learned",
+    learning: "Learning",
+    new: "New",
+    selectNativeLang: "Explanation language",
+    levels: "Levels",
+    units: "Units",
+    words: "words",
+    searchVocabulary: "Search this curriculum…",
+    reviewDue: "Due for review",
+    noVocabularyMatches: "No words match these filters.",
+    wordLoading: "Loading the vocabulary curriculum…",
+    wordDefinition: "Definition",
+    wordTranslation: "Meaning",
+    wordExample: "Example",
+    wordSynonym: "Synonyms",
+    wordAntonym: "Antonyms",
+    wordCollocation: "Common collocations",
+    wordFamily: "Word family",
+    saved: "Saved",
+    saveWord: "Save word",
+    reviewAgain: "Again",
+    reviewGood: "Good",
+    reviewEasy: "Easy",
+  },
+  fi: {
+    learnWords: "Uudet sanat",
+    vocabCurriculumHint: "Opiskele jäsenneltyä CEFR-sanastoa — älä satunnaisia sanoja.",
+    learned: "Opittu",
+    learning: "Oppimassa",
+    new: "Uusi",
+    selectNativeLang: "Selityskieli",
+    levels: "Tasot",
+    units: "Yksiköt",
+    words: "sanaa",
+    searchVocabulary: "Hae tästä opetussuunnitelmasta…",
+    reviewDue: "Kertaus on ajankohtainen",
+    noVocabularyMatches: "Mikään sana ei vastaa näitä suodattimia.",
+    wordLoading: "Ladataan sanastoa…",
+    wordDefinition: "Määritelmä",
+    wordTranslation: "Merkitys",
+    wordExample: "Esimerkki",
+    wordSynonym: "Synonyymit",
+    wordAntonym: "Vastakohdat",
+    wordCollocation: "Yleiset sanaparit",
+    wordFamily: "Sanaperhe",
+    saved: "Tallennettu",
+    saveWord: "Tallenna sana",
+    reviewAgain: "Uudelleen",
+    reviewGood: "Hyvä",
+    reviewEasy: "Helppo",
+  },
+};
+
+function nativeLanguageName(code: ExplanationLanguage): string {
+  return code === "ar" ? "العربية" : code === "fi" ? "Suomi" : "English";
+}
+
+function getWordUi(code: string): Record<string, string> {
+  return WORD_UI[EXPLANATION_LANGS.includes(code as ExplanationLanguage) ? code as ExplanationLanguage : "ar"];
+}
 
 function loadPrefs(): VocabPrefs | null {
   try {
@@ -102,10 +196,10 @@ function SpeakButton({ text, lang, t, label = "Listen" }: { text: string; lang: 
   );
 }
 
-function labelForState(state: VocabularyState, s: Record<string, string>): string {
-  if (state === "learned") return s.learned || "Learned";
-  if (state === "learning") return s.learning || "Learning";
-  return s.new || "New";
+function labelForState(state: VocabularyState, ui: Record<string, string>): string {
+  if (state === "learned") return ui.learned;
+  if (state === "learning") return ui.learning;
+  return ui.new;
 }
 
 function statusColor(state: VocabularyState): string {
@@ -116,22 +210,24 @@ function pillStyle(color: string, t: Theme): CSSProperties {
   return { border: `1px solid ${color}55`, background: `${color}18`, color, borderRadius: 20, padding: "4px 9px", fontSize: 11, fontWeight: 700, whiteSpace: "nowrap" };
 }
 
-export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang, defaultNativeLang, onTranslateText, onSaveWord }: WordVocabProps) {
+export default function LearnWordVocab({ t, languagePacks, defaultTargetLang, defaultNativeLang: _defaultNativeLang, onTranslateText, onSaveWord }: WordVocabProps) {
   const stored = loadPrefs();
   const initialTarget = languagePacks.some((pack) => pack.targetLang === stored?.targetLang)
     ? stored!.targetLang
-    : languagePacks.some((pack) => pack.targetLang === defaultTargetLang)
-      ? defaultTargetLang
-      : languagePacks[0]?.targetLang || "en";
-  // Arabic is the default explanation language; stored or inherited values that
-  // fall outside the allowed set (e.g. legacy "es") are normalized to Arabic.
-  const initialNative = EXPLANATION_LANGS.includes(stored?.nativeLang ?? "")
-    ? stored!.nativeLang
-    : EXPLANATION_LANGS.includes(defaultNativeLang)
-      ? defaultNativeLang
-      : "ar";
+    : languagePacks.some((pack) => pack.targetLang === "en")
+      ? "en"
+      : languagePacks.some((pack) => pack.targetLang === defaultTargetLang)
+        ? defaultTargetLang
+        : languagePacks[0]?.targetLang || "en";
+  // Arabic is always the default explanation language in Learn Words. Stored
+  // legacy values such as "es", and values inherited from the wider app, are
+  // intentionally ignored unless the user has explicitly selected ar/en/fi.
+  const initialNative: ExplanationLanguage = EXPLANATION_LANGS.includes(stored?.nativeLang as ExplanationLanguage)
+    ? stored!.nativeLang as ExplanationLanguage
+    : "ar";
   const [targetLang, setTargetLang] = useState(initialTarget);
-  const [nativeLang, setNativeLang] = useState(initialNative);
+  const [nativeLang, setNativeLang] = useState<ExplanationLanguage>(initialNative);
+  const currentUi = getWordUi(nativeLang);
   const [level, setLevel] = useState<LevelFilter>("all");
   const [unitId, setUnitId] = useState("all");
   const [stateFilter, setStateFilter] = useState<StateFilter>("all");
@@ -176,25 +272,26 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
   const display = current ? {
     ...current,
     ...enriched,
-    // The selected native language is the single source of truth for every
-    // translated field. A curriculum value is only shown when it declares that
-    // exact language; when the learner studies in the same language (English +
-    // English) the curriculum definition doubles as the explanation; otherwise
-    // the runtime translation pipeline supplies the value, and a failed
-    // request leaves the field blank instead of leaking Spanish or Finnish text.
+    // The selected native language is the single source of truth. A legacy
+    // curriculum translation is only shown when its declared language matches
+    // that selection; otherwise the runtime result is used, or the field stays
+    // blank while the request is unavailable.
     nativeMeaning: enriched.nativeMeaning ?? (
       current.nativeMeaningLang === nativeLang
-        ? current.nativeMeaning
+        ? current.definition || current.nativeMeaning
         : nativeLang === current.language
           ? current.definition || current.word
           : ""
     ),
     exampleTranslation: enriched.exampleTranslation ?? (
-      current.nativeMeaningLang === nativeLang ? current.exampleTranslation : ""
+      current.nativeMeaningLang === nativeLang
+        ? current.exampleTranslation
+        : nativeLang === current.language
+          ? current.example
+          : ""
     ),
-    // Definitions are authored in the target language; they are only displayed
-    // as-is in same-language mode, otherwise they come from the runtime
-    // translation (and stay blank if that fails).
+    // A definition is authored in the target language and is therefore only
+    // safe to display directly when the learner explains in that same language.
     definition: enriched.definition ?? (nativeLang === current.language ? current.definition : ""),
   } : null;
   const currentReview = current ? getVocabularyReview(progress, current.id) : null;
@@ -204,31 +301,53 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
     setSaved(false);
     const currentRequest = ++requestId.current;
     if (!current || !pack) return;
-    // Same-language study (e.g. English + English) needs no runtime
-    // translation: the curriculum definition is the explanation.
-    if (nativeLang === current.language) return;
+
+    const sameLanguage = nativeLang === current.language;
     const curriculumMeaningLang = current.nativeMeaningLang || pack.explanationLangs[0] || "en";
-    const needsMeaning = nativeLang !== curriculumMeaningLang;
-    // Definitions are written in the target language, so they are translated
-    // whenever the explanation language differs from the target language.
-    const needsDefinition = Boolean(current.definition);
-    if (!needsMeaning && !needsDefinition) return;
+    const needsMeaning = !sameLanguage && nativeLang !== curriculumMeaningLang;
+    const needsExampleTranslation = Boolean(current.example) && !sameLanguage && nativeLang !== curriculumMeaningLang;
+    // Finnish curriculum entries commonly use an English gloss and do not
+    // always have a target-language definition. Translate that gloss into
+    // Finnish so Finnish + Finnish still receives a Finnish explanation.
+    const definitionSource = current.definition || current.nativeMeaning;
+    const definitionSourceLang = current.definition ? current.language : curriculumMeaningLang;
+    const needsDefinition = Boolean(definitionSource) && (
+      sameLanguage
+        ? !current.definition && definitionSourceLang !== nativeLang
+        : Boolean(current.definition)
+    );
+
+    if (!needsMeaning && !needsExampleTranslation && !needsDefinition) {
+      if (sameLanguage) {
+        setEnriched({
+          nativeMeaning: current.definition || (current.nativeMeaningLang === nativeLang ? current.nativeMeaning : current.word),
+          exampleTranslation: current.example || "",
+          definition: current.definition || "",
+        });
+      }
+      return;
+    }
+
     let active = true;
     void Promise.all([
       needsMeaning ? onTranslateText(current.word, current.language, nativeLang) : Promise.resolve(null),
-      needsMeaning && current.example ? onTranslateText(current.example, current.language, nativeLang) : Promise.resolve(null),
-      needsDefinition ? onTranslateText(current.definition, current.language, nativeLang) : Promise.resolve(null),
+      needsExampleTranslation ? onTranslateText(current.example, current.language, nativeLang) : Promise.resolve(null),
+      needsDefinition ? onTranslateText(definitionSource, definitionSourceLang, nativeLang) : Promise.resolve(null),
     ]).then(([translation, exampleTranslation, definition]) => {
       if (!active || currentRequest !== requestId.current) return;
       setEnriched({
         // Never show a curriculum value in the wrong language when the runtime
         // translation request fails. A blank value is safer than leaking a
         // Finnish/Spanish explanation into an Arabic vocabulary view.
-        nativeMeaning: translation ?? (current.nativeMeaningLang === nativeLang ? current.nativeMeaning : ""),
-        exampleTranslation: exampleTranslation ?? (current.nativeMeaningLang === nativeLang ? current.exampleTranslation : ""),
-        definition: definition ?? "",
+        nativeMeaning: sameLanguage
+          ? current.definition || definition || (current.nativeMeaningLang === nativeLang ? current.nativeMeaning : "")
+          : translation ?? (current.nativeMeaningLang === nativeLang ? current.nativeMeaning : ""),
+        exampleTranslation: sameLanguage
+          ? current.example
+          : exampleTranslation ?? (current.nativeMeaningLang === nativeLang ? current.exampleTranslation : ""),
+        definition: sameLanguage ? current.definition || definition || "" : definition ?? "",
       });
-    }).catch(() => { /* local curriculum remains the source of truth */ });
+    }).catch(() => { /* leave non-matching translated fields blank */ });
     return () => { active = false; };
   }, [current, nativeLang, onTranslateText, pack]);
 
@@ -240,8 +359,9 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
   }
 
   function chooseNative(code: string) {
-    setNativeLang(code);
-    savePrefs({ targetLang, nativeLang: code });
+    const normalized: ExplanationLanguage = EXPLANATION_LANGS.includes(code as ExplanationLanguage) ? code as ExplanationLanguage : "ar";
+    setNativeLang(normalized);
+    savePrefs({ targetLang, nativeLang: normalized });
   }
 
   function review(result: "again" | "good" | "easy") {
@@ -277,20 +397,20 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
   }
 
   if (!pack) {
-    return <div style={{ color: t.textDim, padding: 24, textAlign: "center" }}>{s.wordLoading || "Loading the local vocabulary curriculum…"}</div>;
+    return <div style={{ color: t.textDim, padding: 24, textAlign: "center" }}>{currentUi.wordLoading}</div>;
   }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
       <header style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        <h2 style={{ color: t.text, margin: 0, fontSize: 22 }}>{s.learnWords || "New words"}</h2>
-        <p style={{ color: t.textDim, margin: 0, fontSize: 13, lineHeight: 1.6 }}>{s.vocabCurriculumHint || "Study a structured CEFR vocabulary curriculum — not random words."}</p>
+        <h2 style={{ color: t.text, margin: 0, fontSize: 22 }}>{currentUi.learnWords}</h2>
+        <p style={{ color: t.textDim, margin: 0, fontSize: 13, lineHeight: 1.6 }}>{currentUi.vocabCurriculumHint}</p>
       </header>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 7 }}>
         {(["new", "learning", "learned"] as const).map((state) => (
           <button key={state} type="button" onClick={() => setStateFilter(state)} style={{ ...pillStyle(statusColor(state), t), cursor: "pointer", opacity: stateFilter === state ? 1 : 0.7, textAlign: "left" }}>
-            {counts[state]} <span style={{ fontWeight: 500 }}>{labelForState(state, s)}</span>
+            {counts[state]} <span style={{ fontWeight: 500 }}>{labelForState(state, currentUi)}</span>
           </button>
         ))}
       </div>
@@ -301,38 +421,38 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
             {candidate.flag} {candidate.name}
           </button>
         ))}
-        <select aria-label={s.selectNativeLang || "Explanation language"} value={nativeLang} onChange={(event) => chooseNative(event.target.value)} style={{ marginLeft: "auto", minWidth: 130, padding: "5px 8px", borderRadius: 20, border: `1px solid ${t.border}`, background: t.card2, color: t.text, fontSize: 11 }}>
-          {EXPLANATION_LANGS.map((code) => <option key={code} value={code}>{code.toUpperCase()}</option>)}
+        <select aria-label={currentUi.selectNativeLang} value={nativeLang} onChange={(event) => chooseNative(event.target.value)} style={{ marginLeft: "auto", minWidth: 130, padding: "5px 8px", borderRadius: 20, border: `1px solid ${t.border}`, background: t.card2, color: t.text, fontSize: 11 }}>
+          {EXPLANATION_LANGS.map((code) => <option key={code} value={code}>{nativeLanguageName(code)}</option>)}
         </select>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: 8 }}>
-        <select aria-label={s.levels || "CEFR level"} value={level} onChange={(event) => { setLevel(event.target.value as LevelFilter); setUnitId("all"); }} style={filterStyle(t)}>
-          <option value="all">{s.levels || "All levels"}</option>
+        <select aria-label={currentUi.levels} value={level} onChange={(event) => { setLevel(event.target.value as LevelFilter); setUnitId("all"); }} style={filterStyle(t)}>
+          <option value="all">{currentUi.levels}</option>
           {LEVELS.slice(1).map((value) => <option key={value} value={value}>{value}</option>)}
         </select>
-        <select aria-label={s.units || "Unit"} value={unitId} onChange={(event) => setUnitId(event.target.value)} style={filterStyle(t)}>
-          <option value="all">{s.units || "All units"}</option>
+        <select aria-label={currentUi.units} value={unitId} onChange={(event) => setUnitId(event.target.value)} style={filterStyle(t)}>
+          <option value="all">{currentUi.units}</option>
           {units.map((unit) => <option key={unit.id} value={unit.id}>{unit.id} · {unit.title}</option>)}
         </select>
       </div>
       <div style={{ display: "flex", gap: 8 }}>
         <div style={{ position: "relative", flex: 1 }}>
           <Search size={14} style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: t.textFaint }} />
-          <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={s.searchVocabulary || "Search this curriculum…"} style={{ ...filterStyle(t), width: "100%", paddingLeft: 32 }} />
+          <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={currentUi.searchVocabulary} style={{ ...filterStyle(t), width: "100%", paddingLeft: 32 }} />
         </div>
-        <button type="button" onClick={() => setStateFilter(stateFilter === "due" ? "all" : "due")} style={{ ...filterStyle(t), color: stateFilter === "due" ? "#f59e0b" : t.textMuted, cursor: "pointer", width: "auto" }} title={s.reviewDue || "Due for review"}>🔁</button>
+        <button type="button" onClick={() => setStateFilter(stateFilter === "due" ? "all" : "due")} style={{ ...filterStyle(t), color: stateFilter === "due" ? "#f59e0b" : t.textMuted, cursor: "pointer", width: "auto" }} title={currentUi.reviewDue}>🔁</button>
       </div>
 
-      {!current ? <div style={{ color: t.textDim, textAlign: "center", padding: 28 }}>{s.noVocabularyMatches || "No words match these filters."}</div> : (
+      {!current ? <div style={{ color: t.textDim, textAlign: "center", padding: 28 }}>{currentUi.noVocabularyMatches}</div> : (
         <>
-          <div style={{ color: t.textDim, fontSize: 12 }}>{filtered.length} {s.words || "words"} · {current.unitTitle} · {current.lessonTitle}</div>
+          <div style={{ color: t.textDim, fontSize: 12 }}>{filtered.length} {currentUi.words} · {current.unitTitle} · {current.lessonTitle}</div>
           <article style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 16, padding: 18, display: "flex", flexDirection: "column", gap: 14 }}>
             <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start" }}>
               <div style={{ minWidth: 0 }}>
                 <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
                   <strong style={{ color: t.text, fontSize: 30, lineHeight: 1.1 }}>{display?.word}</strong>
-                  <span style={pillStyle(statusColor(currentReview!.state), t)}>{labelForState(currentReview!.state, s)}</span>
+                  <span style={pillStyle(statusColor(currentReview!.state), t)}>{labelForState(currentReview!.state, currentUi)}</span>
                 </div>
                 <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginTop: 10 }}>
                   <span style={pillStyle("#a78bfa", t)}>{display?.cefr}</span>
@@ -344,25 +464,25 @@ export default function LearnWordVocab({ t, s, languagePacks, defaultTargetLang,
             </div>
 
             {display?.ipa && <div style={{ color: t.textDim, fontFamily: "monospace", fontSize: 14 }}>/{display.ipa}/</div>}
-            {display?.definition && display.definition !== display.nativeMeaning && <InfoBlock title={s.wordDefinition || "Definition"} value={display.definition} t={t} />}
-            <InfoBlock title={`${s.wordTranslation || "Meaning"} · ${nativeLang.toUpperCase()}`} value={display?.nativeMeaning || "—"} t={t} direction={nativeLang === "ar" ? "rtl" : "ltr"} />
+            {display?.definition && display.definition !== display.nativeMeaning && <InfoBlock title={currentUi.wordDefinition} value={display.definition} t={t} />}
+            <InfoBlock title={`${currentUi.wordTranslation} · ${nativeLang.toUpperCase()}`} value={display?.nativeMeaning || "—"} t={t} direction={nativeLang === "ar" ? "rtl" : "ltr"} />
 
             {display?.example && <div style={{ background: t.card2, borderRadius: 11, padding: 13 }}>
-              <div style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, marginBottom: 6 }}>{s.wordExample || "Example"}</div>
+              <div style={{ color: t.textFaint, fontSize: 11, fontWeight: 700, marginBottom: 6 }}>{currentUi.wordExample}</div>
               <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}><span style={{ color: t.text, fontStyle: "italic", flex: 1 }}>{display.example}</span><SpeakButton text={display.example} lang={display.language} t={t} /></div>
               {display.exampleTranslation && <div style={{ color: t.textDim, marginTop: 8, direction: nativeLang === "ar" ? "rtl" : "ltr" }}>{display.exampleTranslation}</div>}
             </div>}
 
-            <DetailList title={s.wordSynonym || "Synonyms"} values={display?.synonyms || []} t={t} lang={display?.language || targetLang} />
-            <DetailList title={s.wordAntonym || "Antonyms"} values={display?.antonyms || []} t={t} lang={display?.language || targetLang} />
-            <DetailList title={s.wordCollocation || "Common collocations"} values={display?.collocations || []} t={t} lang={display?.language || targetLang} />
-            <DetailList title={s.wordFamily || "Word family"} values={display?.wordFamily || []} t={t} lang={display?.language || targetLang} />
+            <DetailList title={currentUi.wordSynonym} values={display?.synonyms || []} t={t} lang={display?.language || targetLang} />
+            <DetailList title={currentUi.wordAntonym} values={display?.antonyms || []} t={t} lang={display?.language || targetLang} />
+            <DetailList title={currentUi.wordCollocation} values={display?.collocations || []} t={t} lang={display?.language || targetLang} />
+            <DetailList title={currentUi.wordFamily} values={display?.wordFamily || []} t={t} lang={display?.language || targetLang} />
 
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              <button type="button" onClick={saveCurrent} disabled={saved || !display?.nativeMeaning} style={{ ...primaryButtonStyle(), flex: "1 1 160px", opacity: saved || !display?.nativeMeaning ? 0.65 : 1 }}><Star size={16} fill={saved ? "currentColor" : "none"} /> {saved ? (s.saved || "Saved") : (s.saveWord || "Save word")}</button>
-              <button type="button" onClick={() => review("again")} style={{ ...reviewButtonStyle("#f97316", t), flex: "1 1 100px" }}><RotateCcw size={14} /> {s.reviewAgain || "Again"}</button>
-              <button type="button" onClick={() => review("good")} style={{ ...reviewButtonStyle("#22c55e", t), flex: "1 1 100px" }}><Check size={14} /> {s.reviewGood || "Good"}</button>
-              <button type="button" onClick={() => review("easy")} style={{ ...reviewButtonStyle("#a78bfa", t), flex: "1 1 100px" }}><Zap size={14} /> {s.reviewEasy || "Easy"}</button>
+              <button type="button" onClick={saveCurrent} disabled={saved || !display?.nativeMeaning} style={{ ...primaryButtonStyle(), flex: "1 1 160px", opacity: saved || !display?.nativeMeaning ? 0.65 : 1 }}><Star size={16} fill={saved ? "currentColor" : "none"} /> {saved ? currentUi.saved : currentUi.saveWord}</button>
+              <button type="button" onClick={() => review("again")} style={{ ...reviewButtonStyle("#f97316", t), flex: "1 1 100px" }}><RotateCcw size={14} /> {currentUi.reviewAgain}</button>
+              <button type="button" onClick={() => review("good")} style={{ ...reviewButtonStyle("#22c55e", t), flex: "1 1 100px" }}><Check size={14} /> {currentUi.reviewGood}</button>
+              <button type="button" onClick={() => review("easy")} style={{ ...reviewButtonStyle("#a78bfa", t), flex: "1 1 100px" }}><Zap size={14} /> {currentUi.reviewEasy}</button>
             </div>
           </article>
           <div style={{ display: "flex", gap: 7, overflowX: "auto", paddingBottom: 2 }}>
