@@ -162,25 +162,62 @@ Sample topics: Rhetoric/Influence, Translation/Culture, Linguistics, Postmodern 
 
 ---
 
-## 7. Files Modified
+## 7. Latest English Enrichment Batch (u57)
 
-- `artifacts/lengoali/src/curriculum-data-more.ts`
-- `artifacts/lengoali/src/curriculum-en-more.ts`
+The English runtime curriculum now includes the reviewed `u57` continuation in `artifacts/lengoali/src/curriculum-en-part18.ts`. It adds one focused unit per CEFR level without changing the Finnish curriculum or replacing existing English entries:
+
+| Level | Unit focus |
+|---|---|
+| A0 | Playground language, movement, and safety |
+| A1 | Public transport, tickets, platforms, and routes |
+| A2 | Making plans, alternatives, and changed arrangements |
+| B1 | Problem solving, priorities, resources, and solutions |
+| B2 | Climate policy, emissions, trade-offs, and equity |
+| C1 | Digital ethics, accountability, transparency, and safeguards |
+| C2 | Pragmatics, politeness, indirectness, and implication |
+
+Each level contributes eight new lexical entries with part of speech, IPA, definition, examples, translations, synonyms, antonyms, collocations, word families, tags, and category metadata, plus four useful phrases, a four-line dialogue, and an original reading passage. The new part is imported by `curriculum-en.ts` and is therefore available through the existing lazy-loaded `ENGLISH_PACK` pipeline.
+
+The reference library remains analysis-only. This batch was written as a reviewed curriculum addition and does not import or runtime-load any reference PDF.
+
+## 8. Latest English Enrichment Batch (u58)
+
+The English runtime curriculum now also includes the reviewed `u58` continuation in `artifacts/lengoali/src/curriculum-en-part19.ts`. It adds one focused unit per CEFR level while preserving the existing English and Finnish entries:
+
+| Level | Unit focus |
+|---|---|
+| A0 | Home routines, hygiene, and tidying |
+| A1 | Shopping for clothes, payment, receipts, and refunds |
+| A2 | Clinic visits, symptoms, treatment, and recovery |
+| B1 | Teamwork, delegation, feedback, and deadlines |
+| B2 | Urban planning, housing, transport, and infrastructure |
+| C1 | Research integrity, evidence, citations, and reproducibility |
+| C2 | Discourse analysis, context, register, stance, and interaction |
+
+Each level contributes eight new lexical entries with part of speech, IPA, definition, examples, translations, synonyms, antonyms, collocations, word families, tags, and category metadata, plus four useful phrases, a four-line dialogue, and an original reading passage. The new part is imported by `curriculum-en.ts` and is available through the existing `ENGLISH_PACK` pipeline.
+
+The reference library remains analysis-only. This batch was written as a reviewed curriculum addition and does not import or runtime-load any reference PDF.
+
+## 9. Files Modified
+
+- `artifacts/lengoali/src/curriculum-en-part19.ts`
+- `artifacts/lengoali/src/curriculum-en.ts`
 - `docs/CURRICULUM_PROGRESS_REPORT.md` (this report)
 
 ---
 
-## 8. Next Steps / Recommendations
+## 10. Next Steps / Recommendations
 
-1. **Continue Curriculum Expansion** — Add `u28`/`u29` and beyond to reach an even more comprehensive curriculum.
-2. **Split Large Curriculum Files** — Consider splitting `curriculum-data-more.ts` and `curriculum-en-more.ts` by CEFR level to reduce chunk sizes as the curriculum grows.
-3. **Add Interactive Elements** — Introduce exercises, quiz questions, and review items that are stored alongside each unit.
+1. **Continue Curriculum Expansion** — Add the next reviewed English unit batch only after checking lexical identity, CEFR fit, topic coverage, and duplication risk.
+2. **Split Large Curriculum Files** — Keep new English batches in numbered part files to reduce the size of individual source modules and curriculum chunks.
+3. **Add Interactive Elements** — Extend the existing lesson builder with richer exercises only when the schema and UI are updated together.
 4. **Browser Verification** — Run the app in the browser to ensure the Learn center loads all new units correctly.
 5. **Deploy to GitHub Pages** — Verify the latest build is deployed and the live URL loads without errors.
 
 ---
 
-## 9. Repository and Deployment Links
+
+## 10. Repository and Deployment Links
 
 - **GitHub Repository:** https://github.com/feratpizza-creator/Legacy-Code-Update
 - **GitHub Pages URL:** https://feratpizza-creator.github.io/Legacy-Code-Update/
