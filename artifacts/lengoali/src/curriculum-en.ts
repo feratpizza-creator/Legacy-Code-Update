@@ -37,6 +37,8 @@ import { ENGLISH_UNIT_ENRICHMENTS } from "./curriculum-en-enrichment";
 import { ENGLISH_REVIEWED_ENRICHMENTS } from "./curriculum-en-enrichment-reviewed";
 import { ENGLISH_C1_FOCUSED_ENRICHMENTS } from "./curriculum-en-c1-focused-enrichment";
 import { ENGLISH_B1_B2_C1_FOCUSED_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-focused-enrichment";
+import { ENGLISH_B1_B2_C1_NEXT_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-next-enrichment";
+import { ENGLISH_C1_U52_U53_ENRICHMENTS } from "./curriculum-en-c1-u52-u53-enrichment";
 
 // ------------------------------------------------------------------------
 // Helpers (mirrors curriculum-data.ts helpers to avoid circular imports)
@@ -262,7 +264,9 @@ function enrichEnglishAdditionalUnits(additionalUnits: Record<string, UnitSeed[]
         const reviewedEnrichment = ENGLISH_REVIEWED_ENRICHMENTS[level]?.[unit.id] ?? [];
         const focusedC1Enrichment = level === "C1" ? ENGLISH_C1_FOCUSED_ENRICHMENTS[unit.id] ?? [] : [];
         const focusedB1B2C1Enrichment = ENGLISH_B1_B2_C1_FOCUSED_ENRICHMENTS[level]?.[unit.id] ?? [];
-        const enrichment = [...legacyEnrichment, ...reviewedEnrichment, ...focusedC1Enrichment, ...focusedB1B2C1Enrichment];
+        const nextB1B2C1Enrichment = ENGLISH_B1_B2_C1_NEXT_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const focusedC1U52U53Enrichment = level === "C1" ? ENGLISH_C1_U52_U53_ENRICHMENTS[unit.id] ?? [] : [];
+        const enrichment = [...legacyEnrichment, ...reviewedEnrichment, ...focusedC1Enrichment, ...focusedB1B2C1Enrichment, ...nextB1B2C1Enrichment, ...focusedC1U52U53Enrichment];
         return enrichment.length > 0
           ? { ...unit, words: [...unit.words, ...enrichment] }
           : unit;

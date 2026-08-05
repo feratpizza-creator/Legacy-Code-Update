@@ -340,7 +340,49 @@ Validation for this pass:
 
 The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-focused-enrichment.ts`; unrelated working-tree changes were preserved.
 
-## 16. Next Steps / Recommendations
+## 16. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the next existing units `u50` and `u51` in B1, B2, and C1. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford reference library under `words-reference-5000/` remained an analysis-only source; no reference file was imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u50`, `u51` | 16 | participatory community decisions, public deliberation, reflection, transferable skills, resilience |
+| B2 | `u50`, `u51` | 16 | market positioning, financial strategy, negotiation tactics, bargaining power, agreement implementation |
+| C1 | `u50`, `u51` | 16 | institutional checks and balances, legislative oversight, research paradigms, sampling bias, validity, study design |
+
+All 48 additions include Arabic translation metadata, IPA, definition, contextual example with Arabic translation, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata through the reviewed-entry helper. The existing merge path in `curriculum-en.ts` appends them to the current units; it does not replace core curriculum records.
+
+Validation for this pass:
+
+- Curriculum validator: **0 errors**, 12 warnings, quality **94.2/100** across 4,140 records.
+- Lengoali TypeScript check: **passed** (`pnpm --dir artifacts/lengoali run typecheck`).
+- Validator TypeScript check: **passed** (`pnpm --dir scripts run typecheck`).
+- Structural/runtime audit: B1/B2/C1 each retains **61 unique units**; every target unit `u50` and `u51` now has **16 vocabulary records**.
+- Duplicate audit: the initial scan found one existing collision (`causal inference`); it was replaced with the non-colliding `causal pathway`. Final target units contain no internal duplicates and the new bank has no exact declaration collisions with other English curriculum files.
+
+The focused bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-next-enrichment.ts`; unrelated working-tree files remain outside this enrichment change.
+
+## 17. Continued C1 Enrichment (existing units only)
+
+This focused pass enriched the existing C1 units `u52` (Rhetorical Analysis) and `u53` (Research Ethics), which were still at eight runtime vocabulary items each. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The reference library under `words-reference-5000/` remained analysis-only and was not imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| C1 | `u52`, `u53` | 16 | rhetorical strategy, argumentative structure, ethical approval, data protection, participant protection, research transparency |
+
+All 16 additions include Arabic translation metadata, IPA, definition, contextual example with Arabic translation, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata through the reviewed-entry helper. The existing merge path in `curriculum-en.ts` appends them to the current units without replacing core curriculum records.
+
+Validation for this pass:
+
+- Curriculum validator: **0 errors**, 12 warnings, quality **94.2/100** across 4,156 records.
+- Lengoali TypeScript check: **passed** (`pnpm --dir artifacts/lengoali run typecheck`).
+- Validator TypeScript check: **passed** (`pnpm --dir scripts run typecheck`).
+- Structural/runtime audit: C1 retains **61 unique units**; `u52` and `u53` each now contain **16 vocabulary records**.
+- Duplicate audit: no exact declaration collisions with other English curriculum files and no duplicate words inside either target unit.
+
+The focused bank is isolated in `artifacts/lengoali/src/curriculum-en-c1-u52-u53-enrichment.ts`; unrelated working-tree files remain outside this enrichment change.
+
+## 18. Next Steps / Recommendations
 
 1. **Continue Curriculum Expansion** — Add the next reviewed English unit batch only after checking lexical identity, CEFR fit, topic coverage, and duplication risk.
 2. **Split Large Curriculum Files** — Keep new English batches in numbered part files to reduce the size of individual source modules and curriculum chunks.
