@@ -30,8 +30,13 @@ import { ADDITIONAL_EN_PART16_UNITS } from "./curriculum-en-part16";
 import { ADDITIONAL_EN_PART17_UNITS } from "./curriculum-en-part17";
 import { ADDITIONAL_EN_PART18_UNITS } from "./curriculum-en-part18";
 import { ADDITIONAL_EN_PART19_UNITS } from "./curriculum-en-part19";
+import { ADDITIONAL_EN_PART20_UNITS } from "./curriculum-en-part20";
+import { ADDITIONAL_EN_PART21_UNITS } from "./curriculum-en-part21";
+import { ADDITIONAL_EN_PART22_UNITS } from "./curriculum-en-part22";
 import { ENGLISH_UNIT_ENRICHMENTS } from "./curriculum-en-enrichment";
 import { ENGLISH_REVIEWED_ENRICHMENTS } from "./curriculum-en-enrichment-reviewed";
+import { ENGLISH_C1_FOCUSED_ENRICHMENTS } from "./curriculum-en-c1-focused-enrichment";
+import { ENGLISH_B1_B2_C1_FOCUSED_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-focused-enrichment";
 
 // ------------------------------------------------------------------------
 // Helpers (mirrors curriculum-data.ts helpers to avoid circular imports)
@@ -239,6 +244,9 @@ const ADDITIONAL_EN_UNITS = mergeAdditionalUnits(
   ADDITIONAL_EN_PART17_UNITS,
   ADDITIONAL_EN_PART18_UNITS,
   ADDITIONAL_EN_PART19_UNITS,
+  ADDITIONAL_EN_PART20_UNITS,
+  ADDITIONAL_EN_PART21_UNITS,
+  ADDITIONAL_EN_PART22_UNITS,
 );
 
 function shuffle<T>(arr: T[]): T[] {
@@ -252,7 +260,9 @@ function enrichEnglishAdditionalUnits(additionalUnits: Record<string, UnitSeed[]
       units.map((unit) => {
         const legacyEnrichment = ENGLISH_UNIT_ENRICHMENTS[level]?.[unit.id] ?? [];
         const reviewedEnrichment = ENGLISH_REVIEWED_ENRICHMENTS[level]?.[unit.id] ?? [];
-        const enrichment = [...legacyEnrichment, ...reviewedEnrichment];
+        const focusedC1Enrichment = level === "C1" ? ENGLISH_C1_FOCUSED_ENRICHMENTS[unit.id] ?? [] : [];
+        const focusedB1B2C1Enrichment = ENGLISH_B1_B2_C1_FOCUSED_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const enrichment = [...legacyEnrichment, ...reviewedEnrichment, ...focusedC1Enrichment, ...focusedB1B2C1Enrichment];
         return enrichment.length > 0
           ? { ...unit, words: [...unit.words, ...enrichment] }
           : unit;

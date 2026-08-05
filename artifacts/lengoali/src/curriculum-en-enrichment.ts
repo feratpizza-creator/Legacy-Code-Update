@@ -1,5 +1,15 @@
 import type { VocabularyItem } from "./learn-data";
 
+type EnrichmentSeed = Pick<VocabularyItem, "word" | "translation" | "pos" | "definition" | "example" | "exampleTranslation" | "category" | "tags">;
+
+const makeEnrichment = (seed: EnrichmentSeed): VocabularyItem => ({
+  ...seed,
+  synonyms: [],
+  antonyms: [],
+  collocations: [seed.word],
+  wordFamily: [seed.word],
+});
+
 /**
  * Additional English vocabulary keyed by existing CEFR level and unit id.
  * This bank enriches lessons in place; it never creates or renames units.

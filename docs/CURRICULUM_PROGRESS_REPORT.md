@@ -10,6 +10,21 @@
 
 ## 1. Executive Summary
 
+### Current enrichment phase — B1, B2, and C1
+
+The current phase enriches existing English units only; it does not create new units. The reference library under `words-reference-5000/` remains analysis-only, while reviewed additions are kept in separate enrichment banks and merged into the runtime English pack through `curriculum-en.ts`.
+
+The latest completed batch adds **24 reviewed C1 vocabulary entries** to the existing units:
+
+| Existing unit | Topic | Added entries |
+|---|---|---:|
+| `C1/u44` | Institutions and Reform | 8 |
+| `C1/u45` | Memory and Identity | 8 |
+| `C1/u46` | Ethics and Technology | 8 |
+
+Quality checks for this batch: **61 C1 units / 61 unique IDs**, **16 vocabulary items per target unit after merge**, no exact duplicate words within `u44`, `u45`, or `u46`, application typecheck passed, scripts typecheck passed, and curriculum validation passed with **0 errors**, **12 warnings**, and **94/100 quality**.
+
+
 Today the Lingolali language-learning curriculum was significantly expanded. A total of **24 additional units per CEFR level** were added to both the Finnish and English language packs (units `u4` through `u27`). The existing curriculum files were also audited, and duplicate `u12`/`u13` entries were cleaned. All changes passed TypeScript type-checking and Vite production builds, and were pushed to the `main` branch.
 
 | Metric | Finnish (`curriculum-data-more.ts`) | English (`curriculum-en-more.ts`) |
@@ -198,15 +213,134 @@ Each level contributes eight new lexical entries with part of speech, IPA, defin
 
 The reference library remains analysis-only. This batch was written as a reviewed curriculum addition and does not import or runtime-load any reference PDF.
 
-## 9. Files Modified
+## 9. Latest English Enrichment Batch (u59)
 
-- `artifacts/lengoali/src/curriculum-en-part19.ts`
-- `artifacts/lengoali/src/curriculum-en.ts`
-- `docs/CURRICULUM_PROGRESS_REPORT.md` (this report)
+The English runtime curriculum now also includes the reviewed `u59` continuation in `artifacts/lengoali/src/curriculum-en-part20.ts`. This batch was selected after a read-only review of the uploaded Oxford 5000 reference-library inventory, its comparison rules, and the existing runtime curriculum. The environment did not provide a PDF text-extraction utility, so no reference PDF content was imported or treated as automatically authoritative; the reference files remain analysis-only and did not overwrite curriculum entries.
+
+| Level | Unit focus |
+|---|---|
+| A0 | Classroom objects, art materials, and learning instructions |
+| A1 | Post office, letters, parcels, postage, and delivery |
+| A2 | Emergencies, accidents, first aid, and rescue |
+| B1 | Community volunteering, charity, outreach, and support |
+| B2 | Personal finance, borrowing, investment, liquidity, and solvency |
+| C1 | Cognitive bias, framing, correlation, causation, and judgement |
+| C2 | Implicature, entailment, intertextuality, paratext, and multimodality |
+
+Each level contributes eight new lexical entries with part of speech, IPA, definition, examples, translations, synonyms, antonyms, collocations, word families, tags, and category metadata, plus four useful phrases, a four-line dialogue, and an original reading passage. The new part is imported by `curriculum-en.ts` and is available through the existing `ENGLISH_PACK` pipeline.
+
+The batch preserves the project’s lexical comparison rule: repeated spellings were treated as possible contextual, grammatical, or CEFR distinctions rather than being copied blindly. Existing Finnish content and unrelated working-tree changes were left untouched.
+
+## 10. Latest English Enrichment Batch (u60)
+
+The English runtime curriculum now also includes the reviewed `u60` continuation in `artifacts/lengoali/src/curriculum-en-part21.ts`. This batch was selected after a read-only review of the uploaded Oxford 5000 reference-library structure and the existing runtime curriculum. The local environment did not provide `pdftotext`, so the PDFs were not extracted or imported; the reference library remains analysis-only.
+
+| Level | Unit focus |
+|---|---|
+| A0 | Playground equipment, movement, and safety |
+| A1 | Library membership, borrowing, catalogues, and due dates |
+| A2 | Household tools, leaks, electrical safety, and repairs |
+| B1 | Meeting facilitation, mediation, alignment, and collaboration |
+| B2 | Media literacy, fact-checking, algorithms, and misleading content |
+| C1 | Policy implementation, legislation, enforcement, and feasibility |
+| C2 | Translation choices, idioms, equivalence, and cultural meaning |
+
+Each level contributes eight new lexical entries with part of speech, IPA, definition, examples, translations, synonyms, antonyms, collocations, word families, tags, and category metadata, plus four useful phrases, a four-line dialogue, and an original reading passage. The new part is imported by `curriculum-en.ts` and is available through the existing `ENGLISH_PACK` pipeline.
+
+Candidate selection followed the project’s comparison rule of lemma + part of speech + meaning + CEFR/context. Commonly repeated spellings were avoided or replaced with more specific entries where the existing curriculum already covered the same sense. Existing Finnish content and unrelated working-tree changes were left untouched.
+
+## 11. Latest English Enrichment Batch (u61)
+
+The English runtime curriculum now includes the reviewed `u61` continuation in `artifacts/lengoali/src/curriculum-en-part22.ts`. This batch was selected after a read-only review of the uploaded Oxford 5000 reference-library inventory, the project comparison rules, and the existing English vocabulary declarations. The local environment does not provide `pdftotext`, so the PDFs were not extracted or imported; the reference library remains analysis-only.
+
+| Level | Unit focus |
+|---|---|
+| A0 | Colors, shapes, patterns, and picture description |
+| A1 | Everyday symptoms, basic care, and medicine |
+| A2 | Cooking actions, kitchen tools, and recipes |
+| B1 | Respectful disagreement, assumptions, and reframing |
+| B2 | Climate adaptation, resilience, habitats, and biodiversity |
+| C1 | Research design, measurement, confounders, and generalizability |
+| C2 | Speech acts, indexicality, homonymy, connotation, and cultural meaning |
+
+Each level contributes eight reviewed lexical entries with part of speech, IPA, definition, examples, translations, synonyms, antonyms, collocations, word families, tags, and category metadata, plus four useful phrases, a four-line dialogue, and an original reading passage. The new part is imported by `curriculum-en.ts` and is available through the existing lazy-loaded `ENGLISH_PACK` pipeline.
+
+Candidate selection followed the project’s comparison rule of lemma + part of speech + meaning + CEFR/context. Exact declaration collisions were removed or replaced before implementation; repeated spellings in surrounding content were treated as contextual review rather than automatic deletion. Existing Finnish content and unrelated working-tree changes were left untouched.
+
+## 12. Focused B1/B2/C1 Enrichment (existing units only)
+
+This phase focused on enriching the existing B1, B2, and C1 units `u57`–`u61`; no unit was created, renamed, removed, or duplicated. The uploaded Oxford 5000 PDFs in `words-reference-5000/B1`, `B2`, and `C1` were treated as analysis-only reference material, consistent with the repository rules. No PDF was imported into runtime code.
+
+| Level | Existing unit topics enriched | Added reviewed vocabulary |
+|---|---|---:|
+| B1 | Problem solving; teamwork; community volunteering; meetings and collaboration; respectful disagreement | 40 |
+| B2 | Climate policy; planning better cities; personal finance; reading the media; climate adaptation | 40 |
+| C1 | Digital ethics; research integrity; cognitive bias and decisions; policy implementation; research design and evidence | 40 |
+
+Each added entry includes Arabic translation metadata, IPA, definition, contextual example with Arabic translation, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata. At runtime, every target unit now has 16 vocabulary records across its two existing lessons (previously 8), while each level still contains exactly 61 units and has no duplicate unit IDs.
+
+Validation completed for this phase:
+
+- Curriculum validator: **0 errors**, 12 warnings, quality **93.9/100** across 3,926 records.
+- Lengoali TypeScript check: **passed** (`pnpm --dir artifacts/lengoali run typecheck`).
+- Validator TypeScript check: **passed** (`pnpm --dir scripts run typecheck`).
+- Runtime audit: B1/B2/C1 each has 61 units; `u57`–`u61` each has 16 vocabulary records.
+
+The reviewed data remains isolated in `artifacts/lengoali/src/curriculum-en-enrichment-reviewed.ts` and is appended through the existing merge in `curriculum-en.ts`; the core unit declarations were not replaced.
+
+## 13. Files Modified
+
+- `artifacts/lengoali/src/curriculum-en-enrichment-reviewed.ts` — reviewed B1/B2/C1 enrichment entries.
+- `docs/CURRICULUM_PROGRESS_REPORT.md` — this report.
+- `.curriculum-validation-report.md` — generated validator output.
+
+Pre-existing working-tree changes in `curriculum-en.ts`, the legacy enrichment bank, and the numbered curriculum part files were preserved and were not rewritten as part of this phase.
 
 ---
 
-## 10. Next Steps / Recommendations
+## 14. Continued B1/B2/C1 Enrichment (existing units only)
+
+The next enrichment pass continued within the existing B1, B2, and C1 units. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford reference PDFs in `words-reference-5000/B1`, `B2`, and `C1` remained analysis-only sources and were not imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u52`, `u53`, `u56` | 24 | newsroom practice, source checking, accountability, mentoring, role clarity, cohesion, constructive teamwork |
+| B2 | `u52`, `u53`, `u54` | 24 | legislation, regulatory oversight, evidence interpretation, cultural trends, social mobility |
+| C1 | `u56` | 8 | disinformation, astroturfing, deepfakes, media ownership, platform moderation, information disorder |
+
+All additions are reviewed Arabic-supported entries with IPA, definitions, contextual examples and Arabic translations, part of speech, category, tags, synonyms, collocations, and word-family metadata through the existing reviewed-entry helper. The runtime merge remains unchanged: entries are appended to the current units rather than replacing core curriculum records.
+
+Validation for this pass:
+
+- Curriculum validator: **0 errors**, 12 warnings, quality **94/100** across 3,974 records.
+- Lengoali TypeScript check: **passed** (`pnpm --dir artifacts/lengoali run typecheck`).
+- Validator TypeScript check: **passed** (`pnpm --dir scripts run typecheck`).
+- Structural audit: B1/B2/C1 each retains **61 unique units**; every newly enriched target unit has **16 vocabulary records** at runtime.
+- Repeated words across neighbouring units were retained only where they represent contextual reinforcement or a different lesson context; no duplicate unit IDs were introduced.
+
+## 15. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the existing `u47`–`u49` units in B1, B2, and C1. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The uploaded Oxford 5000 PDFs under `words-reference-5000/B1`, `B2`, and `C1` were used as analysis-only reference material; no PDF content was imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u47`, `u48`, `u49` | 24 | cultural travel, food and wellbeing, community projects |
+| B2 | `u47`, `u48`, `u49` | 24 | business strategy, climate policy, psychology and behaviour |
+| C1 | `u47`, `u48`, `u49` | 24 | academic writing, law and rights, media and public trust |
+
+All 72 additions include Arabic translation metadata, IPA, definition, contextual example with Arabic translation, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata through the reviewed-entry helper. The existing merge path in `curriculum-en.ts` appends them to the current units; it does not replace core curriculum records.
+
+Validation for this pass:
+
+- Curriculum validator: **0 errors**, 12 warnings, quality **94.1/100** across 4,092 records.
+- Lengoali TypeScript check: **passed** (`pnpm --dir artifacts/lengoali run typecheck`).
+- Validator TypeScript check: **passed** (`pnpm --dir scripts run typecheck`).
+- Structural/runtime audit: B1/B2/C1 each retains **61 unique units**; every target unit `u47`–`u49` now has **16 vocabulary records**.
+- Duplicate audit: no exact declaration collisions with other English curriculum files and no duplicate words inside any of the nine target units.
+
+The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-focused-enrichment.ts`; unrelated working-tree changes were preserved.
+
+## 16. Next Steps / Recommendations
 
 1. **Continue Curriculum Expansion** — Add the next reviewed English unit batch only after checking lexical identity, CEFR fit, topic coverage, and duplication risk.
 2. **Split Large Curriculum Files** — Keep new English batches in numbered part files to reduce the size of individual source modules and curriculum chunks.
@@ -217,7 +351,7 @@ The reference library remains analysis-only. This batch was written as a reviewe
 ---
 
 
-## 10. Repository and Deployment Links
+## 17. Repository and Deployment Links
 
 - **GitHub Repository:** https://github.com/feratpizza-creator/Legacy-Code-Update
 - **GitHub Pages URL:** https://feratpizza-creator.github.io/Legacy-Code-Update/
@@ -225,4 +359,4 @@ The reference library remains analysis-only. This batch was written as a reviewe
 
 ---
 
-*Report generated automatically as part of the Lingolali curriculum expansion session on July 23, 2026.*
+*Report updated as part of the continued Lengoali B1/B2/C1 enrichment session on August 5, 2026.*
