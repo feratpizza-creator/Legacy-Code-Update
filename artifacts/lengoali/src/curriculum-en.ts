@@ -39,6 +39,15 @@ import { ENGLISH_C1_FOCUSED_ENRICHMENTS } from "./curriculum-en-c1-focused-enric
 import { ENGLISH_B1_B2_C1_FOCUSED_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-focused-enrichment";
 import { ENGLISH_B1_B2_C1_NEXT_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-next-enrichment";
 import { ENGLISH_C1_U52_U53_ENRICHMENTS } from "./curriculum-en-c1-u52-u53-enrichment";
+import { ENGLISH_B1_B2_C1_U10_U11_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u10-u11-enrichment";
+import { ENGLISH_B1_B2_C1_U8_U9_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u8-u9-enrichment";
+import { ENGLISH_B1_B2_C1_U6_U7_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u6-u7-enrichment";
+import { ENGLISH_B1_B2_C1_U1_U2_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u1-u2-enrichment";
+import { ENGLISH_B1_B2_C1_U3_U4_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u3-u4-enrichment";
+import { ENGLISH_B1_B2_C1_U5_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u5-enrichment";
+import { ENGLISH_B1_B2_C1_U12_U13_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u12-u13-enrichment";
+import { ENGLISH_B1_B2_C1_U14_U15_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u14-u15-enrichment";
+import { ENGLISH_B1_B2_C1_U16_U17_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u16-u17-enrichment";
 
 // ------------------------------------------------------------------------
 // Helpers (mirrors curriculum-data.ts helpers to avoid circular imports)
@@ -255,6 +264,21 @@ function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
+function enrichEnglishBaseLevels(levels: LevelSeed[]): LevelSeed[] {
+  return levels.map((level) => ({
+    ...level,
+    units: level.units.map((unit) => {
+      const u1U2Enrichment = ENGLISH_B1_B2_C1_U1_U2_ENRICHMENTS[level.cefr]?.[unit.id] ?? [];
+      const u3U4Enrichment = ENGLISH_B1_B2_C1_U3_U4_ENRICHMENTS[level.cefr]?.[unit.id] ?? [];
+      const u5Enrichment = ENGLISH_B1_B2_C1_U5_ENRICHMENTS[level.cefr]?.[unit.id] ?? [];
+      const enrichment = [...u1U2Enrichment, ...u3U4Enrichment, ...u5Enrichment];
+      return enrichment.length > 0
+        ? { ...unit, words: [...unit.words, ...enrichment] }
+        : unit;
+    }),
+  }));
+}
+
 function enrichEnglishAdditionalUnits(additionalUnits: Record<string, UnitSeed[]>): Record<string, UnitSeed[]> {
   return Object.fromEntries(
     Object.entries(additionalUnits).map(([level, units]) => [
@@ -266,7 +290,16 @@ function enrichEnglishAdditionalUnits(additionalUnits: Record<string, UnitSeed[]
         const focusedB1B2C1Enrichment = ENGLISH_B1_B2_C1_FOCUSED_ENRICHMENTS[level]?.[unit.id] ?? [];
         const nextB1B2C1Enrichment = ENGLISH_B1_B2_C1_NEXT_ENRICHMENTS[level]?.[unit.id] ?? [];
         const focusedC1U52U53Enrichment = level === "C1" ? ENGLISH_C1_U52_U53_ENRICHMENTS[unit.id] ?? [] : [];
-        const enrichment = [...legacyEnrichment, ...reviewedEnrichment, ...focusedC1Enrichment, ...focusedB1B2C1Enrichment, ...nextB1B2C1Enrichment, ...focusedC1U52U53Enrichment];
+        const u10U11Enrichment = ENGLISH_B1_B2_C1_U10_U11_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u8U9Enrichment = ENGLISH_B1_B2_C1_U8_U9_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u6U7Enrichment = ENGLISH_B1_B2_C1_U6_U7_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u1U2Enrichment = ENGLISH_B1_B2_C1_U1_U2_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u3U4Enrichment = ENGLISH_B1_B2_C1_U3_U4_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u5Enrichment = ENGLISH_B1_B2_C1_U5_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u12U13Enrichment = ENGLISH_B1_B2_C1_U12_U13_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u14U15Enrichment = ENGLISH_B1_B2_C1_U14_U15_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u16U17Enrichment = ENGLISH_B1_B2_C1_U16_U17_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const enrichment = [...legacyEnrichment, ...reviewedEnrichment, ...focusedC1Enrichment, ...focusedB1B2C1Enrichment, ...nextB1B2C1Enrichment, ...focusedC1U52U53Enrichment, ...u10U11Enrichment, ...u8U9Enrichment, ...u6U7Enrichment, ...u1U2Enrichment, ...u3U4Enrichment, ...u5Enrichment, ...u12U13Enrichment, ...u14U15Enrichment, ...u16U17Enrichment];
         return enrichment.length > 0
           ? { ...unit, words: [...unit.words, ...enrichment] }
           : unit;
@@ -289,7 +322,8 @@ function buildLanguagePack(
   const curriculumUnits = targetLang === "en"
     ? enrichEnglishAdditionalUnits(additionalUnits)
     : additionalUnits;
-  const builtLevels = levels.map((l, i) => buildLevel(l, i, curriculumUnits[l.cefr]));
+  const curriculumLevels = targetLang === "en" ? enrichEnglishBaseLevels(levels) : levels;
+  const builtLevels = curriculumLevels.map((l, i) => buildLevel(l, i, curriculumUnits[l.cefr]));
   const localizedLevels = builtLevels.map((level) => ({
     ...level,
     units: level.units.map((unit) => ({

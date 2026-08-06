@@ -14,15 +14,47 @@
 
 The current phase enriches existing English units only; it does not create new units. The reference library under `words-reference-5000/` remains analysis-only, while reviewed additions are kept in separate enrichment banks and merged into the runtime English pack through `curriculum-en.ts`.
 
-The latest completed batch adds **24 reviewed C1 vocabulary entries** to the existing units:
+The latest completed batch enriches the thirty-three existing `u1`–`u5`, `u12`–`u17` units across B1, B2, and C1 with **264 reviewed vocabulary entries**:
 
-| Existing unit | Topic | Added entries |
+| Existing units | Topic focus | Added entries |
 |---|---|---:|
-| `C1/u44` | Institutions and Reform | 8 |
-| `C1/u45` | Memory and Identity | 8 |
-| `C1/u46` | Ethics and Technology | 8 |
+| `B1/u1` | News and media | 8 |
+| `B1/u2` | Environment | 8 |
+| `B1/u3` | Work and career | 8 |
+| `B1/u4` | Culture and lifestyles | 8 |
+| `B1/u5` | Technology and daily life | 8 |
+| `B2/u1` | Literature and art | 8 |
+| `B2/u2` | Economy and society | 8 |
+| `B2/u3` | Technology and ethics | 8 |
+| `B2/u4` | Politics and society | 8 |
+| `B2/u5` | Research and innovation | 8 |
+| `C1/u1` | Academic writing | 8 |
+| `C1/u2` | Global politics | 8 |
+| `C1/u3` | Science and society | 8 |
+| `C1/u4` | Global economy | 8 |
+| `C1/u5` | Academic writing | 8 |
+| `B1/u12` | Destination and routes | 8 |
+| `B1/u13` | Food and culture | 8 |
+| `B2/u12` | Media and propaganda | 8 |
+| `B2/u13` | Innovation and entrepreneurship | 8 |
+| `C1/u12` | Moral philosophy | 8 |
+| `C1/u13` | Climate and sustainability | 8 |
+| `B1/u14` | Environment and nature | 8 |
+| `B1/u15` | Friendship and trust | 8 |
+| `B2/u14` | Technology and digitalization | 8 |
+| `B2/u15` | Art and cultural heritage | 8 |
+| `C1/u14` | Government and opposition | 8 |
+| `C1/u15` | Immigration and refugees | 8 |
+| `B1/u16` | Education and learning | 8 |
+| `B1/u17` | Workplace and team | 8 |
+| `B2/u16` | Science and research | 8 |
+| `B2/u17` | Globalization and trade | 8 |
+| `C1/u16` | Justice and law | 8 |
+| `C1/u17` | Ethics and morality | 8 |
 
-Quality checks for this batch: **61 C1 units / 61 unique IDs**, **16 vocabulary items per target unit after merge**, no exact duplicate words within `u44`, `u45`, or `u46`, application typecheck passed, scripts typecheck passed, and curriculum validation passed with **0 errors**, **12 warnings**, and **94/100 quality**.
+This follows the earlier `u6/u7`, `u8/u9`, and `u10/u11` enrichment rounds and does not create or rename units. The reference PDFs under `words-reference-5000/B1`, `B2`, and `C1` were used for read-only topic and level comparison; they remain outside the runtime bundle. The additions preserve the existing lesson-generation and merge pipeline in `curriculum-en.ts`, with full definitions, Arabic translations, examples, IPA, parts of speech, collocations, word families, and topic tags.
+
+Quality checks for this batch: each target unit now has **16 runtime vocabulary items** across its two generated lessons, each newly added term occurs exactly once in its intended target unit, application typecheck passed, scripts typecheck passed, and curriculum validation passed with **0 errors**. The existing-unit enrichment path was extended so these existing `u1`–`u5`, `u12`–`u17` units receive the reviewed banks without changing their IDs or structure. Existing unrelated changes were preserved.
 
 
 Today the Lingolali language-learning curriculum was significantly expanded. A total of **24 additional units per CEFR level** were added to both the Finnish and English language packs (units `u4` through `u27`). The existing curriculum files were also audited, and duplicate `u12`/`u13` entries were cleaned. All changes passed TypeScript type-checking and Vite production builds, and were pushed to the `main` branch.
@@ -382,7 +414,47 @@ Validation for this pass:
 
 The focused bank is isolated in `artifacts/lengoali/src/curriculum-en-c1-u52-u53-enrichment.ts`; unrelated working-tree files remain outside this enrichment change.
 
-## 18. Next Steps / Recommendations
+## 18. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the six existing B1/B2/C1 units with the smallest runtime vocabulary banks: `u10` and `u11` in each level. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford 5000 reference files under `words-reference-5000/B1`, `B2`, and `C1` were consulted as analysis-only material; no PDF content was imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u10`, `u11` | 16 | everyday banking, card payments, account security, congestion, route planning, public transport rules |
+| B2 | `u10`, `u11` | 16 | inflation mechanisms, household purchasing pressure, macroeconomic policy, emotional regulation, stress coping, resilience |
+| C1 | `u10`, `u11` | 16 | multinational operations, foreign investment, global value chains, censorship, press freedom, surveillance, online moderation |
+
+All 48 additions use the established reviewed-entry helper and include Arabic translation metadata, IPA, definition, contextual example with Arabic translation, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata. The existing merge path in `curriculum-en.ts` appends them to the current units; it does not replace core curriculum records.
+
+Validation for this pass:
+
+- Target-unit runtime audit: each of the six units increased from **4 to 12 vocabulary records**; B1/B2/C1 retain **61 unique units per level**.
+- Duplicate review: the new bank was checked against the existing English curriculum; intentionally reused general concepts were avoided in the target banks, with lexical distinctions preserved by topic, meaning, and CEFR context.
+- Reference safety: the Oxford files remain analysis-only and are not imported by frontend or curriculum runtime modules.
+
+The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-u10-u11-enrichment.ts`; unrelated working-tree changes remain outside this enrichment change.
+
+## 19. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the six existing lowest-count B1/B2/C1 units: `u8` and `u9` in each level. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford 5000 files under `words-reference-5000/B1`, `B2`, and `C1` remained analysis-only references; no PDF content was imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u8`, `u9` | 16 | job applications, workplace conditions, professional networking, reporting standards, source protection, corrections |
+| B2 | `u8`, `u9` | 16 | academic pathways, assessment, funding, clinical research, patient consent, diagnostic care |
+| C1 | `u8`, `u9` | 16 | evidentiary standards, cross-examination, prosecutorial discretion, judicial review, negotiation authority, mediation, implementation |
+
+All 48 additions use the established reviewed-entry schema with Arabic translations, IPA, definitions, contextual examples and Arabic translations, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata. The existing merge path in `curriculum-en.ts` appends vocabulary to the current units only.
+
+Validation notes:
+
+- The six selected units were the lowest-count units before this pass: 4 runtime records each.
+- The reference PDFs were not text-extracted in the local environment and remain analysis-only.
+- Candidate collisions were checked against the runtime English curriculum before implementation; existing repeated terms were excluded or replaced with more specific lexical entries.
+
+The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-u8-u9-enrichment.ts`; unrelated working-tree changes remain untouched.
+
+## 20. Next Steps / Recommendations
 
 1. **Continue Curriculum Expansion** — Add the next reviewed English unit batch only after checking lexical identity, CEFR fit, topic coverage, and duplication risk.
 2. **Split Large Curriculum Files** — Keep new English batches in numbered part files to reduce the size of individual source modules and curriculum chunks.
