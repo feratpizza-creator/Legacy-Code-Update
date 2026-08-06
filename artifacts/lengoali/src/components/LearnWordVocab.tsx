@@ -75,6 +75,7 @@ const WORD_UI: Record<ExplanationLanguage, Record<string, string>> = {
     selectNativeLang: "لغة الشرح",
     levels: "المستويات",
     units: "الوحدات",
+    allWords: "All words",
     words: "كلمات",
     searchVocabulary: "ابحث في هذا المنهج…",
     reviewDue: "حان وقت المراجعة",
@@ -102,6 +103,7 @@ const WORD_UI: Record<ExplanationLanguage, Record<string, string>> = {
     selectNativeLang: "Explanation language",
     levels: "Levels",
     units: "Units",
+    allWords: "All words",
     words: "words",
     searchVocabulary: "Search this curriculum…",
     reviewDue: "Due for review",
@@ -129,6 +131,7 @@ const WORD_UI: Record<ExplanationLanguage, Record<string, string>> = {
     selectNativeLang: "Selityskieli",
     levels: "Tasot",
     units: "Yksiköt",
+    allWords: "All words",
     words: "sanaa",
     searchVocabulary: "Hae tästä opetussuunnitelmasta…",
     reviewDue: "Kertaus on ajankohtainen",
@@ -230,6 +233,7 @@ export default function LearnWordVocab({ t, languagePacks, defaultTargetLang, de
   const currentUi = getWordUi(nativeLang);
   const [level, setLevel] = useState<LevelFilter>("all");
   const [unitId, setUnitId] = useState("all");
+  const [showAllWords, setShowAllWords] = useState(false);
   const [stateFilter, setStateFilter] = useState<StateFilter>("all");
   const [search, setSearch] = useState("");
   const [progress, setProgress] = useState<VocabularyProgress>(() => loadVocabularyProgress());
@@ -243,9 +247,10 @@ export default function LearnWordVocab({ t, languagePacks, defaultTargetLang, de
   const counts = useMemo(() => countVocabularyStates(catalog, progress), [catalog, progress]);
   const units = useMemo(() => {
     const byId = new Map<string, { id: string; title: string }>();
-    for (const word of catalog) byId.set(word.unitId, { id: word.unitId, title: word.unitTitle });
+    const scopedCatalog = level === "all" ? catalog : catalog.filter((word) => word.level === level);
+    for (const word of scopedCatalog) byId.set(word.unitId, { id: word.unitId, title: word.unitTitle });
     return Array.from(byId.values());
-  }, [catalog]);
+  }, [catalog, level]);
 
   const filtered = useMemo(() => {
     const query = search.trim().toLocaleLowerCase();
@@ -259,6 +264,17 @@ export default function LearnWordVocab({ t, languagePacks, defaultTargetLang, de
       return [word.word, word.nativeMeaning, word.unitTitle, word.category, ...word.tags].some((value) => value.toLocaleLowerCase().includes(query));
     });
   }, [catalog, level, progress, search, stateFilter, unitId]);
+
+  const allWords = useMemo(() => {
+    const query = search.trim().toLocaleLowerCase();
+    return catalog.filter((word) => {
+      if (level !== "all" && word.level !== level) return false;
+      if (unitId !== "all" && word.unitId !== unitId) return false;
+      if (!query) return true;
+      return [word.word, word.nativeMeaning, word.unitTitle, word.category, ...word.tags]
+        .some((value) => value.toLocaleLowerCase().includes(query));
+    });
+  }, [catalog, level, search, unitId]);
 
   useEffect(() => {
     if (!filtered.length) {
@@ -431,10 +447,20 @@ export default function LearnWordVocab({ t, languagePacks, defaultTargetLang, de
           <option value="all">{currentUi.levels}</option>
           {LEVELS.slice(1).map((value) => <option key={value} value={value}>{value}</option>)}
         </select>
-        <select aria-label={currentUi.units} value={unitId} onChange={(event) => setUnitId(event.target.value)} style={filterStyle(t)}>
-          <option value="all">{currentUi.units}</option>
-          {units.map((unit) => <option key={unit.id} value={unit.id}>{unit.id} · {unit.title}</option>)}
-        </select>
+        <div style={{ display: "flex", gap: 8, minWidth: 0 }}>
+          <select aria-label={currentUi.units} value={unitId} onChange={(event) => setUnitId(event.target.value)} style={{ ...filterStyle(t), flex: 1 }}>
+            <option value="all">{currentUi.units}</option>
+            {units.map((unit) => <option key={unit.id} value={unit.id}>{unit.id} · {unit.title}</option>)}
+          </select>
+          <button
+            type="button"
+            onClick={() => setShowAllWords((visible) => !visible)}
+            aria-pressed={showAllWords}
+            style={{ ...filterStyle(t), borderColor: showAllWords ? "#60a5fa" : t.inputBorder, background: showAllWords ? "#60a5fa22" : t.inputBg, color: showAllWords ? "#60a5fa" : t.textMuted, cursor: "pointer", fontWeight: 700, whiteSpace: "nowrap" }}
+          >
+            {currentUi.allWords}
+          </button>
+        </div>
       </div>
       <div style={{ display: "flex", gap: 8 }}>
         <div style={{ position: "relative", flex: 1 }}>
@@ -444,7 +470,16 @@ export default function LearnWordVocab({ t, languagePacks, defaultTargetLang, de
         <button type="button" onClick={() => setStateFilter(stateFilter === "due" ? "all" : "due")} style={{ ...filterStyle(t), color: stateFilter === "due" ? "#f59e0b" : t.textMuted, cursor: "pointer", width: "auto" }} title={currentUi.reviewDue}>🔁</button>
       </div>
 
-      {!current ? <div style={{ color: t.textDim, textAlign: "center", padding: 28 }}>{currentUi.noVocabularyMatches}</div> : (
+      {showAllWords ? (
+        <AllWordsList
+          words={allWords}
+          t={t}
+          ui={currentUi}
+          nativeLang={nativeLang}
+          onTranslateText={onTranslateText}
+          onSaveWord={onSaveWord}
+        />
+      ) : !current ? <div style={{ color: t.textDim, textAlign: "center", padding: 28 }}>{currentUi.noVocabularyMatches}</div> : (
         <>
           <div style={{ color: t.textDim, fontSize: 12 }}>{filtered.length} {currentUi.words} · {current.unitTitle} · {current.lessonTitle}</div>
           <article style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 16, padding: 18, display: "flex", flexDirection: "column", gap: 14 }}>
@@ -490,6 +525,120 @@ export default function LearnWordVocab({ t, languagePacks, defaultTargetLang, de
           </div>
         </>
       )}
+    </div>
+  );
+}
+
+function AllWordsList({
+  words,
+  t,
+  ui,
+  nativeLang,
+  onTranslateText,
+  onSaveWord,
+}: {
+  words: CurriculumVocabularyWord[];
+  t: Theme;
+  ui: Record<string, string>;
+  nativeLang: ExplanationLanguage;
+  onTranslateText: (text: string, sourceLang: string, targetLang: string) => Promise<string | null>;
+  onSaveWord: (word: string, sourceLang: string, translation: string, details?: WordSaveDetails) => void;
+}) {
+  if (!words.length) {
+    return <div style={{ color: t.textDim, textAlign: "center", padding: 28 }}>{ui.noVocabularyMatches}</div>;
+  }
+
+  return (
+    <section style={{ display: "flex", flexDirection: "column", gap: 8 }} aria-label={ui.allWords}>
+      <div style={{ color: t.textDim, fontSize: 12 }}>{words.length} {ui.words}</div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        {words.map((word) => (
+          <AllWordsRow
+            key={word.id}
+            word={word}
+            t={t}
+            ui={ui}
+            nativeLang={nativeLang}
+            onTranslateText={onTranslateText}
+            onSaveWord={onSaveWord}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function AllWordsRow({
+  word,
+  t,
+  ui,
+  nativeLang,
+  onTranslateText,
+  onSaveWord,
+}: {
+  word: CurriculumVocabularyWord;
+  t: Theme;
+  ui: Record<string, string>;
+  nativeLang: ExplanationLanguage;
+  onTranslateText: (text: string, sourceLang: string, targetLang: string) => Promise<string | null>;
+  onSaveWord: (word: string, sourceLang: string, translation: string, details?: WordSaveDetails) => void;
+}) {
+  const directTranslation = nativeLang === word.nativeMeaningLang
+    ? word.nativeMeaning
+    : nativeLang === word.language
+      ? word.definition || word.word
+      : "";
+  const [translation, setTranslation] = useState(directTranslation);
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    setTranslation(directTranslation);
+    if (directTranslation || nativeLang === word.language) return () => { active = false; };
+    void onTranslateText(word.word, word.language, nativeLang).then((result) => {
+      if (active && result) setTranslation(result);
+    });
+    return () => { active = false; };
+  }, [directTranslation, nativeLang, onTranslateText, word.language, word.word]);
+
+  const save = () => {
+    if (saved || !translation) return;
+    onSaveWord(word.word, word.language, translation, {
+      translationLang: nativeLang,
+      pos: word.pos,
+      synonym: word.synonyms.join(", "),
+      antonym: word.antonyms.join(", "),
+      collocation: word.collocations.join(", "),
+      wordFamily: word.wordFamily.join(", "),
+      example: word.example,
+      exampleTranslation: word.exampleTranslation,
+      ipa: word.ipa,
+      definition: word.definition,
+      cefr: word.cefr,
+      tags: word.tags.join(", "),
+    });
+    setSaved(true);
+  };
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10, background: t.card, border: `1px solid ${t.border}`, borderRadius: 11, padding: "10px 12px" }}>
+      <div style={{ flex: 1, minWidth: 0, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+        <span style={{ color: t.text, fontWeight: 700, fontSize: 15 }}>{word.word}</span>
+        <span style={{ color: t.textDim, fontSize: 13, direction: nativeLang === "ar" ? "rtl" : "ltr" }}>
+          {translation || "…"}
+        </span>
+      </div>
+      <SpeakButton text={word.word} lang={word.language} t={t} />
+      <button
+        type="button"
+        onClick={save}
+        disabled={saved || !translation}
+        title={saved ? ui.saved : ui.saveWord}
+        aria-label={`${saved ? ui.saved : ui.saveWord}: ${word.word}`}
+        style={{ width: 34, height: 34, borderRadius: "50%", border: `1px solid ${saved ? "#fbbf24" : t.border}`, background: saved ? "#fbbf2422" : t.card2, color: saved ? "#fbbf24" : t.textMuted, cursor: saved || !translation ? "default" : "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}
+      >
+        <Star size={16} fill={saved ? "currentColor" : "none"} />
+      </button>
     </div>
   );
 }
