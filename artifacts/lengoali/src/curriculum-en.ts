@@ -48,6 +48,13 @@ import { ENGLISH_B1_B2_C1_U5_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u5-enr
 import { ENGLISH_B1_B2_C1_U12_U13_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u12-u13-enrichment";
 import { ENGLISH_B1_B2_C1_U14_U15_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u14-u15-enrichment";
 import { ENGLISH_B1_B2_C1_U16_U17_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u16-u17-enrichment";
+import { ENGLISH_B1_B2_C1_U18_U19_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u18-u19-enrichment";
+import { ENGLISH_B1_B2_C1_U20_U21_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u20-u21-enrichment";
+import { ENGLISH_B1_B2_C1_U22_U23_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u22-u23-enrichment";
+import { ENGLISH_B1_B2_C1_U24_U25_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u24-u25-enrichment";
+import { ENGLISH_B1_B2_C1_U26_U27_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u26-u27-enrichment";
+import { ENGLISH_B1_B2_C1_U28_U29_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u28-u29-enrichment";
+import { ENGLISH_B1_B2_C1_U30_U31_ENRICHMENTS } from "./curriculum-en-b1-b2-c1-u30-u31-enrichment";
 
 // ------------------------------------------------------------------------
 // Helpers (mirrors curriculum-data.ts helpers to avoid circular imports)
@@ -299,7 +306,14 @@ function enrichEnglishAdditionalUnits(additionalUnits: Record<string, UnitSeed[]
         const u12U13Enrichment = ENGLISH_B1_B2_C1_U12_U13_ENRICHMENTS[level]?.[unit.id] ?? [];
         const u14U15Enrichment = ENGLISH_B1_B2_C1_U14_U15_ENRICHMENTS[level]?.[unit.id] ?? [];
         const u16U17Enrichment = ENGLISH_B1_B2_C1_U16_U17_ENRICHMENTS[level]?.[unit.id] ?? [];
-        const enrichment = [...legacyEnrichment, ...reviewedEnrichment, ...focusedC1Enrichment, ...focusedB1B2C1Enrichment, ...nextB1B2C1Enrichment, ...focusedC1U52U53Enrichment, ...u10U11Enrichment, ...u8U9Enrichment, ...u6U7Enrichment, ...u1U2Enrichment, ...u3U4Enrichment, ...u5Enrichment, ...u12U13Enrichment, ...u14U15Enrichment, ...u16U17Enrichment];
+        const u18U19Enrichment = ENGLISH_B1_B2_C1_U18_U19_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u20U21Enrichment = ENGLISH_B1_B2_C1_U20_U21_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u22U23Enrichment = ENGLISH_B1_B2_C1_U22_U23_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u24U25Enrichment = ENGLISH_B1_B2_C1_U24_U25_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u26U27Enrichment = ENGLISH_B1_B2_C1_U26_U27_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u28U29Enrichment = ENGLISH_B1_B2_C1_U28_U29_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const u30U31Enrichment = ENGLISH_B1_B2_C1_U30_U31_ENRICHMENTS[level]?.[unit.id] ?? [];
+        const enrichment = [...legacyEnrichment, ...reviewedEnrichment, ...focusedC1Enrichment, ...focusedB1B2C1Enrichment, ...nextB1B2C1Enrichment, ...focusedC1U52U53Enrichment, ...u10U11Enrichment, ...u8U9Enrichment, ...u6U7Enrichment, ...u1U2Enrichment, ...u3U4Enrichment, ...u5Enrichment, ...u12U13Enrichment, ...u14U15Enrichment, ...u16U17Enrichment, ...u18U19Enrichment, ...u20U21Enrichment, ...u22U23Enrichment, ...u24U25Enrichment, ...u26U27Enrichment, ...u28U29Enrichment, ...u30U31Enrichment];
         return enrichment.length > 0
           ? { ...unit, words: [...unit.words, ...enrichment] }
           : unit;

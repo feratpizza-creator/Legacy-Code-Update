@@ -454,7 +454,147 @@ Validation notes:
 
 The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-u8-u9-enrichment.ts`; unrelated working-tree changes remain untouched.
 
-## 20. Next Steps / Recommendations
+## 20. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the next six existing lowest-count units: `u18` and `u19` in B1, B2, and C1. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford 5000 files under `words-reference-5000/B1`, `B2`, and `C1` remained analysis-only references and were not imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u18`, `u19` | 16 | newsroom practice, source protection, corrections, online identity, privacy, responsible social-media use |
+| B2 | `u18`, `u19` | 16 | stress responses, psychological wellbeing, recovery support, leadership styles, role clarity, organisational change |
+| C1 | `u18`, `u19` | 16 | discourse, ideology, power relations, counter-narratives, epistemic reliability, information verification |
+
+All 48 additions use the established reviewed-entry schema with Arabic translations, IPA, definitions, contextual examples and Arabic translations, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata. The existing merge path in `curriculum-en.ts` appends vocabulary to the current units only; it does not replace core curriculum records or create new structure.
+
+Validation notes for this pass:
+
+- The six selected units were tied for the lowest runtime vocabulary count before implementation: **8 records each**.
+- Candidate collisions were checked against the complete English runtime pack; exact collisions were excluded or replaced with more specific lexical entries.
+- The Oxford reference PDFs remain analysis-only and are not imported by frontend or curriculum runtime modules.
+
+The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-u18-u19-enrichment.ts`; unrelated working-tree changes remain untouched.
+
+## 21. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the next six existing lowest-count units: `u20` and `u21` in B1, B2, and C1. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford 5000 files under `words-reference-5000/B1`, `B2`, and `C1` remained analysis-only references and were not imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u20`, `u21` | 16 | machine learning, sensors, robotics, speech recognition, literary genres, narrative perspective |
+| B2 | `u20`, `u21` | 16 | wealth inequality, border systems, systemic discrimination, social integration, cognition, metacognition, attention |
+| C1 | `u20`, `u21` | 16 | logical reasoning, fallacies, evidence burdens, discourse strategy, memory consolidation, cultural remembrance |
+
+All 48 additions use the established reviewed-entry schema with Arabic translations, IPA, definitions, contextual examples and Arabic translations, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata. The existing merge path in `curriculum-en.ts` appends vocabulary to the current units only; it does not replace core curriculum records or create new structure.
+
+Validation notes for this pass:
+
+- The six selected units were tied for the lowest runtime vocabulary count before implementation: **8 records each**.
+- Candidate collisions were checked against the complete English runtime pack; exact collisions were excluded while preserving legitimate topic progression.
+- The Oxford reference PDFs remain analysis-only and are not imported by frontend or curriculum runtime modules.
+
+The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-u20-u21-enrichment.ts`; unrelated working-tree changes remain untouched.
+
+## 22. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the next six existing lowest-count units: `u22` and `u23` in B1, B2, and C1. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford 5000 files under `words-reference-5000/B1`, `B2`, and `C1` remained analysis-only references and were not imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u22`, `u23` | 16 | work placements, recruitment documents, career pathways, study grants, assessment, learning planning |
+| B2 | `u22`, `u23` | 16 | defendants, prosecution, testimony, court orders, petitions, civil disobedience, grassroots organising |
+| C1 | `u22`, `u23` | 16 | inherited traditions, cultural assimilation, ethnocentrism, secularisation, morphology, phonemic contrast |
+
+All 48 additions use the established reviewed-entry schema with Arabic translations, IPA, definitions, contextual examples and Arabic translations, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata. The existing merge path in `curriculum-en.ts` appends vocabulary to the current units only; it does not replace core curriculum records or create new structure.
+
+Validation notes for this pass:
+
+- The six selected units were tied for the lowest runtime vocabulary count before implementation: **8 records each**.
+- Candidate collisions were checked against the complete English runtime pack; exact collisions were excluded or replaced with more specific lexical entries.
+- The Oxford reference PDFs remain analysis-only and are not imported by frontend or curriculum runtime modules.
+
+The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-u22-u23-enrichment.ts`; unrelated working-tree changes remain untouched.
+
+## 23. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the next six existing lowest-count units: `u24` and `u25` in B1, B2, and C1. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford 5000 files under `words-reference-5000/B1`, `B2`, and `C1` remained analysis-only references and were not imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u24`, `u25` | 16 | news broadcasting, editorial practice, ecological relationships, habitats, climate and waste |
+| B2 | `u24`, `u25` | 16 | macroeconomic indicators, fiscal policy, credit risk, autonomous systems, computer vision, speech and learning systems |
+| C1 | `u24`, `u25` | 16 | equality, voting rights, constitutional government, sovereignty, experimental art, symbolism, visual criticism |
+
+All 48 additions use the established reviewed-entry schema with Arabic translations, IPA, definitions, contextual examples and Arabic translations, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata. The existing merge path in `curriculum-en.ts` appends vocabulary to the current units only; it does not replace core curriculum records or create new structure.
+
+Validation notes for this pass:
+
+- The six selected units were tied for the lowest runtime vocabulary count before implementation: **8 records each**.
+- Candidate collisions were checked against the complete English runtime pack; exact collisions were excluded or replaced with more specific lexical entries.
+- The Oxford reference PDFs remain analysis-only and are not imported by frontend or curriculum runtime modules.
+
+The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-u24-u25-enrichment.ts`; unrelated working-tree changes remain untouched.
+
+## 24. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the next six existing lowest-count units: `u26` and `u27` in B1, B2, and C1. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford 5000 files under `words-reference-5000/B1`, `B2`, and `C1` remained analysis-only references and were not imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u26`, `u27` | 16 | family bonds, trust, reconciliation, daily routines, sleep and energy |
+| B2 | `u26`, `u27` | 16 | metropolitan development, public space, traffic, forced displacement, resettlement and citizenship |
+| C1 | `u26`, `u27` | 16 | state institutions, executive authority, constitutional jurisdiction, textual meaning, authorial intent and hermeneutic analysis |
+
+All 48 additions use the established reviewed-entry schema with Arabic translations, IPA, definitions, contextual examples and Arabic translations, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata. The existing merge path in `curriculum-en.ts` appends vocabulary to the current units only; it does not replace core curriculum records or create new structure.
+
+Validation notes for this pass:
+
+- The six selected units were tied for the lowest runtime vocabulary count before implementation: **8 records each**.
+- Candidate collisions were checked against the complete English runtime pack; exact collisions were excluded or replaced with more specific lexical entries.
+- The Oxford reference PDFs remain analysis-only and are not imported by frontend or curriculum runtime modules.
+
+The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-u26-u27-enrichment.ts`; unrelated working-tree changes remain untouched.
+
+## 25. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the next six existing lowest-count units: `u28` and `u29` in B1, B2, and C1. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford 5000 files under `words-reference-5000/B1`, `B2`, and `C1` remained analysis-only references and were not imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u28`, `u29` | 16 | workplace clarification, punctuality, professional communication, recycling, renewable energy and community action |
+| B2 | `u28`, `u29` | 16 | digital economy, labour-market change, cloud computing, cultural stereotypes, editorial bias and media narratives |
+| C1 | `u28`, `u29` | 16 | empirical findings, evidential reasoning, fallacies, ethical ambiguity, social stratification and civic responsibility |
+
+All 48 additions use the established reviewed-entry schema with Arabic translations, IPA, definitions, contextual examples and Arabic translations, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata. The existing merge path in `curriculum-en.ts` appends vocabulary to the current units only; it does not replace core curriculum records or create new structure.
+
+Validation notes for this pass:
+
+- The six selected units were tied for the lowest runtime vocabulary count before implementation: **8 records each**.
+- Candidate collisions were checked against the complete English runtime pack; exact collisions were excluded or replaced with more specific lexical entries.
+- The Oxford reference PDFs remain analysis-only and are not imported by frontend or curriculum runtime modules.
+
+The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-u28-u29-enrichment.ts`; unrelated working-tree changes remain untouched.
+
+## 26. Continued B1/B2/C1 Enrichment (existing units only)
+
+This pass enriched the next six existing lowest-count units: `u30` and `u31` in B1, B2, and C1. No unit, lesson, title, or identifier was created, renamed, removed, or duplicated. The Oxford 5000 files under `words-reference-5000/B1`, `B2`, and `C1` remained analysis-only references and were not imported into runtime code.
+
+| Level | Existing units enriched | New reviewed entries | Main topic gaps addressed |
+|---|---|---:|---|
+| B1 | `u30`, `u31` | 16 | root causes, troubleshooting, practical solutions, belonging, cultural diversity and local identity |
+| B2 | `u30`, `u31` | 16 | experimental controls, reproducibility, sampling uncertainty, contract terms, payment schedules and negotiating leverage |
+| C1 | `u30`, `u31` | 16 | policy mechanisms, public spending, impact assessment, interpretive frameworks, epistemic uncertainty and inferential limits |
+
+All 48 additions use the established reviewed-entry schema with Arabic translations, IPA, definitions, contextual examples and Arabic translations, part of speech, category, tags, synonyms, antonyms, collocations, and word-family metadata. The existing merge path in `curriculum-en.ts` appends vocabulary to the current units only; it does not replace core curriculum records or create new structure.
+
+Validation notes for this pass:
+
+- The six selected units were tied for the lowest runtime vocabulary count before implementation: **8 records each**.
+- Candidate collisions were checked against the complete English runtime pack; exact collisions were excluded or replaced with more specific lexical entries.
+- The Oxford reference PDFs remain analysis-only and are not imported by frontend or curriculum runtime modules.
+
+The new bank is isolated in `artifacts/lengoali/src/curriculum-en-b1-b2-c1-u30-u31-enrichment.ts`; unrelated working-tree changes remain untouched.
+
+## 27. Next Steps / Recommendations
 
 1. **Continue Curriculum Expansion** — Add the next reviewed English unit batch only after checking lexical identity, CEFR fit, topic coverage, and duplication risk.
 2. **Split Large Curriculum Files** — Keep new English batches in numbered part files to reduce the size of individual source modules and curriculum chunks.
